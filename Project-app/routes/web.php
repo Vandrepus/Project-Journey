@@ -6,6 +6,13 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController; // Replace with your actual controller
 use App\Http\Controllers\AdminContactMessageController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\SightController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ForumController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\ReplyController;
+
 
 
 Route::get('/', function () {
@@ -47,6 +54,22 @@ Route::middleware(['web', 'auth', 'admin'])->group(function () {
     // Admin Contact Message Routes
     Route::get('/admin/contact-messages', [AdminContactMessageController::class, 'index'])->name('admin.contact-messages.index');
     Route::delete('/admin/contact-messages/{message}', [AdminContactMessageController::class, 'destroy'])->name('admin.contact-messages.destroy');
+});
+
+Route::get('/countries', [CountryController::class, 'index'])->name('countries.index');
+Route::get('/countries/{country}', [CountryController::class, 'show'])->name('countries.show');
+Route::get('/sights/{sight}', [SightController::class, 'show'])->name('sights.show');
+
+Route::post('/reviews', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
+
+Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+    Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
+    Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
+    Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
+    Route::post('/forum/{id}/reply', [ReplyController::class, 'store'])->name('forum.reply');
 });
 
 require __DIR__.'/auth.php';

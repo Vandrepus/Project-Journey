@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center">
                     @auth
                         @if (Auth::user()->usertype === 'admin')
-                            <a href="{{ route('admin.dashboard') }}">
+                            <a href="{{ route('dashboard') }}">
                                <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                             </a>
                         @else
@@ -32,6 +32,12 @@
                         @else
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('countries.index')" :active="request()->routeIs('countries.index')">
+                                {{ __('Countries') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('forum.index')" :active="request()->routeIs('forum.index')">
+                                {{ __('Forum') }}
                             </x-nav-link>
                         @endif
                     @endauth
