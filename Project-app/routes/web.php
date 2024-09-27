@@ -13,6 +13,8 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\ReplyController;
 
+use App\Http\Controllers\UserManagementController;
+
 
 
 Route::get('/', function () {
@@ -71,5 +73,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
     Route::post('/forum/{id}/reply', [ReplyController::class, 'store'])->name('forum.reply');
 });
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/users', [UserManagementController::class, 'index'])->name('admin.users.index');
+    Route::get('/admin/users/{id}/edit', [UserManagementController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/users/{id}', [UserManagementController::class, 'update'])->name('admin.users.update');
+});
+
 
 require __DIR__.'/auth.php';

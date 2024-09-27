@@ -17,9 +17,9 @@ class CreateSightsTable extends Migration
             $table->text('description')->nullable();
             $table->string('location')->nullable(); // Location of the sight
             $table->string('category')->nullable(); // Category of the sight
-            $table->string('opening_hours')->nullable();
-            $table->decimal('average_rating', 3, 2)->default(0); // Opening hours of the sight
-            $table->string('map_url')->nullable();
+            $table->string('opening_hours')->nullable(); // Opening hours of the sight
+            $table->decimal('average_rating', 2, 1)->default(0); // Adjusted for ratings up to 5.0
+            $table->string('map_url')->nullable(); // Optional map URL for the sight
             $table->timestamps();
         });
     }

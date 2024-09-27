@@ -28,7 +28,7 @@
         heroImg="images/Home.jpg" 
         title="Your Journey Starts Here"
         text="Choose Your Destination"
-        buttonText="Travel Plan"
+        buttonText="Discuss "
         url="/register"
         btnClass="show"
     />

@@ -7,7 +7,7 @@
                 <div class="shrink-0 flex items-center">
                     @auth
                         @if (Auth::user()->usertype === 'admin')
-                            <a href="{{ route('dashboard') }}">
+                            <a href="{{ route('admin.dashboard') }}">
                                <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                             </a>
                         @else
@@ -29,6 +29,9 @@
                             <x-nav-link :href="route('admin.contact-messages.index')" :active="request()->routeIs('admin.contact-messages.index')">
                                 {{ __('Check Contact Us') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                                {{ __('User Management') }}
+                            </x-nav-link>
                         @else
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
@@ -39,6 +42,7 @@
                             <x-nav-link :href="route('forum.index')" :active="request()->routeIs('forum.index')">
                                 {{ __('Forum') }}
                             </x-nav-link>
+
                         @endif
                     @endauth
                 </div>
