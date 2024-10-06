@@ -20,7 +20,6 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-
                     @auth
                         @if (Auth::user()->usertype === 'admin')
                             <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
@@ -32,6 +31,9 @@
                             <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
                                 {{ __('User Management') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.sights.index')" :active="request()->routeIs('admin.sights.index')">
+                                {{ __('Review Proposed Locations') }}
+                            </x-nav-link>
                         @else
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
@@ -42,7 +44,9 @@
                             <x-nav-link :href="route('forum.index')" :active="request()->routeIs('forum.index')">
                                 {{ __('Forum') }}
                             </x-nav-link>
-
+                            <x-nav-link :href="route('location.propose')" :active="request()->routeIs('location.propose')">
+                                {{ __('Propose a Location') }}
+                            </x-nav-link>
                         @endif
                     @endauth
                 </div>

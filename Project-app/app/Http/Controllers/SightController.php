@@ -15,5 +15,4 @@ class SightController extends Controller
         $reviews = $sight->reviews()->latest()->get();
         return view('user.sights.show', compact('sight', 'reviews'));
     }
-    
 }

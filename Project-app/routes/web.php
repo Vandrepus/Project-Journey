@@ -12,7 +12,8 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\TopicController;
 use App\Http\Controllers\ReplyController;
-
+use App\Http\Controllers\ReviewSightsController;
+use App\Http\Controllers\ProposeLocationController;
 use App\Http\Controllers\UserManagementController;
 
 
@@ -78,6 +79,20 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', [UserManagementController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/users/{id}/edit', [UserManagementController::class, 'edit'])->name('admin.users.edit');
     Route::put('/admin/users/{id}', [UserManagementController::class, 'update'])->name('admin.users.update');
+});
+
+
+// Routes for users
+Route::middleware('auth')->group(function () {
+    Route::get('/locations/propose', [ProposeLocationController::class, 'create'])->name('location.propose');
+    Route::post('/locations/propose', [ProposeLocationController::class, 'store'])->name('location.store');
+});
+
+// Routes for admin
+Route::middleware('auth', 'admin')->group(function () {
+    Route::get('/admin/sights', [ReviewSightsController::class, 'index'])->name('admin.sights.index');
+    Route::patch('/admin/sights/{id}/approve', [ReviewSightsController::class, 'approve'])->name('admin.sights.approve');
+    Route::delete('/admin/sights/{id}/decline', [ReviewSightsController::class, 'decline'])->name('admin.sights.decline');
 });
 
 

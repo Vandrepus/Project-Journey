@@ -15,11 +15,9 @@ class CountryController extends Controller
 
     public function show(Country $country)
     {
-        $sights = $country->sights; // Assuming a Country has many Sights
+        // Retrieve only the sights that are visible
+        $sights = $country->sights()->where('visible', 1)->get();
+
         return view('user.countries.show', compact('country', 'sights'));
     }
-
-    
-
-    
 }

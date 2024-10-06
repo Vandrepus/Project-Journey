@@ -9,7 +9,7 @@ class Country extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'flag'];
+    protected $fillable = ['name', 'description'];
 
     public function sights()
     {
