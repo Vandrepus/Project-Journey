@@ -13,6 +13,12 @@ class ReviewSightsController extends Controller
         return view('admin.sights.index', compact('pendingSights'));
     }
 
+    public function show($id)
+    {
+        $sight = Sight::findOrFail($id);
+        return view('admin.sights.show', compact('sight'));
+    }
+
     public function approve($id)
     {
         $sight = Sight::findOrFail($id);

@@ -33,6 +33,10 @@
                             <td class="px-6 py-4 text-gray-900">{{ $sight->name }}</td>
                             <td class="px-6 py-4 text-gray-600">{{ Str::limit($sight->description, 100) }}</td>
                             <td class="px-6 py-4 flex justify-center space-x-4">
+                                <!-- View Details Button -->
+                                <a href="{{ route('admin.sights.show', $sight->id) }}" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600">
+                                    View Details
+                                </a>
                                 <!-- Approve Button -->
                                 <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST">
                                     @csrf

@@ -41,6 +41,7 @@ class ProposeLocationController extends Controller
         'opening_hours' => $request->opening_hours,
         'map_url' => $request->map_url,
         'visible' => 0, // Invisible by default
+        'submitted_by' => auth()->id()
     ]);
 
     return redirect()->back()->with('success', 'Sight proposed successfully! Awaiting admin approval.');

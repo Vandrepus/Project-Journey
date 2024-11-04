@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
 // Routes for admin
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/admin/sights', [ReviewSightsController::class, 'index'])->name('admin.sights.index');
+    Route::get('/admin/sights/{id}', [ReviewSightsController::class, 'show'])->name('admin.sights.show');
     Route::patch('/admin/sights/{id}/approve', [ReviewSightsController::class, 'approve'])->name('admin.sights.approve');
     Route::delete('/admin/sights/{id}/decline', [ReviewSightsController::class, 'decline'])->name('admin.sights.decline');
 });
