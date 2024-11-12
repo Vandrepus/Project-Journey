@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_app
+    ports:
+      - "8000:80"  # Связываем порт 8000 хоста с портом 80 контейнера
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APACHE_RUN_USER=www-data
+      - APACHE_RUN_GROUP=www-data
+      - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+    networks:
+      - laravel_network
+    depends_on:
+      - db
+    command: sh -c "sleep 10 && apache2-foreground"  # Добавляем задержку 10 секунд перед запуском
+
+  db:
+    image: mysql:8.0
+    container_name: laravel_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: Journey
+      MYSQL_USER: Journey
+      MYSQL_PASSWORD: root_password
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel_network
+
+networks:
+  laravel_network:
+    driver: bridge
