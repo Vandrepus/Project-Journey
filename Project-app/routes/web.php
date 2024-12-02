@@ -15,6 +15,8 @@ use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\ReviewSightsController;
 use App\Http\Controllers\ProposeLocationController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\ProposeCountryController;
+use App\Http\Controllers\AdminCountryController;
 
 
 
@@ -95,6 +97,20 @@ Route::middleware('auth', 'admin')->group(function () {
     Route::patch('/admin/sights/{id}/approve', [ReviewSightsController::class, 'approve'])->name('admin.sights.approve');
     Route::delete('/admin/sights/{id}/decline', [ReviewSightsController::class, 'decline'])->name('admin.sights.decline');
 });
+
+Route::middleware('auth')->group(function () {
+    // User routes
+    Route::get('/propose', [ProposeCountryController::class, 'create'])->name('countries.propose');
+    Route::post('/propose', [ProposeCountryController::class, 'store'])->name('countries.store');
+
+    // Admin routes
+    Route::middleware('admin')->group(function () {
+        Route::get('/admin/countries', [AdminCountryController::class, 'index'])->name('admin.countries.index');
+        Route::patch('/admin/countries/{id}/approve', [AdminCountryController::class, 'approve'])->name('admin.country.approve');
+        Route::delete('/admin/countries/{id}/decline', [AdminCountryController::class, 'decline'])->name('admin.country.decline');
+    });
+});
+
 
 
 require __DIR__.'/auth.php';

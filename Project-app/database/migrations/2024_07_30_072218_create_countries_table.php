@@ -12,7 +12,8 @@ class CreateCountriesTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description')->nullable();
-            $table->string('flag')->nullable(); // Optional: to store a flag URL or path
+            $table->foreignId('submitted_by')->constrained('users')->onDelete('cascade');
+            $table->boolean('visible')->default(false); // Default to invisible
             $table->timestamps();
         });
     }
