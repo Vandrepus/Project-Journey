@@ -16,9 +16,8 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        $user = $request->user();
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $request->user(), // Passes the current user to the view
         ]);
     }
 
@@ -27,8 +26,12 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $validatedData = $request->validated();
 
+        // Save validated data to the user
+        $request->user()->fill($validatedData);
+
+        // Handle email verification reset if the email changes
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }

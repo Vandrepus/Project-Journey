@@ -24,6 +24,20 @@
             <x-input-error class="text-sm text-red-600 mt-1" :messages="$errors->get('name')" />
         </div>
 
+        <!--Surname Field -->
+        <div class="mt-4">
+            <x-input-label for="surname" :value="__('Surname')" />
+            <x-text-input id="surname" class="block mt-1 w-full" type="text" name="surname" :value="old('surname', $user->surname)" required />
+            <x-input-error :messages="$errors->get('surname')" class="mt-2" />
+        </div>
+
+        <!--Username Field -->
+        <div>
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username', $user->username)" required />
+            <x-input-error :messages="$errors->get('username')" class="mt-2" />
+        </div>
+
         <!-- Email Field -->
         <div class="space-y-1">
             <x-input-label for="email" :value="__('Email')" class="font-medium text-gray-700" />
@@ -45,6 +59,13 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <!-- About me Field -->
+        <div class="mt-4">
+            <x-input-label for="about_me" :value="__('About Me')" />
+            <textarea id="about_me" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" name="about_me" rows="4">{{ old('about_me', $user->about_me) }}</textarea>
+            <x-input-error :messages="$errors->get('about_me')" class="mt-2" />
         </div>
 
         <!-- Save Button and Success Message -->

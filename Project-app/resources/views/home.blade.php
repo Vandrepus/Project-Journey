@@ -7,7 +7,7 @@
     <title>Home</title>
 
     <!-- Fonts -->
-
+    
     <!-- Font Awesome -->
     <link
         rel="stylesheet"
@@ -26,9 +26,9 @@
     <x-hero 
         cName="hero"
         heroImg="images/Home.jpg" 
-        title="Your Journey Starts Here"
-        text="Choose Your Destination"
-        buttonText="Discuss "
+        title="Journey Community Starts Here"
+        text="Join Now"
+        buttonText="Open new world"
         url="/register"
         btnClass="show"
     />

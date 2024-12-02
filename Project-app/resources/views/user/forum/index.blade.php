@@ -22,7 +22,7 @@
                         <a href="{{ route('forum.show', $topic->id) }}" class="text-blue-600 hover:underline">
                             {{ $topic->title }}
                         </a>
-                        <p class="text-gray-500 text-sm">Posted by {{ $topic->user->name }} on {{ $topic->created_at->format('M d, Y') }}</p>
+                        <p class="text-gray-500 text-sm">Posted by {{ $topic->user->username }} on {{ $topic->created_at->format('M d, Y') }}</p>
                     </li>
                 @endforeach
             </ul>

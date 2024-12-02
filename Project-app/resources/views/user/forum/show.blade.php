@@ -16,14 +16,14 @@
         <div class="bg-white shadow-sm sm:rounded-lg p-6">
             <h2 class="text-2xl font-semibold mb-6">{{ $topic->title }}</h2>
             <p class="text-gray-700 mb-6">{{ $topic->content }}</p>
-            <p class="text-gray-500 text-sm mb-6">Posted by {{ $topic->user->name }} on {{ $topic->created_at->format('M d, Y') }}</p>
+            <p class="text-gray-500 text-sm mb-6">Posted by {{ $topic->user->username }} on {{ $topic->created_at->format('M d, Y') }}</p>
 
             <h3 class="text-xl font-semibold mb-4">Replies</h3>
             <ul>
                 @foreach($topic->replies as $reply)
                     <li class="border-b py-4">
                         <p class="text-gray-700">{{ $reply->content }}</p>
-                        <p class="text-gray-500 text-sm">Replied by {{ $reply->user->name }} on {{ $reply->created_at->format('M d, Y') }}</p>
+                        <p class="text-gray-500 text-sm">Replied by {{ $reply->user->username }} on {{ $reply->created_at->format('M d, Y') }}</p>
                     </li>
                 @endforeach
             </ul>
