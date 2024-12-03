@@ -12,51 +12,75 @@
 <body class="bg-gray-100">
     @include('layouts.navigation')
 
-    <div class="container mx-auto py-10">
+    <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow-lg rounded-lg p-6">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800">Sight Details</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Sight Details</h1>
 
-            <div class="mb-6">
-                <p><strong class="text-gray-800">Name:</strong> {{ $sight->name }}</p>
-                <p><strong class="text-gray-800">Country:</strong> {{ $sight->country->name }}</p>
-                <p><strong class="text-gray-800">Location:</strong> {{ $sight->location }}</p>
-                <p><strong class="text-gray-800">Category:</strong> {{ $sight->category}}</p>
-                <p><strong class="text-gray-800">Opening Hours:</strong> {{ $sight->opening_hours }}</p>
-                <p><strong class="text-gray-800">Map URL:</strong> 
+            <div class="space-y-4">
+                <div>
+                    <p class="text-gray-800 font-semibold">Name:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->name }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Country:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->country->name }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Location:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->location }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Category:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->category }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Opening Hours:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->opening_hours }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Map URL:</p>
                     @if($sight->map_url)
-                        <a href="{{ $sight->map_url }}" target="_blank" class="text-blue-500 hover:underline">
+                        <a href="{{ $sight->map_url }}" target="_blank" class="text-blue-500 hover:underline break-words">
                             View on Map
                         </a>
                     @else
                         <span class="text-gray-500">None</span>
                     @endif
-</p>
-                <p><strong class="text-gray-800">Description:</strong> {{ $sight->description }}</p>
-                <p><strong class="text-gray-800">Submitted By:</strong> {{ $sight->submittedBy->name ?? 'Unknown' }}</p>
-                <p><strong class="text-gray-800">Date Submitted:</strong> {{ $sight->created_at->format('F j, Y') }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Description:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->description }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Submitted By:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->submittedBy->name ?? 'Unknown' }}</p>
+                </div>
+                <div>
+                    <p class="text-gray-800 font-semibold">Date Submitted:</p>
+                    <p class="text-gray-600 break-words">{{ $sight->created_at->format('F j, Y') }}</p>
+                </div>
             </div>
 
-            <div class="flex justify-center space-x-4">
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
                 <!-- Approve Button -->
                 <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
-                    <button type="submit" class="px-4 py-2 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600">
+                    <button type="submit" class="px-6 py-2 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600 transition duration-150">
                         Approve
                     </button>
                 </form>
-
                 <!-- Decline Button -->
                 <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600">
+                    <button type="submit" class="px-6 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600 transition duration-150">
                         Decline
                     </button>
                 </form>
             </div>
 
-            <div class="mt-6">
+            <div class="mt-6 text-center">
                 <a href="{{ route('admin.sights.index') }}" class="text-blue-500 hover:underline">
                     Back to Pending Sights
                 </a>

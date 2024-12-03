@@ -38,7 +38,7 @@ class TicketController extends Controller
             ['message' => $request->message]
         );
 
-        return redirect()->route('user.support.index')->with('success', 'Ticket created successfully.');
+        return redirect()->route('support.index')->with('success', 'Ticket created successfully.');
     }
 
     public function show(Ticket $ticket)
@@ -57,7 +57,7 @@ class TicketController extends Controller
 
     // Ensure the user can reply only if the ticket is not closed
     if ($ticket->status === 'closed') {
-        return redirect()->route('user.support.show', $ticket->id)->with('error', 'This ticket is closed and cannot be updated.');
+        return redirect()->route('support.show', $ticket->id)->with('error', 'This ticket is closed and cannot be updated.');
     }
 
     TicketReply::create([
@@ -67,7 +67,7 @@ class TicketController extends Controller
     ]);
 
     // Allow users to reply but do not change the ticket's status
-    return redirect()->route('user.support.show', $ticket->id)->with('success', 'Reply sent successfully.');
+    return redirect()->route('support.show', $ticket->id)->with('success', 'Reply sent successfully.');
     }
 
 }

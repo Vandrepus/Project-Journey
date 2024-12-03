@@ -115,10 +115,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::prefix('support')->group(function () {
-        Route::get('/', [TicketController::class, 'index'])->name('user.support.index'); // List tickets
+        Route::get('/', [TicketController::class, 'index'])->name('support.index'); // List tickets
         Route::get('/create', [TicketController::class, 'create'])->name('support.create'); // Create ticket form
         Route::post('/', [TicketController::class, 'store'])->name('support.store'); // Store ticket
-        Route::get('/{ticket}', [TicketController::class, 'show'])->name('user.support.show'); // Show ticket details
+        Route::get('/{ticket}', [TicketController::class, 'show'])->name('support.show'); // Show ticket details
         Route::post('/{ticket}/reply', [TicketController::class, 'reply'])->name('support.reply'); // Reply to ticket
     });
 });

@@ -1,4 +1,3 @@
-<!-- resources/views/admin/users/index.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,35 +9,43 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Admin - User Management</title>
 </head>
-<body>
-@include('layouts.navigation')
-    <div class="container mx-auto py-12">
-        <div class="bg-white shadow-sm sm:rounded-lg p-6">
-            <h2 class="text-2xl font-semibold mb-6">User Management</h2>
-            <table class="table-auto w-full">
-                <thead>
-                    <tr class="border-b">
-                        <th class="px-4 py-2 text-left">Name</th>
-                        <th class="px-4 py-2 text-left">Email</th>
-                        <th class="px-4 py-2 text-left">User Type</th>
-                        <th class="px-4 py-2 text-left">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($users as $user)
-                        <tr class="border-b">
-                            <td class="px-4 py-2">{{ $user->name }}</td>
-                            <td class="px-4 py-2">{{ $user->email }}</td>
-                            <td class="px-4 py-2">{{ ucfirst($user->usertype) }}</td>
-                            <td class="px-4 py-2">
-                                <a href="{{ route('admin.users.edit', $user->id) }}" class="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600">
-                                    Edit
-                                </a>
-                            </td>
+<body class="bg-gray-100">
+    @include('layouts.navigation')
+
+    <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">User Management</h2>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white border border-gray-200 divide-y divide-gray-200 rounded-lg">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">UserName</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Email</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">User Type</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Actions</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach ($users as $user)
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $user->username }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ $user->email }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-700">{{ ucfirst($user->usertype) }}</td>
+                                <td class="px-6 py-4 text-sm">
+                                    <a href="{{ route('admin.users.edit', $user->id) }}" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                        Edit
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6">
+                {{ $users->links() }} <!-- Pagination -->
+            </div>
         </div>
     </div>
 </body>

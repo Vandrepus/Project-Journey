@@ -9,55 +9,61 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Pending Sights for Review</title>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-50 min-h-screen">
     @include('layouts.navigation')
 
-    <div class="container mx-auto py-10">
-        <div class="bg-white shadow-lg rounded-lg p-6">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800">Pending Sights for Review</h1>
+    <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="px-6 py-4">
+                <h1 class="text-3xl font-bold text-gray-800">Pending Sights for Review</h1>
+            </div>
 
             @if($pendingSights->isEmpty())
-                <p class="text-gray-600">No pending sights for review.</p>
+                <div class="px-6 py-4">
+                    <p class="text-gray-600 text-center">No pending sights for review.</p>
+                </div>
             @else
-                <table class="min-w-full table-auto bg-white">
-                    <thead>
-                        <tr class="bg-gray-200 text-gray-700">
-                            <th class="px-6 py-3 text-left text-sm font-medium uppercase">Name</th>
-                            <th class="px-6 py-3 text-left text-sm font-medium uppercase">Description</th>
-                            <th class="px-6 py-3 text-center text-sm font-medium uppercase">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @foreach($pendingSights as $sight)
-                        <tr>
-                            <td class="px-6 py-4 text-gray-900">{{ $sight->name }}</td>
-                            <td class="px-6 py-4 text-gray-600">{{ Str::limit($sight->description, 100) }}</td>
-                            <td class="px-6 py-4 flex justify-center space-x-4">
-                                <!-- View Details Button -->
-                                <a href="{{ route('admin.sights.show', $sight->id) }}" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600">
-                                    View Details
-                                </a>
-                                <!-- Approve Button -->
-                                <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" class="px-4 py-2 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600">
-                                        Approve
-                                    </button>
-                                </form>
-                                <!-- Decline Button -->
-                                <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600">
-                                        Decline
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white divide-y divide-gray-200">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Description</th>
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            @foreach($pendingSights as $sight)
+                            <tr>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ $sight->name }}</td>
+                                <td class="px-6 py-4 text-sm text-gray-600">{{ Str::limit($sight->description, 100) }}</td>
+                                <td class="px-6 py-4 text-center space-y-2 md:space-y-0 md:space-x-2">
+                                    <!-- View Details Button -->
+                                    <a href="{{ route('admin.sights.show', $sight->id) }}" class="inline-block px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600">
+                                        View Details
+                                    </a>
+                                    <!-- Approve Button -->
+                                    <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" class="px-4 py-2 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600">
+                                            Approve
+                                        </button>
+                                    </form>
+                                    <!-- Decline Button -->
+                                    <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600">
+                                            Decline
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             @endif
         </div>
     </div>
