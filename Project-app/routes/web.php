@@ -17,6 +17,8 @@ use App\Http\Controllers\ProposeLocationController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ProposeCountryController;
 use App\Http\Controllers\AdminCountryController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\AdminTicketController; 
 
 
 
@@ -110,6 +112,27 @@ Route::middleware('auth')->group(function () {
         Route::delete('/admin/countries/{id}/decline', [AdminCountryController::class, 'decline'])->name('admin.country.decline');
     });
 });
+
+Route::middleware('auth')->group(function () {
+    Route::prefix('support')->group(function () {
+        Route::get('/', [TicketController::class, 'index'])->name('user.support.index'); // List tickets
+        Route::get('/create', [TicketController::class, 'create'])->name('support.create'); // Create ticket form
+        Route::post('/', [TicketController::class, 'store'])->name('support.store'); // Store ticket
+        Route::get('/{ticket}', [TicketController::class, 'show'])->name('user.support.show'); // Show ticket details
+        Route::post('/{ticket}/reply', [TicketController::class, 'reply'])->name('support.reply'); // Reply to ticket
+    });
+});
+
+
+
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/tickets', [AdminTicketController::class, 'index'])->name('admin.tickets.index');
+    Route::get('/admin/tickets/{ticket}', [AdminTicketController::class, 'show'])->name('admin.tickets.show');
+    Route::patch('/admin/tickets/{ticket}/close', [AdminTicketController::class, 'close'])->name('admin.tickets.close');
+    Route::post('/admin/tickets/{ticket}/reply', [AdminTicketController::class, 'reply'])->name('admin.tickets.reply');
+});
+
 
 
 

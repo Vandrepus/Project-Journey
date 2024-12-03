@@ -29,6 +29,9 @@
                         <x-nav-link :href="route('admin.countries.index')" :active="request()->routeIs('admin.countries.index')">
                             {{ __('Review Countries') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.index')">
+                            {{ __('Manage Tickets') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
@@ -44,6 +47,9 @@
                         </x-nav-link>
                         <x-nav-link :href="route('countries.propose')" :active="request()->routeIs('countries.propose')">
                             {{ __('Propose Country') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('support.index')" :active="request()->routeIs('support.index')">
+                            {{ __('Support Tickets') }}
                         </x-nav-link>
                     @endif
                 @endauth
@@ -107,6 +113,9 @@
                     <x-responsive-nav-link :href="route('admin.countries.index')" :active="request()->routeIs('admin.countries.index')">
                         {{ __('Review Countries') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('admin.tickets.index')" :active="request()->routeIs('admin.tickets.index')">
+                        {{ __('Manage Tickets') }}
+                    </x-responsive-nav-link>
                 @else
                     <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
@@ -122,6 +131,9 @@
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('countries.propose')" :active="request()->routeIs('countries.propose')">
                         {{ __('Propose Country') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('support.index')" :active="request()->routeIs('support.index')">
+                        {{ __('Support Tickets') }}
                     </x-responsive-nav-link>
                 @endif
             @endauth
