@@ -1,4 +1,3 @@
-<!-- resources/views/user/forum/create.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,26 +9,67 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Create Topic</title>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex flex-col">
 @include('layouts.navigation')
-    <div class="container mx-auto py-12">
-        <div class="bg-white shadow-sm sm:rounded-lg p-6">
-            <h2 class="text-2xl font-semibold mb-6">Create a New Topic</h2>
-            <form action="{{ route('forum.store') }}" method="POST">
-                @csrf
-                <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                    <input type="text" name="title" id="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
-                </div>
-                <div class="mb-4">
-                    <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
-                    <textarea name="content" id="content" rows="6" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
-                </div>
-                <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Post Topic</button>
-                </div>
-            </form>
-        </div>
+
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <!-- Page Title -->
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Create a New Topic</h2>
+        
+        <!-- Create Topic Form -->
+        <form action="{{ route('forum.store') }}" method="POST" class="space-y-6">
+            @csrf
+
+            <!-- Title Field -->
+            <div>
+                <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                <input 
+                    type="text" 
+                    name="title" 
+                    id="title" 
+                    class="mt-1 block w-full input input-bordered focus:ring focus:ring-blue-300 focus:ring-opacity-50" 
+                    placeholder="Enter the topic title" 
+                    required
+                >
+            </div>
+
+            <!-- Content Field -->
+            <div>
+                <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+                <textarea 
+                    name="content" 
+                    id="content" 
+                    rows="6" 
+                    class="mt-1 block w-full textarea textarea-bordered focus:ring focus:ring-blue-300 focus:ring-opacity-50" 
+                    placeholder="Write your topic content..." 
+                    required
+                ></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end space-x-4">
+                <a 
+                    href="{{ route('forum.index') }}" 
+                    class="btn btn-outline btn-error"
+                >
+                    <i class="fas fa-arrow-left mr-2"></i>Cancel
+                </a>
+                <button 
+                    type="submit" 
+                    class="btn btn-primary"
+                >
+                    <i class="fas fa-paper-plane mr-2"></i>Post Topic
+                </button>
+            </div>
+        </form>
     </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white text-center py-4">
+    <p>&copy; {{ date('Y') }} JourneyHub. All rights reserved.</p>
+</footer>
 </body>
 </html>

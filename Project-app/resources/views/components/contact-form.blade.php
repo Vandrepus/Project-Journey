@@ -1,92 +1,78 @@
-<div class="form-container">
-    <h1>Send a message to us!</h1>
+<div class="form-container bg-gray-50 py-12 px-4 sm:px-6 lg:px-20">
+    <!-- Title -->
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Send a message to us!</h1>
+
+    <!-- Success Alert -->
     @if (session('success'))
-    <div class="alert">
+    <div class="alert bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded text-center mb-4">
         {{ session('success') }}
     </div>
     @endif
 
-    <form action="{{ route('contact.submit') }}" method="POST"> 
+    <!-- Contact Form -->
+    <form action="{{ route('contact.submit') }}" method="POST" class="space-y-6 max-w-lg mx-auto">
         @csrf 
-        @error('name')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror  
-        <input type="text" name="name" placeholder="Name">
-         @error('email')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-        <input type="email" name="email" placeholder="E-mail">
-        @error('subject')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-        <input type="text" name="subject" placeholder="Subject">
-        @error('message')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-        <textarea name="message" placeholder="Message" rows="4"></textarea>
-        <button type="submit">Send Message</button>
+
+        <!-- Name -->
+        <div>
+            <input 
+                type="text" 
+                name="name" 
+                placeholder="Name" 
+                class="input input-bordered w-full"
+            />
+            @error('name')
+            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Email -->
+        <div>
+            <input 
+                type="email" 
+                name="email" 
+                placeholder="E-mail" 
+                class="input input-bordered w-full"
+            />
+            @error('email')
+            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Subject -->
+        <div>
+            <input 
+                type="text" 
+                name="subject" 
+                placeholder="Subject" 
+                class="input input-bordered w-full"
+            />
+            @error('subject')
+            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Message -->
+        <div>
+            <textarea 
+                name="message" 
+                placeholder="Message" 
+                rows="4" 
+                class="textarea textarea-bordered w-full"
+            ></textarea>
+            @error('message')
+            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button 
+                type="submit" 
+                class="btn btn-primary w-full md:w-auto"
+            >
+                Send Message
+            </button>
+        </div>
     </form>
 </div>
-
-<style>
-.form-container{
-    margin: 4rem 6rem;
-    columns: #2a2a2a;
-}
-.form-container h1{
-    text-align: center;
-    font-size: 2rem;
-}
-
-.alert{
-    text-align: center;
-    font-size: 1.2rem;
-    color:red;
-}
-
-.form-container form{
-    padding-top: 3rem;
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-    margin: auto;
-}
-
-.form-container input{
-    height: 3rem;
-    padding: 0 1rem;
-    margin-bottom: 2rem;
-    border-radius: .3rem;
-    border: 1px solid #2a2a2a;
-}
-
-.form-container textarea{
-    padding: 0 1rem;
-    margin-bottom: 2rem;
-    border-radius: .3rem;
-    border: 1px solid #2a2a2a;
-}
-
-.form-container button{
-    display: inline;
-    padding: 0.5rem 1rem;
-    white-space: nowrap;
-    border: solid;
-    border-radius: 0.3rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-}
-
-@media screen  and (max-width:850px){
-    .form-container{
-        margin: 4rem 2rem;
-    }
-
-    .form-container form{
-        padding-top: 2rem;
-        width: 90%;
-    }
-}
-</style>

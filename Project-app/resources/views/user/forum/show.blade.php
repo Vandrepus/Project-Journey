@@ -10,36 +10,79 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>{{ $topic->title }}</title>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex flex-col">
 @include('layouts.navigation')
-    <div class="container mx-auto py-12">
-        <div class="bg-white shadow-sm sm:rounded-lg p-6">
-            <h2 class="text-2xl font-semibold mb-6">{{ $topic->title }}</h2>
-            <p class="text-gray-700 mb-6">{{ $topic->content }}</p>
-            <p class="text-gray-500 text-sm mb-6">Posted by {{ $topic->user->username }} on {{ $topic->created_at->format('M d, Y') }}</p>
 
-            <h3 class="text-xl font-semibold mb-4">Replies</h3>
-            <ul>
-                @foreach($topic->replies as $reply)
-                    <li class="border-b py-4">
-                        <p class="text-gray-700">{{ $reply->content }}</p>
-                        <p class="text-gray-500 text-sm">Replied by {{ $reply->user->username }} on {{ $reply->created_at->format('M d, Y') }}</p>
-                    </li>
-                @endforeach
-            </ul>
-
-            <h3 class="text-xl font-semibold mb-4 mt-6">Reply to this Topic</h3>
-            <form action="{{ route('forum.reply', $topic->id) }}" method="POST">
-                @csrf
-                <div class="mb-4">
-                    <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
-                    <textarea name="content" id="content" rows="4" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required></textarea>
-                </div>
-                <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Post Reply</button>
-                </div>
-            </form>
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <!-- Topic Details -->
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-gray-800">{{ $topic->title }}</h2>
+            <p class="text-gray-700 text-lg mt-4">{{ $topic->content }}</p>
+            <p class="text-sm text-gray-500 mt-2">
+                Posted by <span class="font-medium">{{ $topic->user->username }}</span> on {{ $topic->created_at->format('M d, Y') }}
+            </p>
         </div>
+
+        <!-- Replies Section -->
+        <div class="bg-gray-50 p-6 rounded-lg shadow-inner">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Replies</h3>
+            @if ($topic->replies->count() > 0)
+                <ul class="space-y-4">
+                    @foreach($topic->replies as $reply)
+                        <li class="bg-white rounded-lg p-4 shadow-md">
+                            <p class="text-gray-700">{{ $reply->content }}</p>
+                            <p class="text-sm text-gray-500 mt-2">
+                                Replied by <span class="font-medium">{{ $reply->user->username }}</span> on {{ $reply->created_at->format('M d, Y') }}
+                            </p>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p class="text-gray-500">No replies yet. Be the first to reply!</p>
+            @endif
+        </div>
+
+        <!-- Reply Form -->
+        @auth
+            <div class="mt-8">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Reply to this Topic</h3>
+                <form action="{{ route('forum.reply', $topic->id) }}" method="POST" class="space-y-6">
+                    @csrf
+                    <!-- Reply Content -->
+                    <div>
+                        <label for="content" class="block text-sm font-medium text-gray-700">Your Reply</label>
+                        <textarea 
+                            name="content" 
+                            id="content" 
+                            rows="5" 
+                            class="textarea textarea-bordered w-full focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            placeholder="Write your reply here..." 
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <div class="flex justify-end">
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary"
+                        >
+                            <i class="fas fa-paper-plane mr-2"></i>Post Reply
+                        </button>
+                    </div>
+                </form>
+            </div>
+        @else
+            <p class="text-gray-600 mt-8">Please <a href="{{ route('login') }}" class="text-blue-500 hover:underline">log in</a> to reply to this topic.</p>
+        @endauth
     </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white text-center py-4">
+    <p>&copy; {{ date('Y') }} JourneyHub. All rights reserved.</p>
+</footer>
 </body>
 </html>

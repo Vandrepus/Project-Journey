@@ -10,23 +10,43 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Forum</title>
 </head>
-<body>
+<body class="bg-gray-100 min-h-screen flex flex-col">
 @include('layouts.navigation')
-    <div class="container mx-auto py-12">
-        <div class="bg-white shadow-sm sm:rounded-lg p-6">
-            <h2 class="text-2xl font-semibold mb-6">Forum</h2>
-            <a href="{{ route('forum.create') }}" class="inline-block mb-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Create New Topic</a>
-            <ul>
+
+<!-- Main Content -->
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <!-- Forum Header -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Forum</h2>
+            <a href="{{ route('forum.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus mr-2"></i>Create New Topic
+            </a>
+        </div>
+
+        <!-- Forum Topics List -->
+        @if($topics->count() > 0)
+            <div class="divide-y divide-gray-200">
                 @foreach($topics as $topic)
-                    <li class="border-b py-4">
-                        <a href="{{ route('forum.show', $topic->id) }}" class="text-blue-600 hover:underline">
+                    <div class="py-4">
+                        <a href="{{ route('forum.show', $topic->id) }}" class="text-lg font-medium text-blue-600 hover:underline">
                             {{ $topic->title }}
                         </a>
-                        <p class="text-gray-500 text-sm">Posted by {{ $topic->user->username }} on {{ $topic->created_at->format('M d, Y') }}</p>
-                    </li>
+                        <p class="text-gray-500 text-sm mt-1">
+                            Posted by <span class="font-semibold">{{ $topic->user->username }}</span> on {{ $topic->created_at->format('M d, Y') }}
+                        </p>
+                    </div>
                 @endforeach
-            </ul>
-        </div>
+            </div>
+        @else
+            <p class="text-gray-500 text-center">No topics have been posted yet. Be the first to start a discussion!</p>
+        @endif
     </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white text-center py-4">
+    <p>&copy; {{ date('Y') }} JourneyHub. All rights reserved.</p>
+</footer>
 </body>
 </html>

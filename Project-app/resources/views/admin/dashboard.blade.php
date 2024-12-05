@@ -13,12 +13,13 @@
     @include('layouts.navigation')
 
     <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <div class="max-w-6xl mx-auto bg-base-100 p-8 rounded-lg shadow-lg">
+            <!-- Title -->
             <h1 class="text-3xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
             <p class="text-lg text-gray-600 mb-4">Welcome, Admin! Please adhere to the following rules while performing your tasks:</p>
             
             <!-- Admin Rules Section -->
-            <div class="bg-gray-50 p-6 rounded-lg shadow-md">
+            <div class="bg-gray-50 p-6 rounded-lg shadow-lg">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Rules to Follow</h2>
                 <ul class="list-disc list-inside space-y-2 text-gray-700">
                     <li>Ensure all user data is handled securely and confidentially.</li>
@@ -30,29 +31,48 @@
                 </ul>
             </div>
 
-            <!-- Admin Actions Section -->
+            <!-- Quick Actions Section -->
             <div class="mt-8">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <a href="{{ route('admin.users.index') }}" class="p-6 bg-blue-100 text-blue-800 rounded-lg shadow hover:bg-blue-200 transition">
-                        <i class="fas fa-users text-xl"></i>
-                        <p class="mt-2 font-semibold">Manage Users</p>
+                    <!-- Action Card: Manage Users -->
+                    <a href="{{ route('admin.users.index') }}" class="card bg-blue-100 shadow-lg hover:bg-blue-200 transition duration-200">
+                        <div class="card-body items-center text-center">
+                            <i class="fas fa-users text-blue-600 text-4xl"></i>
+                            <p class="mt-2 text-lg font-semibold text-blue-800">Manage Users</p>
+                        </div>
                     </a>
-                    <a href="{{ route('admin.sights.index') }}" class="p-6 bg-green-100 text-green-800 rounded-lg shadow hover:bg-green-200 transition">
-                        <i class="fas fa-map-marked-alt text-xl"></i>
-                        <p class="mt-2 font-semibold">Review Locations</p>
+                    
+                    <!-- Action Card: Review Locations -->
+                    <a href="{{ route('admin.sights.index') }}" class="card bg-green-100 shadow-lg hover:bg-green-200 transition duration-200">
+                        <div class="card-body items-center text-center">
+                            <i class="fas fa-map-marked-alt text-green-600 text-4xl"></i>
+                            <p class="mt-2 text-lg font-semibold text-green-800">Review Locations</p>
+                        </div>
                     </a>
-                    <a href="{{ route('admin.countries.index') }}" class="p-6 bg-yellow-100 text-yellow-800 rounded-lg shadow hover:bg-yellow-200 transition">
-                        <i class="fas fa-globe text-xl"></i>
-                        <p class="mt-2 font-semibold">Review Countries</p>
+                    
+                    <!-- Action Card: Review Countries -->
+                    <a href="{{ route('admin.countries.index') }}" class="card bg-yellow-100 shadow-lg hover:bg-yellow-200 transition duration-200">
+                        <div class="card-body items-center text-center">
+                            <i class="fas fa-globe text-yellow-600 text-4xl"></i>
+                            <p class="mt-2 text-lg font-semibold text-yellow-800">Review Countries</p>
+                        </div>
                     </a>
-                    <a href="{{ route('admin.tickets.index') }}" class="p-6 bg-red-100 text-red-800 rounded-lg shadow hover:bg-red-200 transition">
-                        <i class="fas fa-ticket-alt text-xl"></i>
-                        <p class="mt-2 font-semibold">Manage Tickets</p>
+                    
+                    <!-- Action Card: Manage Tickets -->
+                    <a href="{{ route('admin.tickets.index') }}" class="card bg-red-100 shadow-lg hover:bg-red-200 transition duration-200">
+                        <div class="card-body items-center text-center">
+                            <i class="fas fa-ticket-alt text-red-600 text-4xl"></i>
+                            <p class="mt-2 text-lg font-semibold text-red-800">Manage Tickets</p>
+                        </div>
                     </a>
-                    <a href="{{ route('admin.contact-messages.index') }}" class="p-6 bg-purple-100 text-purple-800 rounded-lg shadow hover:bg-purple-200 transition">
-                        <i class="fas fa-envelope text-xl"></i>
-                        <p class="mt-2 font-semibold">Check Messages</p>
+                    
+                    <!-- Action Card: Check Messages -->
+                    <a href="{{ route('admin.contact-messages.index') }}" class="card bg-purple-100 shadow-lg hover:bg-purple-200 transition duration-200">
+                        <div class="card-body items-center text-center">
+                            <i class="fas fa-envelope text-purple-600 text-4xl"></i>
+                            <p class="mt-2 text-lg font-semibold text-purple-800">Check Messages</p>
+                        </div>
                     </a>
                 </div>
             </div>

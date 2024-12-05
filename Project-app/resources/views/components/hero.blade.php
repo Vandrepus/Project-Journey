@@ -1,98 +1,24 @@
-<div class="{{ $cName }}">
-    <img alt="HeroImg" src="{{ asset($heroImg) }}">
-    <div class="hero-text">
-        <h1>{{ $title }}</h1>
+<div class="{{ $cName }} relative w-full h-screen">
+    <img 
+        alt="Hero Image" 
+        src="{{ asset($heroImg) }}" 
+        class="absolute top-0 left-0 w-full h-full object-cover"
+    >
+    <div class="hero-text absolute inset-0 flex flex-col justify-center items-center text-center px-4">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">
+            {{ $title }}
+        </h1>
 
-        @isset($text) 
-            <p>{{ $text }}</p>
+        @isset($text)
+        <p class="text-lg sm:text-xl md:text-2xl text-white mt-4">{{ $text }}</p>
         @endisset
+        
 
         @isset($buttonText)
-            <a href="{{ $url }}" class="{{ isset($btnClass) ? $btnClass : '' }}">{{ $buttonText }}</a>
+        <a href="{{ $url }}" 
+           class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-md hover:bg-indigo-700 transition-all shadow-lg transform hover:scale-105 mt-4">
+           {{ $buttonText }}
+        </a>
         @endisset
     </div>
 </div>
-
-<style>
-.hero {
-    width: 100%;
-    height: 100vh;
-    position: relative;
-}
-
-.hero-mid {
-    width: 100%;
-    height: 70vh;
-    position: relative;
-}
-
-.hero-mid h1 {
-    padding-top: 4rem !important;
-}
-
-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.hero-text {
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.hero-text h1 {
-    font-size: 3rem;
-    font-weight: 800;
-    background: #fff;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    align-items: center;
-}
-
-.hero-text p {
-    font-size: 1.3rem;
-    color: #fff;
-    padding: 0.5rem 0 2rem 0;
-}
-
-.hero-text .show {
-    text-decoration: none;
-    background: #fff;
-    padding: 1rem 2rem;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    color: #222;
-}
-
-.hero-text .hide {
-    display: none;
-}
-
-/* Media Query */
-@media screen and (max-width: 555px) {
-    .hero-text h1 {
-        padding: 10px 20px;
-    }
-
-    .hero-text p {
-        font-size: 1.1rem;
-        padding: 0 0 2rem 0;
-    }
-
-    .hero-text .show {
-        padding: 0.6rem 1.1rem;
-        border-radius: 6px;
-        font-size: 1rem;
-    }
-}
-</style>

@@ -9,14 +9,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Sight Details</title>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 min-h-screen">
     @include('layouts.navigation')
 
     <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow-lg rounded-lg p-6">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6">Sight Details</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Sight Details</h1>
 
-            <div class="space-y-4">
+            <!-- Sight Information -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                     <p class="text-gray-800 font-semibold">Name:</p>
                     <p class="text-gray-600 break-words">{{ $sight->name }}</p>
@@ -47,7 +48,7 @@
                         <span class="text-gray-500">None</span>
                     @endif
                 </div>
-                <div>
+                <div class="col-span-2">
                     <p class="text-gray-800 font-semibold">Description:</p>
                     <p class="text-gray-600 break-words">{{ $sight->description }}</p>
                 </div>
@@ -61,17 +62,16 @@
                 </div>
             </div>
 
+            <!-- Actions -->
             <div class="mt-8 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <!-- Approve Button -->
-                <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST">
+                <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to approve this sight?')">
                     @csrf
                     @method('PATCH')
                     <button type="submit" class="px-6 py-2 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600 transition duration-150">
                         Approve
                     </button>
                 </form>
-                <!-- Decline Button -->
-                <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST">
+                <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to decline this sight?')">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="px-6 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600 transition duration-150">
@@ -80,6 +80,7 @@
                 </form>
             </div>
 
+            <!-- Back Button -->
             <div class="mt-6 text-center">
                 <a href="{{ route('admin.sights.index') }}" class="text-blue-500 hover:underline">
                     Back to Pending Sights

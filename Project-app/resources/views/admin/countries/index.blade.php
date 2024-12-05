@@ -19,27 +19,31 @@
         <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Pending Countries</h2>
 
-            <div x-data="{ activeTab: 'pending' }">
+            <div x-data="{ activeTab: 'pending' }" class="space-y-6">
                 <!-- Tabs -->
                 <div class="flex justify-center mb-6">
                     <button 
                         @click="activeTab = 'pending'"
                         :class="activeTab === 'pending' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="px-4 py-2 rounded-l-md text-sm font-medium transition-all"
+                        class="px-4 py-2 rounded-l-md text-sm font-medium focus:outline-none transition-all duration-200"
+                        role="tab"
+                        aria-selected="activeTab === 'pending'"
                     >
                         Pending Countries
                     </button>
                     <button 
                         @click="activeTab = 'details'"
                         :class="activeTab === 'details' ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700'"
-                        class="px-4 py-2 rounded-r-md text-sm font-medium transition-all"
+                        class="px-4 py-2 rounded-r-md text-sm font-medium focus:outline-none transition-all duration-200"
+                        role="tab"
+                        aria-selected="activeTab === 'details'"
                     >
                         Country Details
                     </button>
                 </div>
 
                 <!-- Pending Countries Tab -->
-                <div x-show="activeTab === 'pending'">
+                <div x-show="activeTab === 'pending'" x-cloak>
                     @if ($proposedCountries->isEmpty())
                         <p class="text-center text-gray-500">No pending countries.</p>
                     @else
@@ -63,14 +67,22 @@
                                                 <form action="{{ route('admin.country.approve', $country->id) }}" method="POST" class="inline-block">
                                                     @csrf
                                                     @method('PATCH')
-                                                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all duration-150">
+                                                    <button 
+                                                        type="submit" 
+                                                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all duration-150"
+                                                        title="Approve this country"
+                                                    >
                                                         Approve
                                                     </button>
                                                 </form>
                                                 <form action="{{ route('admin.country.decline', $country->id) }}" method="POST" class="inline-block">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all duration-150">
+                                                    <button 
+                                                        type="submit" 
+                                                        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all duration-150"
+                                                        title="Decline this country"
+                                                    >
                                                         Decline
                                                     </button>
                                                 </form>
@@ -84,7 +96,7 @@
                 </div>
 
                 <!-- Country Details Tab -->
-                <div x-show="activeTab === 'details'" class="space-y-6">
+                <div x-show="activeTab === 'details'" x-cloak class="space-y-6">
                     @if ($proposedCountries->isEmpty())
                         <p class="text-center text-gray-500">No countries available for details.</p>
                     @else

@@ -10,65 +10,71 @@
     <title>Propose Country</title>
 </head>
 <body class="bg-gradient-to-b from-gray-50 to-gray-200 min-h-screen flex flex-col">
-
     <!-- Navigation -->
     @include('layouts.navigation')
 
     <!-- Main Content -->
-    <div class="flex-grow">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Propose a Country</h2>
+    <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Propose a Country</h2>
 
-                <!-- Success Notification -->
-                @if (session('success'))
-                    <div class="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">{{ session('success') }}</span>
-                        <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                            <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M14.348 14.849l-3.849-3.849-3.849 3.849-1.414-1.414 3.849-3.849-3.849-3.849 1.414-1.414 3.849 3.849 3.849-3.849 1.414 1.414-3.849 3.849 3.849 3.849z" />
-                            </svg>
-                        </button>
+            <!-- Success Notification -->
+            @if (session('success'))
+                <div class="alert alert-success shadow-lg mb-6">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{{ session('success') }}</span>
                     </div>
-                @endif
+                </div>
+            @endif
 
-                <form action="{{ route('countries.store') }}" method="POST" class="space-y-6">
-                    @csrf
-                    <!-- Country Name -->
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Country Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                            required
-                            placeholder="Enter the country name"
-                        />
-                    </div>
-                    <!-- Description -->
-                    <div>
-                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea
-                            name="description"
-                            id="description"
-                            rows="5"
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                            placeholder="Provide a brief description"
-                        ></textarea>
-                    </div>
-                    <!-- Submit Button -->
-                    <div class="flex justify-center">
-                        <button
-                            type="submit"
-                            class="px-6 py-3 bg-indigo-600 text-white rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Submit Proposal
-                        </button>
-                    </div>
-                </form>
-            </div>
+            <!-- Propose Country Form -->
+            <form action="{{ route('countries.store') }}" method="POST" class="space-y-6">
+                @csrf
+
+                <!-- Country Name -->
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Country Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        class="input input-bordered w-full mt-1"
+                        required
+                        placeholder="Enter the country name"
+                    />
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea
+                        name="description"
+                        id="description"
+                        rows="5"
+                        class="textarea textarea-bordered w-full mt-1"
+                        placeholder="Provide a brief description"
+                    ></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-center">
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-full md:w-auto px-6 py-3"
+                    >
+                        <i class="fa-solid fa-paper-plane mr-2"></i> Submit Proposal
+                    </button>
+                </div>
+            </form>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4">
+        <p>&copy; {{ date('Y') }} JourneyHub. All rights reserved.</p>
+    </footer>
 </body>
 </html>

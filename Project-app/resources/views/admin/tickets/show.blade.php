@@ -3,30 +3,42 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <title>Admin - Ticket Details</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen flex flex-col">
     @include('layouts.navigation')
 
-    <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8 flex-grow">
         <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6">Ticket Details</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-6 text-center">Ticket Details</h1>
 
             <!-- Ticket Information -->
             <div class="space-y-4">
-                <p><strong>Subject:</strong> {{ $ticket->subject }}</p>
-                <p><strong>Category:</strong> {{ $ticket->category }}</p>
-                <p><strong>Message:</strong></p>
-                <p class="bg-gray-50 p-4 rounded-md text-gray-800">{{ $ticket->message }}</p>
-                <p><strong>Status:</strong> 
-                    <span 
-                        class="px-2 py-1 rounded-md text-sm font-medium 
-                        {{ $ticket->status === 'closed' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600' }} ">
+                <div>
+                    <p class="font-semibold text-gray-700">Subject:</p>
+                    <p class="text-gray-800">{{ $ticket->subject }}</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-700">Category:</p>
+                    <p class="text-gray-800">{{ $ticket->category }}</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-700">Message:</p>
+                    <p class="bg-gray-50 p-4 rounded-md text-gray-800">{{ $ticket->message }}</p>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-700">Status:</p>
+                    <p class="inline-block px-3 py-1 text-sm font-medium rounded-md 
+                        {{ $ticket->status === 'closed' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600' }}">
                         {{ ucfirst($ticket->status) }}
-                    </span>
-                </p>
-                <p><strong>User:</strong> <span class="text-blue-600">{{ $ticket->user->username }}</span></p>
+                    </p>
+                </div>
+                <div>
+                    <p class="font-semibold text-gray-700">User:</p>
+                    <p class="text-blue-600">{{ $ticket->user->username }}</p>
+                </div>
             </div>
 
             <!-- Replies Section -->
@@ -37,17 +49,16 @@
                 <ul class="space-y-4">
                     @foreach($ticket->replies as $reply)
                         <li class="bg-gray-50 p-4 rounded-md shadow-sm">
-                            <p>
+                            <p class="mb-2">
                                 <strong>
                                     @if($reply->user->usertype === 'admin')
-                                        <span class="text-red-500">Admin</span> {{ $reply->user->username }}
-                                    @else
-                                        {{ $reply->user->username }}
+                                        <span class="text-red-500">Admin</span>
                                     @endif
-                                :</strong>
-                                {{ $reply->message }}
+                                    {{ $reply->user->username }}:
+                                </strong>
                             </p>
-                            <p class="text-gray-500 text-sm mt-1">{{ $reply->created_at->format('Y-m-d H:i:s') }}</p>
+                            <p class="text-gray-800">{{ $reply->message }}</p>
+                            <p class="text-gray-500 text-sm mt-2">{{ $reply->created_at->format('Y-m-d H:i:s') }}</p>
                         </li>
                     @endforeach
                 </ul>
@@ -75,8 +86,8 @@
                     <textarea 
                         name="message" 
                         rows="5" 
-                        class="w-full border-gray-300 p-2 rounded-md focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Write a reply..." 
+                        class="w-full border-gray-300 p-2 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                        placeholder="Write your reply here..." 
                         required>
                     </textarea>
                     <button 

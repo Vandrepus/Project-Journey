@@ -15,10 +15,20 @@
     <div class="flex-grow container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
             <h2 class="text-2xl font-bold text-gray-800 mb-6">Edit User Information</h2>
+            
+            <!-- Success Notification -->
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-green-100 border border-green-300 text-green-800 rounded-md">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
             <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
                 @csrf
                 @method('PUT')
-                <!-- Name -->
+
+                <!-- First Name -->
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">First Name</label>
                     <input 
@@ -26,11 +36,12 @@
                         name="name" 
                         id="name" 
                         value="{{ $user->name }}" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 focus:border-indigo-500 focus:ring-indigo-500 focus:ring-opacity-50" 
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed hover:opacity-90" 
                         disabled
                     >
                 </div>
-                <!-- Surname -->
+
+                <!-- Last Name -->
                 <div class="mb-4">
                     <label for="surname" class="block text-sm font-medium text-gray-700">Last Name</label>
                     <input 
@@ -38,10 +49,11 @@
                         name="surname" 
                         id="surname" 
                         value="{{ $user->surname ?? 'N/A' }}" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 focus:border-indigo-500 focus:ring-indigo-500 focus:ring-opacity-50" 
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed hover:opacity-90" 
                         disabled
                     >
                 </div>
+
                 <!-- Username -->
                 <div class="mb-4">
                     <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -50,10 +62,11 @@
                         name="username" 
                         id="username" 
                         value="{{ $user->username }}" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 focus:border-indigo-500 focus:ring-indigo-500 focus:ring-opacity-50" 
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed hover:opacity-90" 
                         disabled
                     >
                 </div>
+
                 <!-- Email -->
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
@@ -62,10 +75,11 @@
                         name="email" 
                         id="email" 
                         value="{{ $user->email }}" 
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 focus:border-indigo-500 focus:ring-indigo-500 focus:ring-opacity-50" 
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed hover:opacity-90" 
                         disabled
                     >
                 </div>
+
                 <!-- User Type -->
                 <div class="mb-4">
                     <label for="usertype" class="block text-sm font-medium text-gray-700">User Type</label>
@@ -78,6 +92,18 @@
                         <option value="admin" {{ $user->usertype == 'admin' ? 'selected' : '' }}>Admin</option>
                     </select>
                 </div>
+
+                <!-- Error Messages -->
+                @if($errors->any())
+                    <div class="mb-4">
+                        <ul class="text-sm text-red-600 space-y-1">
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <!-- Save Button -->
                 <div class="flex justify-end">
                     <button 

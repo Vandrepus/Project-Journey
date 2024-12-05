@@ -3,23 +3,33 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui/dist/full.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>{{ $sight->name }}</title>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-base-100 min-h-screen flex flex-col">
     <!-- Navigation -->
     @include('layouts.navigation')
 
     <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Sight Details -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="bg-white shadow-xl p-6">
             <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $sight->name }}</h1>
             <p class="text-gray-700 text-lg mb-4">{{ $sight->description }}</p>
             <p class="text-gray-700"><strong>Location:</strong> {{ $sight->location }}</p>
             <p class="text-gray-700"><strong>Category:</strong> {{ $sight->category }}</p>
             <p class="text-gray-700"><strong>Opening Hours:</strong> {{ $sight->opening_hours }}</p>
+            <p class="text-gray-700"><strong>Map:</strong> 
+                @if ($sight->map_url)
+                    <a href="{{ $sight->map_url }}" target="_blank" class="text-indigo-600 hover:underline">
+                        View on Map
+                    </a>
+                @else
+                    None
+                @endif
+            </p>
 
             <div class="mt-6">
                 <h2 class="text-2xl font-semibold text-gray-800">Average Rating</h2>
@@ -40,9 +50,9 @@
             @if($sight->reviews->count() > 0)
                 <div class="space-y-4">
                     @foreach($sight->reviews as $review)
-                        <div class="bg-white rounded-lg shadow-md p-4">
-                            <p class="text-gray-800 font-medium">{{ $review->user->username }}</p>
-                            <p class="text-gray-600 mt-1">{{ $review->content }}</p>
+                        <div class="card bg-base-200 shadow-md p-4">
+                            <p class="font-medium">{{ $review->user->username }}</p>
+                            <p class="mt-1">{{ $review->content }}</p>
                             <p class="text-sm text-gray-500 mt-2">{{ $review->created_at->format('Y-m-d H:i:s') }}</p>
                             <div class="flex items-center mt-2">
                                 <span class="text-yellow-500 font-semibold mr-1">{{ number_format($review->rating, 1) }}</span>
@@ -58,28 +68,28 @@
 
         <!-- Write a Review Section -->
         @auth
-            <section class="mt-8 bg-white rounded-lg shadow-md p-6">
+            <section class="mt-8 card bg-base-100 shadow-md p-6">
                 <h2 class="text-2xl font-semibold text-gray-800 mb-4">Write a Review</h2>
                 <form action="{{ route('reviews.store') }}" method="POST" class="space-y-4">
                     @csrf
                     <input type="hidden" name="sight_id" value="{{ $sight->id }}">
                     
                     <!-- Review Content -->
-                    <div>
-                        <label for="content" class="block text-gray-700 font-medium">Your Review</label>
+                    <div class="form-control">
+                        <label for="content" class="label font-medium text-gray-700">Your Review</label>
                         <textarea
                             id="content"
                             name="content"
                             rows="5"
-                            class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            class="textarea textarea-bordered w-full"
                             placeholder="Share your thoughts..."
                             required
                         ></textarea>
                     </div>
 
                     <!-- Rating -->
-                    <div>
-                        <label for="rating" class="block text-gray-700 font-medium">Rating (1-5)</label>
+                    <div class="form-control">
+                        <label for="rating" class="label font-medium text-gray-700">Rating (1-5)</label>
                         <input
                             type="number"
                             id="rating"
@@ -87,7 +97,7 @@
                             min="1"
                             max="5"
                             step="0.1"
-                            class="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            class="input input-bordered w-full"
                             required
                         />
                     </div>
@@ -96,7 +106,7 @@
                     <div>
                         <button
                             type="submit"
-                            class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            class="btn btn-primary w-full"
                         >
                             Submit Review
                         </button>
