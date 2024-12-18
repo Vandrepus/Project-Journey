@@ -38,6 +38,29 @@
                             <i class="fa-solid fa-chevron-down"></i>
                         </label>
                         <ul tabindex="0" class="dropdown-content bg-white text-black shadow-lg rounded-md p-2 w-36 space-y-2">
+                            <!-- Profile Links for Users -->
+                            <li>
+                                <a 
+                                    href="{{ route('user.profile', ['username' => Auth::user()->username]) }}" 
+                                    class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-150"
+                                >
+                                    <i class="fa-solid fa-user mr-2"></i> <span>My Profile</span>
+                                </a>
+                            </li>
+
+                            <!-- Additional Links for Admins -->
+                            @if(Auth::user()->usertype === 'admin')
+                                <li>
+                                    <a 
+                                        href="{{ route('admin.dashboard') }}" 
+                                        class="flex items-center px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600 transition duration-150"
+                                    >
+                                        <i class="fa-solid fa-chart-line mr-2"></i> <span>Admin Dashboard</span>
+                                    </a>
+                                </li>
+                            @endif
+
+                            <!-- General Settings -->
                             <li>
                                 <a 
                                     href="{{ route('profile.edit') }}" 
@@ -46,22 +69,8 @@
                                     <i class="fa-solid fa-gear mr-2"></i> <span>Settings</span>
                                 </a>
                             </li>
-                            <li>
-                                <a 
-                                    href="{{ route('profile.edit') }}" 
-                                    class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-150"
-                                >
-                                    <i class="fa-solid fa-gear mr-2"></i> <span>Settings</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a 
-                                    href="{{ route('profile.edit') }}" 
-                                    class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-150"
-                                >
-                                    <i class="fa-solid fa-gear mr-2"></i> <span>Settings</span>
-                                </a>
-                            </li>
+
+                            <!-- Log Out -->
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -77,6 +86,7 @@
                     </div>
                 @endauth
             </div>
+
 
 
             <!-- Mobile Menu Button -->
@@ -135,7 +145,7 @@
                     </a>
                 @endif
                 <!-- Mobile Profile Dropdown -->
-                <div class="mt-4">
+                <div class="mt-4" x-data="{ profileOpen: false }">
                     <button 
                         @click="profileOpen = !profileOpen" 
                         class="btn bg-primary text-white btn-sm w-full flex items-center justify-center hover:bg-blue-600 transition duration-150"
@@ -143,17 +153,40 @@
                         <span class="font-medium">{{ Auth::user()->username ?? Auth::user()->name }}</span>
                         <i class="ml-2 fa-solid fa-chevron-down"></i>
                     </button>
+
                     <div 
                         x-show="profileOpen" 
                         @click.away="profileOpen = false" 
-                        class="mt-2 bg-white text-black shadow-lg rounded-md py-2 space-y-2"
+                        class="mt-2 bg-white text-black shadow-lg rounded-md py-2 space-y-2 w-full"
                     >
+                        <!-- My Profile -->
+                        <a 
+                            href="{{ route('user.profile', Auth::user()->username) }}" 
+                            class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-150"
+                        >
+                            <i class="fa-solid fa-user mr-2"></i> <span>My Profile</span>
+                        </a>
+
+                       
+                        <!-- Admin Links (if admin) -->
+                        @if (Auth::user()->usertype === 'admin')
+                            <a 
+                                href="{{ route('admin.dashboard') }}" 
+                                class="flex items-center px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600 transition duration-150"
+                            >
+                                <i class="fa-solid fa-chart-line mr-2"></i> <span>Admin Dashboard</span>
+                            </a>
+                        @endif
+                        
+                        <!-- Settings -->
                         <a 
                             href="{{ route('profile.edit') }}" 
                             class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-150"
                         >
                             <i class="fa-solid fa-gear mr-2"></i> <span>Settings</span>
                         </a>
+
+                        <!-- Logout -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button 

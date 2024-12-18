@@ -18,7 +18,8 @@ use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ProposeCountryController;
 use App\Http\Controllers\AdminCountryController;
 use App\Http\Controllers\TicketController;
-use App\Http\Controllers\AdminTicketController; 
+use App\Http\Controllers\AdminTicketController;
+use App\Http\Controllers\UserProfileController; 
 
 
 
@@ -132,6 +133,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::patch('/admin/tickets/{ticket}/close', [AdminTicketController::class, 'close'])->name('admin.tickets.close');
     Route::post('/admin/tickets/{ticket}/reply', [AdminTicketController::class, 'reply'])->name('admin.tickets.reply');
 });
+
+Route::get('/user/{username}', [UserProfileController::class, 'show'])->name('user.profile');
 
 
 
