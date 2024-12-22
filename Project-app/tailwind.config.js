@@ -1,6 +1,7 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 import daisyui from 'daisyui';
+import lineClamp from '@tailwindcss/line-clamp'; // Import line-clamp plugin
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,7 +10,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.js', // Include if you use Tailwind in JavaScript files
-        './resources/css/**/*.css', 
+        './resources/css/**/*.css',
     ],
 
     theme: {
@@ -20,9 +21,9 @@ export default {
         },
     },
 
-    plugins: [forms, daisyui],
+    plugins: [forms, daisyui, lineClamp], // Add lineClamp to the plugins array
 
     daisyui: {
-        themes: ["light"],
+        themes: ["light"], // DaisyUI theme set to "light"
     },
 };

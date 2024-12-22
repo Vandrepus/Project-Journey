@@ -19,8 +19,9 @@ use App\Http\Controllers\ProposeCountryController;
 use App\Http\Controllers\AdminCountryController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\AdminTicketController;
-use App\Http\Controllers\UserProfileController; 
-
+use App\Http\Controllers\UserProfileController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 
 
 Route::get('/', function () {
@@ -136,7 +137,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::get('/user/{username}', [UserProfileController::class, 'show'])->name('user.profile');
 
+Route::middleware('auth', 'admin')->group(function () {
+    Route::get('/admin/articles', [ArticleController::class, 'index'])->name('articles.index');
+    Route::get('/admin/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+    Route::get('/admin/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
+    Route::delete('/admin/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+    Route::put('/admin/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
+    Route::post('/admin/articles', [ArticleController::class, 'store'])->name('articles.store');
+});
 
-
-
+Route::get('/articles', [ArticleController::class, 'list'])->name('articles.list');
+Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
 require __DIR__.'/auth.php';
