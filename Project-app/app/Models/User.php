@@ -58,4 +58,15 @@ class User extends Authenticatable
     {
         return $this->usertype === 'admin';
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function favoriteSights()
+    {
+        return $this->belongsToMany(Sight::class, 'favorite_sights')->withTimestamps();
+    }
+
 }

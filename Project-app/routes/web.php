@@ -22,6 +22,9 @@ use App\Http\Controllers\AdminTicketController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\FavoriteSightsController;
+
 
 
 Route::get('/', function () {
@@ -79,6 +82,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
     Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
     Route::post('/forum/{id}/reply', [ReplyController::class, 'store'])->name('forum.reply');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::delete('/admin/forum/topics/{topic}', [ForumController::class, 'destroy'])->name('admin.forum.topic.delete');
+    Route::delete('/admin/forum/comments/{comment}', [ReplyController::class, 'destroy'])->name('admin.forum.comments.delete');
+    Route::delete('/admin/comments/{comment}', [CommentController::class, 'destroy'])->name('admin.comments.delete');
+    Route::delete('/admin/reviews/{review}', [ReviewController::class, 'destroy'])->name('admin.reviews.delete');
+    Route::delete('/admin/countries/{country}', [CountryController::class, 'destroy'])->name('admin.countries.delete');
+    Route::delete('/admin/sights/{sight}', [SightController::class, 'destroy'])->name('admin.sights.delete');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -149,4 +161,21 @@ Route::middleware('auth', 'admin')->group(function () {
 Route::get('/articles', [ArticleController::class, 'list'])->name('articles.list');
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
 Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
+
+
+Route::middleware('auth')->group(function () {
+    Route::post('/report', [ReportController::class, 'store'])->name('reports.store');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/reports', [ReportController::class, 'index'])->name('admin.reports.index');
+    Route::get('/admin/reports/{report}', [ReportController::class, 'show'])->name('admin.reports.show');
+    Route::delete('/admin/reports/{report}', [ReportController::class, 'destroy'])->name('admin.reports.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/favorites', [FavoriteSightsController::class, 'index'])->name('favorites.index');
+    Route::post('/favorites/{sight}', [FavoriteSightsController::class, 'store'])->name('favorites.store');
+    Route::delete('/favorites/{sight}', [FavoriteSightsController::class, 'destroy'])->name('favorites.destroy');
+});
 require __DIR__.'/auth.php';

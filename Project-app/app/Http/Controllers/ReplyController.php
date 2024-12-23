@@ -27,4 +27,11 @@ class ReplyController extends Controller
 
         return redirect()->route('forum.show', $topic->id)->with('success', 'Reply posted successfully.');
     }
+
+    public function destroy(Reply $comment)
+    {
+        $comment->delete();
+        return redirect()->back()->with('success', 'Comment deleted successfully.');
+    }
+
 }

@@ -47,10 +47,12 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Review deleted successfully');
     }
 
+
     private function updateSightAverageRating($sightId)
     {
         $sight = Sight::findOrFail($sightId);
-        $averageRating = $sight->reviews()->avg('rating');
+        $averageRating = $sight->reviews()->avg('rating') ?? 0; // Default to 0 if no reviews
         $sight->update(['average_rating' => $averageRating]);
     }
+    
 }

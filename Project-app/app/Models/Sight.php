@@ -22,4 +22,9 @@ class Sight extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function favoredByUsers()
+    {
+        return $this->belongsToMany(User::class, 'favorite_sights')->withTimestamps();
+    }
 }

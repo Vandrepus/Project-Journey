@@ -47,6 +47,22 @@
                                             </p>
                                         </div>
                                     </a>
+
+                                    <!-- Admin-Only Delete Button -->
+                                    @auth
+                                        @if(auth()->user()->isAdmin())
+                                            <form method="POST" action="{{ route('admin.sights.delete', $sight->id) }}" onsubmit="return confirm('Are you sure you want to delete this sight?');" class="p-4">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button 
+                                                    type="submit" 
+                                                    class="btn btn-error w-full text-white"
+                                                >
+                                                    <i class="fas fa-trash-alt mr-2"></i>Delete Sight
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @endauth
                                 </div>
                             @endif
                         @endforeach

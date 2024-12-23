@@ -28,20 +28,38 @@
         @if($topics->count() > 0)
             <div class="divide-y divide-gray-200">
                 @foreach($topics as $topic)
-                    <div class="py-4">
-                        <a href="{{ route('forum.show', $topic->id) }}" class="text-lg font-medium text-blue-600 hover:underline">
-                            {{ $topic->title }}
-                        </a>
-                        <p class="text-gray-500 text-sm mt-1">
-                            Posted by <span class="font-semibold">{{ $topic->user->username }}</span> on {{ $topic->created_at->format('M d, Y') }}
-                        </p>
+                    <div class="py-4 flex justify-between items-center">
+                        <!-- Topic Details -->
+                        <div>
+                            <a href="{{ route('forum.show', $topic->id) }}" class="text-lg font-medium text-blue-600 hover:underline">
+                                {{ $topic->title }}
+                            </a>
+                            <p class="text-gray-500 text-sm mt-1">
+                                Posted by <span class="font-semibold">{{ $topic->user->username }}</span> on {{ $topic->created_at->format('M d, Y') }}
+                            </p>
+                        </div>
+
+                        <!-- Delete Button for Admins -->
+                        @auth
+                            @if (auth()->user()->isAdmin())
+                                <form method="POST" action="{{ route('admin.forum.topic.delete', $topic->id) }}" onsubmit="return confirm('Are you sure you want to delete this topic?')" class="ml-4">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                                    >
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        @endauth
                     </div>
                 @endforeach
             </div>
         @else
             <p class="text-gray-500 text-center">No topics have been posted yet. Be the first to start a discussion!</p>
         @endif
-    </div>
 </main>
 
 <!-- Footer -->

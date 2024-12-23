@@ -35,9 +35,11 @@
                         <tbody>
                             @forelse ($articles as $article)
                                 <tr class="hover:bg-gray-50 border-b border-gray-200">
-                                    <!-- Truncate Title -->
-                                    <td class="px-4 py-3 text-gray-800 max-w-xs truncate" title="{{ $article->title }}">
-                                        {{ $article->title }}
+                                    <!-- Clickable Title -->
+                                    <td class="px-4 py-3 text-gray-800 max-w-xs truncate">
+                                        <a href="{{ route('articles.show', $article) }}" class="text-blue-600 hover:underline" title="{{ $article->title }}">
+                                            {{ $article->title }}
+                                        </a>
                                     </td>
                                     <td class="px-4 py-3 text-gray-600">{{ optional($article->created_at)->format('d M, Y') ?? 'Not Published' }}</td>
                                     <td class="px-4 py-3 text-center">

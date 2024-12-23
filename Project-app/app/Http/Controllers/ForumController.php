@@ -42,4 +42,11 @@ class ForumController extends Controller
         $topic = Topic::findOrFail($id);
         return view('user.forum.show', compact('topic'));
     }
+
+    public function destroy(Topic $topic)
+    {
+        $topic->delete();
+        return redirect()->route('forum.index')->with('success', 'Topic deleted successfully.');
+    }
+
 }

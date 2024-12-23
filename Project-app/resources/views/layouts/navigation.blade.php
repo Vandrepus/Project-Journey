@@ -50,17 +50,43 @@
                                 </a>
                             </li>
 
-                            <!-- Additional Links for Admins -->
+                            <!-- Favorites Button -->
+                            <li>
+                                <a 
+                                    href="{{ route('favorites.index') }}" 
+                                    class="flex items-center px-4 py-2 bg-yellow-500 text-white rounded-md shadow-md hover:bg-yellow-600 transition duration-150"
+                                >
+                                    <i class="fa-solid fa-star mr-2"></i> <span>Favorites</span>
+                                </a>
+                            </li>
+
                             @if(Auth::user()->usertype === 'admin')
                                 <li>
                                     <a 
-                                        href="{{ route('admin.dashboard') }}" 
-                                        class="flex items-center px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600 transition duration-150"
+                                        href="{{ route('forum.index') }}" 
+                                        class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-150 mt-2"
                                     >
-                                        <i class="fa-solid fa-chart-line mr-2"></i> <span>Admin Dashboard</span>
+                                        <i class="fa-solid fa-comments mr-2"></i> <span>Forum Moderation</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a 
+                                        href="{{ route('countries.index') }}" 
+                                        class="flex items-center px-4 py-2 bg-purple-500 text-white rounded-md shadow-md hover:bg-purple-600 transition duration-150 mt-2"
+                                    >
+                                        <i class="fa-solid fa-globe mr-2"></i> <span>Manage Countries</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a 
+                                        href="{{ route('admin.reports.index') }}" 
+                                        class="flex items-center px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600 transition duration-150 mt-2"
+                                    >
+                                        <i class="fa-solid fa-flag mr-2"></i> <span>Reports</span>
                                     </a>
                                 </li>
                             @endif
+
 
                             <!-- General Settings -->
                             <li>
@@ -177,16 +203,37 @@
                             <i class="fa-solid fa-user mr-2"></i> <span>My Profile</span>
                         </a>
 
+                         <!-- Favorites -->
+                        <a 
+                            href="{{ route('favorites.index') }}" 
+                            class="flex items-center px-4 py-2 bg-yellow-500 text-white rounded-md shadow-md hover:bg-yellow-600 transition duration-150"
+                        >
+                            <i class="fa-solid fa-star mr-2"></i> <span>Favorites</span>
+                        </a>
+
                        
                         <!-- Admin Links (if admin) -->
                         @if (Auth::user()->usertype === 'admin')
                             <a 
-                                href="{{ route('admin.dashboard') }}" 
-                                class="flex items-center px-4 py-2 bg-green-500 text-white rounded-md shadow-md hover:bg-green-600 transition duration-150"
+                                href="{{ route('forum.index') }}" 
+                                class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition duration-150 mt-2"
                             >
-                                <i class="fa-solid fa-chart-line mr-2"></i> <span>Admin Dashboard</span>
+                                <i class="fa-solid fa-comments mr-2"></i> <span>Forum Moderation</span>
+                            </a>
+                            <a 
+                                href="{{ route('countries.index') }}" 
+                                class="flex items-center px-4 py-2 bg-purple-500 text-white rounded-md shadow-md hover:bg-purple-600 transition duration-150 mt-2"
+                            >
+                                <i class="fa-solid fa-globe mr-2"></i> <span>Manage Countries</span>
+                            </a>
+                            <a 
+                                href="{{ route('admin.reports.index') }}" 
+                                class="flex items-center px-4 py-2 bg-red-500 text-white rounded-md shadow-md hover:bg-red-600 transition duration-150 mt-2"
+                            >
+                                <i class="fa-solid fa-flag mr-2"></i> <span>Reports</span>
                             </a>
                         @endif
+
                         
                         <!-- Settings -->
                         <a 

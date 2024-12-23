@@ -17,27 +17,41 @@
     <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-base-100 shadow-lg rounded-lg p-6">
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Explore Countries</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            @foreach($countries as $country)
-                <div class="card card-compact bg-base-100 shadow hover:shadow-lg transition duration-300">
-                    <a href="{{ route('countries.show', $country->id) }}">
-                        <figure>
-                            <img 
-                                src="{{ $country->flag ?? 'https://via.placeholder.com/300x200?text=No+Flag' }}" 
-                                alt="{{ $country->name }} Flag" 
-                                class="w-full h-32 object-cover"
-                            />
-                        </figure>
-                        <div class="card-body">
-                            <h3 class="card-title text-lg font-semibold">{{ $country->name }}</h3>
-                            <p class="text-sm text-gray-600">{{ $country->description ?? 'No description available.' }}</p>
-                        </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Explore Countries</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @foreach($countries as $country)
+            <div class="card card-compact bg-base-100 shadow hover:shadow-lg transition duration-300">
+                <a href="{{ route('countries.show', $country->id) }}">
+                    <figure>
+                        <img 
+                            src="{{ $country->flag ?? 'https://via.placeholder.com/300x200?text=No+Flag' }}" 
+                            alt="{{ $country->name }} Flag" 
+                            class="w-full h-32 object-cover"
+                        />
+                    </figure>
+                    <div class="card-body">
+                        <h3 class="card-title text-lg font-semibold">{{ $country->name }}</h3>
+                        <p class="text-sm text-gray-600">{{ $country->description ?? 'No description available.' }}</p>
+                    </div>
+                </a>
+                
+                <!-- Admin Delete Button -->
+                @auth
+                    @if(auth()->user()->isAdmin())
+                        <form method="POST" action="{{ route('admin.countries.delete', $country->id) }}" class="mt-2" onsubmit="return confirm('Are you sure you want to delete this country?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-error btn-sm text-white w-full">
+                                <i class="fas fa-trash-alt mr-2"></i> Delete
+                            </button>
+                        </form>
+                    @endif
+                @endauth
+            </div>
+        @endforeach
     </div>
+</div>
+
 </div>
 
     </main>

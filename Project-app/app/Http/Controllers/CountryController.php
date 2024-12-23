@@ -20,4 +20,13 @@ class CountryController extends Controller
 
         return view('user.countries.show', compact('country', 'sights'));
     }
+
+    public function destroy($id)
+    {
+        $country = Country::findOrFail($id);
+        $country->delete();
+
+        return redirect()->route('countries.index')->with('success', 'Country deleted successfully.');
+    }
+
 }
