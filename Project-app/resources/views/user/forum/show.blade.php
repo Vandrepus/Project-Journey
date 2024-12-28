@@ -20,7 +20,11 @@
             <h2 class="text-3xl font-bold text-gray-800">{{ $topic->title }}</h2>
             <p class="text-gray-700 text-lg mt-4">{{ $topic->content }}</p>
             <p class="text-sm text-gray-500 mt-2">
-                Posted by <span class="font-medium">{{ $topic->user->username }}</span> on {{ $topic->created_at->format('M d, Y') }}
+                Posted by 
+                <a href="{{ route('user.profile', $topic->user->username) }}" class="text-blue-500 hover:underline font-medium">
+                    {{ $topic->user->username }}
+                </a> 
+                on {{ $topic->created_at->format('M d, Y') }}
             </p>
         </div>
 
@@ -34,14 +38,30 @@
                             <!-- Apply line-break styles -->
                             <p class="text-gray-700 break-words whitespace-pre-wrap">{{ $reply->content }}</p>
                             <p class="text-sm text-gray-500 mt-2">
-                                Replied by <span class="font-medium">{{ $reply->user->username }}</span> on {{ $reply->created_at->format('M d, Y') }}
+                                Replied by 
+                                <a href="{{ route('user.profile', $reply->user->username) }}" class="text-blue-500 hover:underline font-medium">
+                                    {{ $reply->user->username }}
+                                </a> 
+                                on {{ $reply->created_at->format('M d, Y') }}
                             </p>
 
                             <div class="mt-4 flex items-center space-x-4">
-                                <!-- Admin-only Delete Button -->
-                                @auth
+                            @auth
                                     @if (auth()->user()->isAdmin())
+                                        <!-- Admin Delete Button -->
                                         <form method="POST" action="{{ route('admin.forum.comments.delete', $reply->id) }}" onsubmit="return confirm('Are you sure you want to delete this reply?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button 
+                                                type="submit" 
+                                                class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                                            >
+                                                <i class="fas fa-trash-alt mr-2"></i>Delete Reply
+                                            </button>
+                                        </form>
+                                    @elseif (auth()->id() === $reply->user_id)
+                                        <!-- User Delete Button -->
+                                        <form method="POST" action="{{ route('forum.reply.delete', $reply->id) }}" onsubmit="return confirm('Are you sure you want to delete your reply?')">
                                             @csrf
                                             @method('DELETE')
                                             <button 
@@ -54,7 +74,7 @@
                                     @endif
 
                                     <!-- Report Button -->
-                                    @if (!auth()->user()->isAdmin() && auth()->id() !== $reply->user_id)
+                                    @if (!auth()->user()->isAdmin() && auth()->id() !== $reply->user_id && !$reply->user->isAdmin())
                                         <button 
                                             type="button" 
                                             onclick="openReportModal({{ $reply->id }})"

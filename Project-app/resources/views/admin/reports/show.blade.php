@@ -28,7 +28,12 @@
                         <span>Report Information</span>
                     </h2>
                     <p class="text-gray-700"><strong>Report ID:</strong> {{ $report->id }}</p>
-                    <p class="text-gray-700"><strong>Reported By:</strong> {{ $report->user->username }}</p>
+                    <p class="text-gray-700">
+                        <strong>Reported By:</strong> 
+                        <a href="{{ route('user.profile', $report->user->username) }}" class="text-blue-600 hover:underline">
+                            {{ $report->user->username }}
+                        </a>
+                    </p>
                     <p class="text-gray-700"><strong>Reason:</strong></p>
                     <p class="text-gray-700 break-words">{{ $report->reason ?? 'No reason provided' }}</p>
                     <p class="text-gray-700"><strong>Type:</strong> {{ class_basename($report->reportable_type) }}</p>

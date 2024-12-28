@@ -54,7 +54,13 @@
                 </div>
                 <div>
                     <p class="text-gray-800 font-semibold">Submitted By:</p>
-                    <p class="text-gray-600 break-words">{{ $sight->submittedBy->name ?? 'Unknown' }}</p>
+                    @if($sight->user)
+                        <a href="{{ route('user.profile', $sight->user->username) }}" class="text-blue-500 hover:underline break-words">
+                            {{ $sight->user->username }}
+                        </a>
+                    @else
+                        <span class="text-gray-500">Unknown</span>
+                    @endif
                 </div>
                 <div>
                     <p class="text-gray-800 font-semibold">Date Submitted:</p>

@@ -28,14 +28,18 @@
         @if($topics->count() > 0)
             <div class="divide-y divide-gray-200">
                 @foreach($topics as $topic)
-                    <div class="py-4 flex justify-between items-center">
+                <div class="py-4 flex justify-between items-center">
                         <!-- Topic Details -->
                         <div>
                             <a href="{{ route('forum.show', $topic->id) }}" class="text-lg font-medium text-blue-600 hover:underline">
                                 {{ $topic->title }}
                             </a>
                             <p class="text-gray-500 text-sm mt-1">
-                                Posted by <span class="font-semibold">{{ $topic->user->username }}</span> on {{ $topic->created_at->format('M d, Y') }}
+                                Posted by 
+                                <a href="{{ route('user.profile', $topic->user->username) }}" class="text-blue-500 hover:underline font-semibold">
+                                    {{ $topic->user->username }}
+                                </a> 
+                                on {{ $topic->created_at->format('M d, Y') }}
                             </p>
                         </div>
 

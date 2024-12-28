@@ -18,6 +18,12 @@ class Sight extends Model
         return $this->belongsTo(Country::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'submitted_by');
+    }
+
+
     public function reviews()
     {
         return $this->hasMany(Review::class);

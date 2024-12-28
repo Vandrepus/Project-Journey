@@ -91,6 +91,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/reviews/{review}', [ReviewController::class, 'destroy'])->name('admin.reviews.delete');
     Route::delete('/admin/countries/{country}', [CountryController::class, 'destroy'])->name('admin.countries.delete');
     Route::delete('/admin/sights/{sight}', [SightController::class, 'destroy'])->name('admin.sights.delete');
+    Route::delete('/forum/replies/{id}', [ReplyController::class, 'destroy'])->name('forum.reply.delete');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.delete');
+    Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.delete');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {

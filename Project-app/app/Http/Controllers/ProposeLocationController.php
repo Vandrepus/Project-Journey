@@ -10,40 +10,47 @@ use Illuminate\Http\Request;
 
 class ProposeLocationController extends Controller
 {
-    // Show the form to propose a new sight with a list of countries
+    // Show the form to propose a new sight with a list of approved countries
     public function create()
     {
-        // Fetch all available countries
-        $countries = Country::all();
+        // Fetch only approved countries (visible = true)
+        $countries = Country::where('visible', true)->get();
         return view('user.location.propose', compact('countries'));
     }
 
     // Store the proposed sight in the database (invisible until admin approval)
     public function store(Request $request)
     {
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'required|string',
-        'location' => 'required|string',
-        'country_id' => 'required|exists:countries,id', // Make sure country is selected
-        'category' => 'required|string|max:255',
-        'opening_hours' => 'required|string',
-        'map_url' => 'nullable|url', // Optional field, must be a valid URL if provided
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'country_id' => 'required|exists:countries,id', // Ensure valid country ID
+            'category' => 'required|string|max:255',
+            'opening_hours' => 'required|string|max:255',
+            'map_url' => 'nullable|url', // Optional field, must be a valid URL if provided
+        ]);
 
-    // Store the proposed sight as invisible by default
-    Sight::create([
-        'name' => $request->name,
-        'description' => $request->description,
-        'location' => $request->location,
-        'country_id' => $request->country_id,
-        'category' => $request->category,
-        'opening_hours' => $request->opening_hours,
-        'map_url' => $request->map_url,
-        'visible' => 0, // Invisible by default
-        'submitted_by' => auth()->id()
-    ]);
+        // Validate if the selected country is approved
+        $country = Country::where('id', $request->country_id)->where('visible', true)->first();
 
-    return redirect()->back()->with('success', 'Sight proposed successfully! Awaiting admin approval.');
+        if (!$country) {
+            return redirect()->back()->withErrors(['country_id' => 'The selected country is not approved.']);
+        }
+
+        // Store the proposed sight as invisible by default
+        Sight::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'location' => $request->location,
+            'country_id' => $request->country_id,
+            'category' => $request->category,
+            'opening_hours' => $request->opening_hours,
+            'map_url' => $request->map_url,
+            'visible' => 0, // Invisible by default
+            'submitted_by' => auth()->id(), // Track the user who submitted the sight
+        ]);
+
+        return redirect()->route('location.propose')->with('success', 'Sight proposed successfully! Awaiting admin approval.');
     }
 }

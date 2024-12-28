@@ -28,10 +28,17 @@ class ReplyController extends Controller
         return redirect()->route('forum.show', $topic->id)->with('success', 'Reply posted successfully.');
     }
 
-    public function destroy(Reply $comment)
+    public function destroy($id)
     {
-        $comment->delete();
-        return redirect()->back()->with('success', 'Comment deleted successfully.');
+        $reply = Reply::findOrFail($id);
+
+        // Check if the authenticated user owns the reply or is an admin
+        if (auth()->id() === $reply->user_id || auth()->user()->isAdmin()) {
+            $reply->delete();
+            return redirect()->back()->with('success', 'Reply deleted successfully.');
+        }
+
+        return redirect()->back()->with('error', 'You are not authorized to delete this reply.');
     }
 
 }

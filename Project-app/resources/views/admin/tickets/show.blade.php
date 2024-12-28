@@ -37,7 +37,9 @@
                 </div>
                 <div>
                     <p class="font-semibold text-gray-700">User:</p>
-                    <p class="text-blue-600">{{ $ticket->user->username }}</p>
+                    <a href="{{ route('user.profile', $ticket->user->username) }}" class="text-blue-600 hover:underline">
+                        {{ $ticket->user->username }}
+                    </a>
                 </div>
             </div>
 
@@ -54,7 +56,9 @@
                                     @if($reply->user->usertype === 'admin')
                                         <span class="text-red-500">Admin</span>
                                     @endif
-                                    {{ $reply->user->username }}:
+                                    <a href="{{ route('user.profile', $reply->user->username) }}" class="text-blue-600 hover:underline">
+                                        {{ $reply->user->username }}
+                                    </a>:
                                 </strong>
                             </p>
                             <p class="text-gray-800">{{ $reply->message }}</p>

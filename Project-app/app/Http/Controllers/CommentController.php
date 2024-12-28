@@ -24,8 +24,13 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        $comment->delete();
-        return redirect()->back()->with('success', 'Comment deleted successfully.');
+        // Allow only admins or the comment's author to delete
+        if (auth()->user()->isAdmin() || auth()->id() === $comment->user_id) {
+            $comment->delete();
+            return redirect()->back()->with('success', 'Comment deleted successfully.');
+        }
+
+        return redirect()->back()->with('error', 'You do not have permission to delete this comment.');
     }
 
 }

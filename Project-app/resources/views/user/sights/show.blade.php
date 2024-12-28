@@ -77,53 +77,58 @@
 
         <!-- Reviews Section -->
         <section class="mt-8">
-            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Reviews</h2>
-            @if($sight->reviews->count() > 0)
-                <div class="space-y-4">
-                    @foreach($sight->reviews as $review)
-                        <div class="card bg-base-200 shadow-md p-4">
-                            <p class="font-medium">{{ $review->user->username }}</p>
-                            <p class="mt-1">{{ $review->content }}</p>
-                            <p class="text-sm text-gray-500 mt-2">{{ $review->created_at->format('Y-m-d H:i:s') }}</p>
-                            <div class="flex items-center mt-2">
-                                <span class="text-yellow-500 font-semibold mr-1">{{ number_format($review->rating, 1) }}</span>
-                                <i class="fas fa-star text-yellow-500"></i>
-                            </div>
-
-                            <div class="flex mt-4 space-x-4">
-                                <!-- Admin-Only Delete Button -->
-                                @auth
-                                    @if (auth()->user()->isAdmin())
-                                        <form method="POST" action="{{ route('admin.reviews.delete', $review->id) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button 
-                                                type="submit" 
-                                                class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                                                <i class="fas fa-trash-alt mr-2"></i>Delete
-                                            </button>
-                                        </form>
-                                    @endif
-
-                                    <!-- Report Button -->
-                                    @if (!auth()->user()->isAdmin() && auth()->id() !== $review->user_id)
-                                        <button 
-                                            type="button" 
-                                            onclick="openReportModal({{ $review->id }})"
-                                            class="btn btn-warning px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
-                                        >
-                                            <i class="fas fa-flag mr-2"></i>Report
-                                        </button>
-                                    @endif
-                                @endauth
-                            </div>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Reviews</h2>
+        @if($sight->reviews->count() > 0)
+            <div class="space-y-4">
+                @foreach($sight->reviews as $review)
+                    <div class="card bg-base-200 shadow-md p-4">
+                        <p class="font-medium">
+                            <a href="{{ route('user.profile', $review->user->username) }}" class="text-blue-600 hover:underline">
+                                {{ $review->user->username }}
+                            </a>
+                        </p>
+                        <p class="mt-1">{{ $review->content }}</p>
+                        <p class="text-sm text-gray-500 mt-2">{{ $review->created_at->format('Y-m-d H:i:s') }}</p>
+                        <div class="flex items-center mt-2">
+                            <span class="text-yellow-500 font-semibold mr-1">{{ number_format($review->rating, 1) }}</span>
+                            <i class="fas fa-star text-yellow-500"></i>
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <p class="text-gray-500">No reviews yet for this sight.</p>
-            @endif
-        </section>
+
+                        <div class="flex mt-4 space-x-4">
+                            @auth
+                                <!-- Admin-Only Delete Button -->
+                                @if (auth()->user()->isAdmin())
+                                    <form method="POST" action="{{ route('admin.reviews.delete', $review->id) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button 
+                                            type="submit" 
+                                            class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                            <i class="fas fa-trash-alt mr-2"></i>Delete
+                                        </button>
+                                    </form>
+                                @endif
+
+
+                                <!-- Report Button -->
+                                @if (!auth()->user()->isAdmin() && auth()->id() !== $review->user_id && !$review->user->isAdmin())
+                                    <button 
+                                        type="button" 
+                                        onclick="openReportModal({{ $review->id }})"
+                                        class="btn btn-warning px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+                                    >
+                                        <i class="fas fa-flag mr-2"></i>Report
+                                    </button>
+                                @endif
+                            @endauth
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p class="text-gray-500">No reviews yet for this sight.</p>
+        @endif
+    </section>
 
 
         <!-- Write a Review Section -->

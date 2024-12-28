@@ -9,7 +9,7 @@ class CountryController extends Controller
 {
     public function index()
     {
-        $countries = Country::all();
+        $countries = Country::where('visible', true)->get();
         return view('user.countries.index', compact('countries'));
     }
 

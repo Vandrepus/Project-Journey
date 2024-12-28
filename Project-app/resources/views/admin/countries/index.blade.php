@@ -104,7 +104,19 @@
                             <div class="bg-gray-100 p-6 rounded-md shadow-md">
                                 <h3 class="text-lg font-bold text-gray-700">{{ $country->name }}</h3>
                                 <p class="text-gray-600 mb-2"><strong>Description:</strong> {{ $country->description }}</p>
-                                <p class="text-gray-600 mb-2"><strong>Submitted By:</strong> {{ $country->user->name ?? 'Unknown' }}</p>
+                                <p class="text-gray-600 mb-2">
+                                <strong>Submitted By:</strong> 
+                                @if ($country->user)
+                                    <a 
+                                        href="{{ route('user.profile', $country->user->username) }}" 
+                                        class="text-blue-500 hover:underline"
+                                    >
+                                        {{ $country->user->username }}
+                                    </a>
+                                @else
+                                    Unknown
+                                @endif
+                            </p>
                                 <p class="text-gray-600"><strong>Status:</strong> {{ $country->visible ? 'Approved' : 'Pending' }}</p>
                             </div>
                         @endforeach

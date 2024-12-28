@@ -44,14 +44,17 @@ class ReviewController extends Controller
         $this->updateSightAverageRating($sightId);
 
         // Redirect back with a success message
-        return redirect()->back()->with('success', 'Review deleted successfully');
+        return redirect()->route('sights.show', $sightId)->with('success', 'Review deleted successfully');
     }
 
-
-    private function updateSightAverageRating($sightId)
+    protected function updateSightAverageRating($sightId)
     {
         $sight = Sight::findOrFail($sightId);
-        $averageRating = $sight->reviews()->avg('rating') ?? 0; // Default to 0 if no reviews
+
+        // Recalculate the average rating
+        $averageRating = $sight->reviews()->avg('rating') ?? 0;
+    
+        // Update the sight's average_rating field
         $sight->update(['average_rating' => $averageRating]);
     }
     
