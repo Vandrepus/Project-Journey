@@ -6,8 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Home</title>
 
-    <!-- Fonts -->
-    
     <!-- Font Awesome -->
     <link
         rel="stylesheet"

@@ -7,9 +7,6 @@
                 Discover Your Next Adventure: Where Every Destination Becomes a Favorite
             </p>
         </div>
-        <div>
-            <!-- Add your logo or any additional branding here -->
-        </div>
     </div>
 
     <!-- Bottom Section -->

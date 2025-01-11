@@ -58,12 +58,12 @@ Route::middleware(['web', 'auth'])->group(function () {
 });
 
 Route::middleware(['web', 'auth', 'admin'])->group(function () {
-    // Admin Dashboard Route
+
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
-    // Admin Contact Message Routes
+
     Route::get('/admin/contact-messages', [AdminContactMessageController::class, 'index'])->name('admin.contact-messages.index');
     Route::delete('/admin/contact-messages/{message}', [AdminContactMessageController::class, 'destroy'])->name('admin.contact-messages.destroy');
 });
@@ -103,13 +103,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 });
 
 
-// Routes for users
+
 Route::middleware('auth')->group(function () {
     Route::get('/locations/propose', [ProposeLocationController::class, 'create'])->name('location.propose');
     Route::post('/locations/propose', [ProposeLocationController::class, 'store'])->name('location.store');
 });
 
-// Routes for admin
+
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/admin/sights', [ReviewSightsController::class, 'index'])->name('admin.sights.index');
     Route::get('/admin/sights/{id}', [ReviewSightsController::class, 'show'])->name('admin.sights.show');
@@ -118,11 +118,10 @@ Route::middleware('auth', 'admin')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    // User routes
+    
     Route::get('/propose', [ProposeCountryController::class, 'create'])->name('countries.propose');
     Route::post('/propose', [ProposeCountryController::class, 'store'])->name('countries.store');
 
-    // Admin routes
     Route::middleware('admin')->group(function () {
         Route::get('/admin/countries', [AdminCountryController::class, 'index'])->name('admin.countries.index');
         Route::patch('/admin/countries/{id}/approve', [AdminCountryController::class, 'approve'])->name('admin.country.approve');

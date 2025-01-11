@@ -31,8 +31,13 @@
                         id="subject"
                         class="input input-bordered w-full"
                         placeholder="Enter the ticket subject"
+                        maxlength="100"
+                        oninput="updateSubjectCount(event)"
                         required
                     />
+                    <p id="subjectCounter" class="text-sm text-gray-500 mt-2">
+                        Characters remaining: <span id="subjectRemaining">100</span>
+                    </p>
                 </div>
 
                 <!-- Category -->
@@ -64,8 +69,13 @@
                         rows="6"
                         class="textarea textarea-bordered w-full"
                         placeholder="Describe your issue or query..."
+                        maxlength="1000"
+                        oninput="updateMessageCount(event)"
                         required
                     ></textarea>
+                    <p id="messageCounter" class="text-sm text-gray-500 mt-2">
+                        Characters remaining: <span id="messageRemaining">1000</span>
+                    </p>
                 </div>
 
                 <!-- Submit Button -->
@@ -80,6 +90,26 @@
             </form>
         </div>
     </main>
+    <script>
+    function updateSubjectCount(event) {
+        const maxLength = 100;
+        const currentLength = event.target.value.length;
+        document.getElementById('subjectRemaining').textContent = maxLength - currentLength;
+    }
+
+    function updateMessageCount(event) {
+        const maxLength = 1000;
+        const currentLength = event.target.value.length;
+        document.getElementById('messageRemaining').textContent = maxLength - currentLength;
+    }
+
+    // Initialize counters on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        updateSubjectCount({ target: document.getElementById('subject') });
+        updateMessageCount({ target: document.getElementById('message') });
+    });
+    </script>
+
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4">

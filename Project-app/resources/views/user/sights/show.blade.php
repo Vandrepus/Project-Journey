@@ -141,15 +141,20 @@
                     
                     <!-- Review Content -->
                     <div class="form-control">
-                        <label for="content" class="label font-medium text-gray-700">Your Review</label>
+                        <label for="content" class="label font-medium text-gray-700">Your Review (max 300 characters)</label>
                         <textarea
                             id="content"
                             name="content"
                             rows="5"
+                            maxlength="300"
+                            oninput="updateCharacterCount(event)"
                             class="textarea textarea-bordered w-full"
                             placeholder="Share your thoughts..."
                             required
                         ></textarea>
+                        <p id="characterCounter" class="text-sm text-gray-500 mt-2">
+                            Characters remaining: <span id="remainingCharacters">300</span>
+                        </p>
                     </div>
 
                     <!-- Rating -->
@@ -221,6 +226,26 @@
             </form>
         </div>
     </div>
+
+    <script>
+    function updateCharacterCount(event) {
+        const maxLength = 300;
+        const currentLength = event.target.value.length;
+        const remainingCharacters = maxLength - currentLength;
+
+        // Update the counter display
+        document.getElementById('remainingCharacters').textContent = remainingCharacters;
+    }
+
+    // Initialize counter if textarea already has content
+    document.addEventListener('DOMContentLoaded', function () {
+        const reviewField = document.getElementById('content');
+        if (reviewField) {
+            updateCharacterCount({ target: reviewField });
+        }
+    });
+    </script>
+
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4">

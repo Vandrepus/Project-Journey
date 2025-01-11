@@ -11,7 +11,7 @@ class CommentController extends Controller
     public function store(Request $request, Article $article)
     {
         $request->validate([
-            'comment' => 'required',
+            'comment' => 'required|string|max:200',
         ]);
 
         $article->comments()->create([

@@ -83,9 +83,21 @@
                 @endif
                 <!-- Comment Form -->
                 @auth
-                    <form method="POST" action="{{ route('comments.store', $article) }}" class="mt-6">
+                    <form method="POST" action="{{ route('comments.store', $article) }}" class="mt-6 space-y-4">
                         @csrf
-                        <textarea name="comment" rows="4" class="textarea textarea-bordered w-full border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500" placeholder="Add your comment..." required></textarea>
+                        <textarea
+                            name="comment"
+                            id="comment"
+                            rows="4"
+                            maxlength="200"  Enforce limit
+                            oninput="updateCharacterCount(event)" 
+                            class="textarea textarea-bordered w-full border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Add your comment (max 200 characters)..."
+                            required
+                        ></textarea>
+                        <p id="characterCounter" class="text-sm text-gray-500">
+                            Characters remaining: <span id="remainingCharacters">200</span>
+                        </p>
                         <button type="submit" class="btn btn-primary mt-4 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
                             Post Comment
                         </button>
@@ -122,6 +134,25 @@
             </form>
         </div>
     </div>
+
+    <script>
+    function updateCharacterCount(event) {
+        const maxLength = 200;
+        const currentLength = event.target.value.length;
+        const remainingCharacters = maxLength - currentLength;
+
+        // Update the counter display
+        document.getElementById('remainingCharacters').textContent = remainingCharacters;
+    }
+
+    // Initialize counter if textarea already has content
+    document.addEventListener('DOMContentLoaded', function () {
+        const commentField = document.getElementById('comment');
+        if (commentField) {
+            updateCharacterCount({ target: commentField });
+        }
+    });
+    </script>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-6 mt-8">

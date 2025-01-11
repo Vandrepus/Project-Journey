@@ -108,9 +108,38 @@
         <!-- About Me Field -->
         <div class="mt-4">
             <x-input-label for="about_me" :value="__('About Me')" />
-            <textarea id="about_me" name="about_me" rows="4" class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('about_me', $user->about_me) }}</textarea>
+            <textarea 
+                id="about_me" 
+                name="about_me" 
+                rows="4" 
+                maxlength="1000" 
+                oninput="updateCharacterCount(event)" 
+                class="block mt-1 w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('about_me', $user->about_me) }}</textarea>
             <x-input-error :messages="$errors->get('about_me')" class="mt-2" />
+            <p id="aboutMeCounter" class="text-sm text-gray-500 mt-2">
+                {{ __('Characters remaining: ') }} <span id="remainingCharacters">1000</span>
+            </p>
         </div>
+
+        <!-- JavaScript for Character Counter -->
+        <script>
+            function updateCharacterCount(event) {
+                const maxLength = 1000;
+                const currentLength = event.target.value.length;
+                const remainingCharacters = maxLength - currentLength;
+
+                // Update the counter
+                document.getElementById('remainingCharacters').textContent = remainingCharacters;
+            }
+
+            // Initialize counter if textarea already has content
+            document.addEventListener('DOMContentLoaded', function() {
+                const aboutMeField = document.getElementById('about_me');
+                if (aboutMeField) {
+                    updateCharacterCount({ target: aboutMeField });
+                }
+            });
+        </script>
 
         <!-- Save Button -->
         <div class="flex items-center gap-4 mt-6">

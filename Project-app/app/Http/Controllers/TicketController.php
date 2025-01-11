@@ -23,9 +23,9 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'subject' => 'required|string|max:255',
+            'subject' => 'required|string|max:100',
             'message' => 'required|string',
-            'category' => 'required|string|max:255',
+            'category' => 'required|string|max:1000',
         ]);
 
         Ticket::firstOrCreate(

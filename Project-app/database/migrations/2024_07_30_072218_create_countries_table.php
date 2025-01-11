@@ -11,6 +11,7 @@ class CreateCountriesTable extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('capital');
             $table->text('description')->nullable();
             $table->foreignId('submitted_by')->constrained('users')->onDelete('cascade');
             $table->boolean('visible')->default(false); // Default to invisible

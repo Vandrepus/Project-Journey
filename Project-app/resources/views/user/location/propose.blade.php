@@ -54,8 +54,21 @@
                 <!-- Description -->
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="description" id="description" rows="4" required class="textarea textarea-bordered w-full mt-1" placeholder="Provide a brief description"></textarea>
+                    <textarea
+                        name="description"
+                        id="description"
+                        rows="4"
+                        maxlength="3000"
+                        oninput="updateCharacterCount(event)"
+                        required
+                        class="textarea textarea-bordered w-full mt-1"
+                        placeholder="Provide a brief description (max 3000 characters)"
+                    ></textarea>
+                    <p id="descriptionCounter" class="text-sm text-gray-500 mt-2">
+                        Characters remaining: <span id="remainingCharacters">3000</span>
+                    </p>
                 </div>
+
 
                 <!-- Location -->
                 <div>
@@ -72,7 +85,19 @@
                 <!-- Opening Hours -->
                 <div>
                     <label for="opening_hours" class="block text-sm font-medium text-gray-700">Opening Hours</label>
-                    <input type="text" name="opening_hours" id="opening_hours" required class="input input-bordered w-full mt-1" placeholder="e.g., 9 AM - 5 PM" />
+                    <input 
+                        type="text" 
+                        name="opening_hours" 
+                        id="opening_hours" 
+                        required 
+                        class="input input-bordered w-full mt-1" 
+                        placeholder="e.g., 9 AM - 5 PM" 
+                    />
+                    @if ($errors->has('opening_hours'))
+                        <p class="text-sm text-red-600 mt-2">
+                            {{ $errors->first('opening_hours') }}
+                        </p>
+                    @endif
                 </div>
 
                 <!-- Map URL -->
@@ -90,6 +115,39 @@
             </form>
         </div>
     </main>
+
+    <script>
+    function updateCharacterCount(event) {
+        const maxLength = 3000;
+        const currentLength = event.target.value.length;
+        const remainingCharacters = maxLength - currentLength;
+
+        // Update the counter display
+        document.getElementById('remainingCharacters').textContent = remainingCharacters;
+    }
+
+    // Initialize counter if textarea already has content
+    document.addEventListener('DOMContentLoaded', function () {
+        const descriptionField = document.getElementById('description');
+        if (descriptionField) {
+            updateCharacterCount({ target: descriptionField });
+        }
+    });
+
+    document.getElementById('opening_hours').addEventListener('input', function (event) {
+        const input = event.target.value;
+        const regex = /^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i;
+
+        if (!regex.test(input)) {
+            event.target.classList.add('border-red-600');
+            event.target.classList.remove('border-gray-300');
+        } else {
+            event.target.classList.remove('border-red-600');
+            event.target.classList.add('border-gray-300');
+        }
+    });
+    </script>
+
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4">

@@ -23,11 +23,14 @@ class ProposeLocationController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'required|string',
+            'description' => 'required|string|max:3000',
             'location' => 'required|string|max:255',
             'country_id' => 'required|exists:countries,id', // Ensure valid country ID
             'category' => 'required|string|max:255',
-            'opening_hours' => 'required|string|max:255',
+            'opening_hours' => [
+                'required',
+                'regex:/^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i',
+            ], // Enforce "9 AM - 5 PM" format
             'map_url' => 'nullable|url', // Optional field, must be a valid URL if provided
         ]);
 

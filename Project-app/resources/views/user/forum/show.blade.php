@@ -101,15 +101,20 @@
                     @csrf
                     <!-- Reply Content -->
                     <div>
-                        <label for="content" class="block text-sm font-medium text-gray-700">Your Reply</label>
+                        <label for="content" class="block text-sm font-medium text-gray-700">Your Reply (max 200 characters)</label>
                         <textarea 
                             name="content" 
                             id="content" 
                             rows="5" 
+                            maxlength="200" 
+                            oninput="updateReplyCharacterCount(event)" 
                             class="textarea textarea-bordered w-full focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             placeholder="Write your reply here..." 
                             required
                         ></textarea>
+                        <p id="replyCounter" class="text-sm text-gray-500 mt-2">
+                            Characters remaining: <span id="remainingReplyCharacters">200</span>
+                        </p>
                     </div>
                     
                     <!-- Submit Button -->
@@ -185,6 +190,23 @@
         document.getElementById('reportModal').classList.add('hidden'); // Hide the modal
         document.getElementById('reportForm').reset(); // Reset the form
     }
+
+    function updateReplyCharacterCount(event) {
+        const maxLength = 200;
+        const currentLength = event.target.value.length;
+        const remainingCharacters = maxLength - currentLength;
+
+        // Update the counter display
+        document.getElementById('remainingReplyCharacters').textContent = remainingCharacters;
+    }
+
+    // Initialize counter if textarea already has content
+    document.addEventListener('DOMContentLoaded', function () {
+        const replyField = document.getElementById('content');
+        if (replyField) {
+            updateReplyCharacterCount({ target: replyField });
+        }
+    });
 </script>
 </body>
 </html>

@@ -14,7 +14,7 @@ class ReplyController extends Controller
     public function store(Request $request, $topicId)
     {
         $request->validate([
-            'content' => 'required',
+            'content' => 'required|string|max:200',
         ]);
 
         $topic = Topic::findOrFail($topicId);

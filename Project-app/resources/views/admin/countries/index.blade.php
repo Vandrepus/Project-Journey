@@ -101,10 +101,25 @@
                         <p class="text-center text-gray-500">No countries available for details.</p>
                     @else
                         @foreach ($proposedCountries as $country)
-                            <div class="bg-gray-100 p-6 rounded-md shadow-md">
-                                <h3 class="text-lg font-bold text-gray-700">{{ $country->name }}</h3>
-                                <p class="text-gray-600 mb-2"><strong>Description:</strong> {{ $country->description }}</p>
-                                <p class="text-gray-600 mb-2">
+                        <div class="bg-gray-100 p-6 rounded-md shadow-md">
+                            <h3 class="text-lg font-bold text-gray-700">{{ $country->name }}</h3>
+                            
+                            <!-- Capital -->
+                            <p class="text-gray-600 mb-2">
+                                <strong>Capital:</strong> 
+                                <span class="break-words">
+                                    {{ $country->capital ? $country->capital : 'Not provided' }}
+                                </span>
+                            </p>
+                            
+                            <!-- Description -->
+                            <p class="text-gray-600 mb-2 break-words">
+                                <strong>Description:</strong> 
+                                {{ $country->description }}
+                            </p>
+                            
+                            <!-- Submitted By -->
+                            <p class="text-gray-600 mb-2">
                                 <strong>Submitted By:</strong> 
                                 @if ($country->user)
                                     <a 
@@ -117,8 +132,13 @@
                                     Unknown
                                 @endif
                             </p>
-                                <p class="text-gray-600"><strong>Status:</strong> {{ $country->visible ? 'Approved' : 'Pending' }}</p>
-                            </div>
+                            
+                            <!-- Status -->
+                            <p class="text-gray-600">
+                                <strong>Status:</strong> 
+                                {{ $country->visible ? 'Approved' : 'Pending' }}
+                            </p>
+                        </div>
                         @endforeach
                     @endif
                 </div>

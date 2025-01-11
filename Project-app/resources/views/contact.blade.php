@@ -6,8 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Contact Us</title>
 
-    <!-- Fonts -->
-
     <!-- Font Awesome -->
     <link
         rel="stylesheet"

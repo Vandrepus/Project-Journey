@@ -15,6 +15,8 @@
 <!-- Main Content -->
 <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white shadow-lg rounded-lg p-6">
+
+
         <!-- Page Title -->
         <h2 class="text-3xl font-bold text-gray-800 mb-6">Create a New Topic</h2>
         
@@ -24,28 +26,38 @@
 
             <!-- Title Field -->
             <div>
-                <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                <label for="title" class="block text-sm font-medium text-gray-700">Title (max 60 characters)</label>
                 <input 
                     type="text" 
                     name="title" 
                     id="title" 
+                    maxlength="60" 
+                    oninput="updateTitleCount(event)" 
                     class="mt-1 block w-full input input-bordered focus:ring focus:ring-blue-300 focus:ring-opacity-50" 
                     placeholder="Enter the topic title" 
                     required
                 >
+                <p id="titleCounter" class="text-sm text-gray-500 mt-2">
+                    Characters remaining: <span id="titleRemaining">60</span>
+                </p>
             </div>
 
             <!-- Content Field -->
             <div>
-                <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+                <label for="content" class="block text-sm font-medium text-gray-700">Content (max 3000 characters)</label>
                 <textarea 
                     name="content" 
                     id="content" 
                     rows="6" 
+                    maxlength="3000" 
+                    oninput="updateContentCount(event)" 
                     class="mt-1 block w-full textarea textarea-bordered focus:ring focus:ring-blue-300 focus:ring-opacity-50" 
                     placeholder="Write your topic content..." 
                     required
                 ></textarea>
+                <p id="contentCounter" class="text-sm text-gray-500 mt-2">
+                    Characters remaining: <span id="contentRemaining">3000</span>
+                </p>
             </div>
 
             <!-- Action Buttons -->
@@ -66,6 +78,30 @@
         </form>
     </div>
 </main>
+
+<script>
+    function updateTitleCount(event) {
+        const maxLength = 60;
+        const currentLength = event.target.value.length;
+        document.getElementById('titleRemaining').textContent = maxLength - currentLength;
+    }
+
+    function updateContentCount(event) {
+        const maxLength = 3000;
+        const currentLength = event.target.value.length;
+        document.getElementById('contentRemaining').textContent = maxLength - currentLength;
+    }
+
+    // Initialize counters on page load
+    document.addEventListener('DOMContentLoaded', function () {
+        const titleField = document.getElementById('title');
+        const contentField = document.getElementById('content');
+
+        if (titleField) updateTitleCount({ target: titleField });
+        if (contentField) updateContentCount({ target: contentField });
+    });
+</script>
+
 
 <!-- Footer -->
 <footer class="bg-gray-800 text-white text-center py-4">

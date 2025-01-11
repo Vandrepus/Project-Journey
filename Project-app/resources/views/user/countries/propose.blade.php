@@ -30,6 +30,23 @@
                 </div>
             @endif
 
+            <!-- Validation Errors -->
+            @if ($errors->any())
+                <div class="alert alert-error shadow-lg mb-6">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <span>
+                            @foreach ($errors->all() as $error)
+                                {{ $error }}
+                                <br />
+                            @endforeach
+                        </span>
+                    </div>
+                </div>
+            @endif
+
             <!-- Propose Country Form -->
             <form action="{{ route('countries.store') }}" method="POST" class="space-y-6">
                 @csrf
@@ -47,6 +64,19 @@
                     />
                 </div>
 
+                <!-- Capital -->
+                <div>
+                    <label for="capital" class="block text-sm font-medium text-gray-700">Capital</label>
+                    <input
+                        type="text"
+                        name="capital"
+                        id="capital"
+                        class="input input-bordered w-full mt-1"
+                        required
+                        placeholder="Enter the country's capital"
+                    />
+                </div>
+
                 <!-- Description -->
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
@@ -54,9 +84,14 @@
                         name="description"
                         id="description"
                         rows="5"
+                        maxlength="3000"
+                        oninput="updateCharacterCount(event)"
                         class="textarea textarea-bordered w-full mt-1"
-                        placeholder="Provide a brief description"
+                        placeholder="Provide a brief description (max 3000 characters)"
                     ></textarea>
+                    <p id="descriptionCounter" class="text-sm text-gray-500 mt-2">
+                        Characters remaining: <span id="remainingCharacters">3000</span>
+                    </p>
                 </div>
 
                 <!-- Submit Button -->
@@ -76,5 +111,25 @@
     <footer class="bg-gray-800 text-white text-center py-4">
         <p>&copy; {{ date('Y') }} JourneyHub. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript for Character Counter -->
+    <script>
+        function updateCharacterCount(event) {
+            const maxLength = 3000;
+            const currentLength = event.target.value.length;
+            const remainingCharacters = maxLength - currentLength;
+
+            // Update the counter display
+            document.getElementById('remainingCharacters').textContent = remainingCharacters;
+        }
+
+        // Initialize counter if textarea already has content
+        document.addEventListener('DOMContentLoaded', function () {
+            const descriptionField = document.getElementById('description');
+            if (descriptionField) {
+                updateCharacterCount({ target: descriptionField });
+            }
+        });
+    </script>
 </body>
 </html>

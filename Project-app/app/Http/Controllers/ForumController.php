@@ -24,17 +24,18 @@ class ForumController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+            'title' => 'required|string|max:60',
+            'content' => 'required|string|max:3000',
         ]);
 
+        // Create the topic
         Topic::create([
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => Auth::id(),
+            'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('forum.index')->with('success', 'Topic created successfully.');
+        return redirect()->route('forum.index')->with('success', 'Topic created successfully!');
     }
 
     public function show($id)
