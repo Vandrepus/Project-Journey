@@ -49,7 +49,7 @@
                 </div>
             </a>
             <!-- Guide Card 4 -->
-            <a href="{{ route('countries.propose') }}" class="card bg-white shadow hover:shadow-md hover:bg-gray-50 transition-transform transform hover:scale-105">
+            <a href="{{ route('location.propose') }}" class="card bg-white shadow hover:shadow-md hover:bg-gray-50 transition-transform transform hover:scale-105">
                 <div class="card-body items-center text-center">
                     <i class="fa-solid fa-check-circle text-primary text-5xl mb-4"></i>
                     <h3 class="card-title text-xl font-semibold text-gray-800">Propose Destinations</h3>
@@ -62,6 +62,22 @@
                     <i class="fa-solid fa-envelope text-primary text-5xl mb-4"></i>
                     <h3 class="card-title text-xl font-semibold text-gray-800">Contact Support</h3>
                     <p class="text-gray-600">Have questions? Reach out to our team for support and assistance.</p>
+                </div>
+            </a>
+            <!-- Guide Card 6 -->
+            <a href="{{ route('articles.list') }}" class="card bg-white shadow hover:shadow-md hover:bg-gray-50 transition-transform transform hover:scale-105">
+                <div class="card-body items-center text-center">
+                    <i class="fa-solid fa-newspaper text-primary text-5xl mb-4"></i>
+                    <h3 class="card-title text-xl font-semibold text-gray-800">Read News</h3>
+                    <p class="text-gray-600">Stay updated with the latest travel news and articles from our editors.</p>
+                </div>
+            </a>
+            <!-- Guide Card 7 -->
+            <a href="{{ route('countries.propose') }}" class="card bg-white shadow hover:shadow-md hover:bg-gray-50 transition-transform transform hover:scale-105">
+                <div class="card-body items-center text-center">
+                    <i class="fa-solid fa-globe text-primary text-5xl mb-4"></i>
+                    <h3 class="card-title text-xl font-semibold text-gray-800">Propose a Country</h3>
+                    <p class="text-gray-600">Help us expand our database by suggesting a new country for others to explore.</p>
                 </div>
             </a>
         </div>

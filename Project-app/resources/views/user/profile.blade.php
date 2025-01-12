@@ -63,37 +63,27 @@
                     @if($user->favoriteSights->isNotEmpty())
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
                             @foreach($user->favoriteSights as $sight)
-                                <div class="card shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 bg-base-100">
-                                    <figure>
-                                        <img 
-                                            src="{{ $sight->image_url ?? 'https://via.placeholder.com/300x200' }}" 
-                                            alt="{{ $sight->name }}" 
-                                            class="rounded-t-lg object-cover w-full h-48"
+                            <div class="card shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 bg-base-100">
+                                <figure>
+                                    <img 
+                                        src="{{ $sight->image_url ?? 'https://via.placeholder.com/300x200' }}" 
+                                        alt="{{ $sight->name }}" 
+                                        class="rounded-t-lg object-cover w-full h-48"
+                                    >
+                                </figure>
+                                <div class="card-body p-4">
+                                    <h3 class="text-lg font-bold text-gray-800">{{ $sight->name }}</h3>
+                                    <p class="text-sm text-gray-600">{{ Str::limit($sight->description, 100) }}</p>
+                                    <div class="mt-4 flex justify-center">
+                                        <a 
+                                            href="{{ route('sights.show', $sight) }}" 
+                                            class="btn btn-link text-blue-500 hover:text-blue-600 text-sm"
                                         >
-                                    </figure>
-                                    <div class="card-body p-4">
-                                        <h3 class="text-lg font-bold text-gray-800">{{ $sight->name }}</h3>
-                                        <p class="text-sm text-gray-600">{{ Str::limit($sight->description, 100) }}</p>
-                                        <div class="mt-4 flex justify-between items-center">
-                                            <a 
-                                                href="{{ route('sights.show', $sight) }}" 
-                                                class="btn btn-link text-blue-500 hover:text-blue-600 text-sm"
-                                            >
-                                                View Details
-                                            </a>
-                                            <form method="POST" action="{{ route('favorites.destroy', $sight) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button 
-                                                    type="submit" 
-                                                    class="btn btn-link text-red-500 hover:text-red-600 text-sm"
-                                                >
-                                                    Remove
-                                                </button>
-                                            </form>
-                                        </div>
+                                            View Details
+                                        </a>
                                     </div>
                                 </div>
+                            </div>
                             @endforeach
                         </div>
                     @else
@@ -109,4 +99,3 @@
         <p>&copy; {{ date('Y') }} JourneyHub. All rights reserved.</p>
     </footer>
 </body>
-</html>

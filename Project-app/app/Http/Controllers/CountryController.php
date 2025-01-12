@@ -13,12 +13,20 @@ class CountryController extends Controller
         return view('user.countries.index', compact('countries'));
     }
 
-    public function show(Country $country)
+    public function show(Country $country, Request $request)
     {
-        // Retrieve only the sights that are visible
-        $sights = $country->sights()->where('visible', 1)->get();
+        // Retrieve the rating filter value from the request
+        $rating = $request->get('rating', null);
 
-        return view('user.countries.show', compact('country', 'sights'));
+        // Retrieve sights based on the rating filter
+        $sights = $country->sights()
+            ->where('visible', 1)
+            ->when($rating, function ($query, $rating) {
+                return $query->where('average_rating', '>=', $rating);
+            })
+            ->get();
+
+        return view('user.countries.show', compact('country', 'sights', 'rating'));
     }
 
     public function destroy($id)

@@ -19,7 +19,27 @@
             <!-- Country Details -->
             <div class="p-8 bg-blue-50">
                 <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $country->name }}</h1>
+                <p class="text-gray-700 text-lg">
+                    <strong>Capital:</strong> 
+                    {{ $country->capital ?? 'Not provided' }}
+                </p>
                 <p class="text-gray-700 text-lg">{{ $country->description }}</p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="p-6 bg-gray-50">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Filter by Average Rating</h3>
+                <form method="GET" action="{{ route('countries.show', $country->id) }}" class="flex items-center gap-4">
+                    <select name="rating" id="rating-filter" class="select select-bordered w-40">
+                        <option value="" selected>All Ratings</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars & Up</option>
+                        <option value="3">3 Stars & Up</option>
+                        <option value="2">2 Stars & Up</option>
+                        <option value="1">1 Star & Up</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
             </div>
 
             <!-- Sights Section -->
@@ -28,7 +48,7 @@
                 @if(count($sights) > 0)
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($sights as $sight)
-                            @if($sight->visible) <!-- Only show visible sights -->
+                            @if($sight->visible && (!$rating || $sight->average_rating >= $rating)) <!-- Only show visible sights matching the filter -->
                                 <div class="bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
                                     <a href="{{ route('sights.show', $sight->id) }}" class="block">
                                         <!-- Sight Image -->
@@ -44,6 +64,14 @@
                                             </h3>
                                             <p class="text-sm text-gray-600 mt-2">
                                                 {{ Str::limit($sight->description, 100) }}
+                                            </p>
+                                            <p class="text-sm text-gray-500 mt-2">
+                                                <strong>Category:</strong> {{ $sight->category }}
+                                            </p>
+                                            <p class="text-sm text-yellow-500 mt-2 flex items-center">
+                                                <i class="fas fa-star mr-1"></i>
+                                                <strong>Rating:</strong> 
+                                                {{ $sight->average_rating ? number_format($sight->average_rating, 1) : 'No ratings yet' }}
                                             </p>
                                         </div>
                                     </a>
