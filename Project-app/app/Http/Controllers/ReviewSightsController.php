@@ -30,6 +30,8 @@ class ReviewSightsController extends Controller
     {
         $sight = Sight::findOrFail($id);
         $sight->delete(); // Delete the sight from the database
-        return redirect()->back()->with('success', 'Sight declined and removed from the database.');
+
+        // Redirect to the review page with a success message
+        return redirect()->route('admin.sights.index')->with('success', 'Sight declined and removed from the database.');
     }
 }

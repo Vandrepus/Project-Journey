@@ -14,9 +14,11 @@ class AdminContactMessageController extends Controller
         return view('admin.contact-messages.index', compact('messages'));
     }
 
-    public function show(ContactMessage $messages): View
+    public function show($id)
     {
-        return view('admin.contact-messages.show', compact('messages')); 
+        $message = ContactMessage::findOrFail($id);
+
+        return view('admin.contact-messages.show', compact('message'));
     }
 
     public function destroy(ContactMessage $message): RedirectResponse

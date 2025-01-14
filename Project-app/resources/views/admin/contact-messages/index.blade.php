@@ -54,7 +54,14 @@
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">{{ $message->created_at->format('Y-m-d H:i') }}</td>
                                     <td class="px-4 py-3 text-center">
-                                        <form action="{{ route('admin.contact-messages.destroy', $message->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?')">
+                                        <a 
+                                            href="{{ route('admin.contact-messages.show', $message->id) }}" 
+                                            class="text-blue-500 hover:text-blue-700 flex items-center space-x-1"
+                                        >
+                                            <i class="fas fa-eye"></i>
+                                            <span>View</span>
+                                        </a>
+                                        <form action="{{ route('admin.contact-messages.destroy', $message->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?')" class="mt-2">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500 hover:text-red-700 flex items-center space-x-1">

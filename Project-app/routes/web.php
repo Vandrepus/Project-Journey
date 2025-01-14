@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ContactController; // Replace with your actual controller
+use App\Http\Controllers\ContactController; 
 use App\Http\Controllers\AdminContactMessageController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\SightController;
@@ -65,6 +65,7 @@ Route::middleware(['web', 'auth', 'admin'])->group(function () {
 
 
     Route::get('/admin/contact-messages', [AdminContactMessageController::class, 'index'])->name('admin.contact-messages.index');
+    Route::get('/admin/contact-messages/{id}', [AdminContactMessageController::class, 'show'])->name('admin.contact-messages.show');
     Route::delete('/admin/contact-messages/{message}', [AdminContactMessageController::class, 'destroy'])->name('admin.contact-messages.destroy');
 });
 
