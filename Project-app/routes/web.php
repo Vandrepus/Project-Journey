@@ -42,7 +42,6 @@ Route::get('/contact', function () {
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
 Route::middleware(['web', 'auth'])->group(function () {
-    // Dashboard Route
     Route::get('/dashboard', function () {
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
@@ -51,7 +50,6 @@ Route::middleware(['web', 'auth'])->group(function () {
         }
     })->name('dashboard');
 
-    // Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -62,7 +60,6 @@ Route::middleware(['web', 'auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
-
 
     Route::get('/admin/contact-messages', [AdminContactMessageController::class, 'index'])->name('admin.contact-messages.index');
     Route::get('/admin/contact-messages/{id}', [AdminContactMessageController::class, 'show'])->name('admin.contact-messages.show');
@@ -75,10 +72,9 @@ Route::get('/sights/{sight}', [SightController::class, 'show'])->name('sights.sh
 
 Route::post('/reviews', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
 
-Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/forum', [ForumController::class, 'index'])->name('forum.index');
+    Route::get('/forum/rules', [ForumController::class, 'rules'])->name('forum.rules');
     Route::get('/forum/create', [ForumController::class, 'create'])->name('forum.create');
     Route::post('/forum', [ForumController::class, 'store'])->name('forum.store');
     Route::get('/forum/{id}', [ForumController::class, 'show'])->name('forum.show');
@@ -103,13 +99,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/admin/users/{id}', [UserManagementController::class, 'update'])->name('admin.users.update');
 });
 
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/locations/propose', [ProposeLocationController::class, 'create'])->name('location.propose');
     Route::post('/locations/propose', [ProposeLocationController::class, 'store'])->name('location.store');
 });
-
 
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/admin/sights', [ReviewSightsController::class, 'index'])->name('admin.sights.index');
@@ -121,7 +114,6 @@ Route::middleware('auth', 'admin')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    
     Route::get('/propose', [ProposeCountryController::class, 'create'])->name('countries.propose');
     Route::post('/propose', [ProposeCountryController::class, 'store'])->name('countries.store');
 
@@ -141,9 +133,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/{ticket}/reply', [TicketController::class, 'reply'])->name('support.reply'); // Reply to ticket
     });
 });
-
-
-
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/tickets', [AdminTicketController::class, 'index'])->name('admin.tickets.index');
@@ -166,7 +155,6 @@ Route::middleware('auth', 'admin')->group(function () {
 Route::get('/articles', [ArticleController::class, 'list'])->name('articles.list');
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
 Route::post('/articles/{article}/comments', [CommentController::class, 'store'])->name('comments.store');
-
 
 Route::middleware('auth')->group(function () {
     Route::post('/report', [ReportController::class, 'store'])->name('reports.store');

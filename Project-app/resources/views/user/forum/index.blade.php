@@ -1,4 +1,3 @@
-<!-- resources/views/user/forum/index.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,17 +17,46 @@
     <div class="bg-white shadow-lg rounded-lg p-6">
         <!-- Forum Header -->
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Forum</h2>
+            <a href="{{ route('forum.index') }}" class="text-2xl font-bold text-gray-800 hover:underline">
+                Forum
+            </a>
             <a href="{{ route('forum.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus mr-2"></i>Create New Topic
             </a>
+        </div>
+
+        <!-- Search Bar -->
+        <form method="GET" action="{{ route('forum.index') }}" class="mb-6">
+            <div class="flex items-center">
+                <input 
+                    type="text" 
+                    name="search" 
+                    value="{{ request('search') }}" 
+                    placeholder="Search topics..." 
+                    class="flex-grow border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-200"
+                />
+                <button 
+                    type="submit" 
+                    class="ml-2 btn btn-primary px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+
+        <!-- Forums Rules and Guidelines Notice -->
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
+            <p class="font-bold">Welcome!</p>
+            <p>If this is your first visit, be sure to check out the 
+                <a href="{{ route('forum.rules') }}" class="text-blue-600 hover:underline font-semibold">Forum Rules and Guidelines</a>.
+            </p>
         </div>
 
         <!-- Forum Topics List -->
         @if($topics->count() > 0)
             <div class="divide-y divide-gray-200">
                 @foreach($topics as $topic)
-                <div class="py-4 flex justify-between items-center">
+                    <div class="py-4 flex justify-between items-center">
                         <!-- Topic Details -->
                         <div>
                             <a href="{{ route('forum.show', $topic->id) }}" class="text-lg font-medium text-blue-600 hover:underline">
@@ -64,6 +92,7 @@
         @else
             <p class="text-gray-500 text-center">No topics have been posted yet. Be the first to start a discussion!</p>
         @endif
+    </div>
 </main>
 
 <!-- Footer -->

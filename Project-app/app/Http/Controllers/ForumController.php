@@ -10,9 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class ForumController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $topics = Topic::all();
+        $search = $request->input('search'); // Retrieve the search input
+
+        $topics = Topic::query()
+            ->when($search, function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%"); // Apply search filter
+            })
+            ->latest()
+            ->get();
+
         return view('user.forum.index', compact('topics'));
     }
 
@@ -49,5 +57,11 @@ class ForumController extends Controller
         $topic->delete();
         return redirect()->route('forum.index')->with('success', 'Topic deleted successfully.');
     }
+
+    public function rules()
+    {
+        return view('user.forum.rules');
+    }
+
 
 }
