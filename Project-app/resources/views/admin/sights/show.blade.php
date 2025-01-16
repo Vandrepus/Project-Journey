@@ -85,6 +85,12 @@
                     </button>
                 </form>
             </div>
+            <!-- Edit Button -->
+            <div class="mt-6 text-center">
+                <a href="{{ route('admin.sights.edit', $sight->id) }}" class="px-6 py-2 bg-yellow-500 text-white text-sm font-medium rounded-md hover:bg-yellow-600 transition duration-150">
+                    Edit
+                </a>
+            </div>
 
             <!-- Back Button -->
             <div class="mt-6 text-center">

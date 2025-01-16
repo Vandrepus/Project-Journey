@@ -27,7 +27,17 @@
     <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Sight Details -->
         <div class="bg-white shadow-xl p-6">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $sight->name }}</h1>
+            <div class="flex justify-between items-center">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $sight->name }}</h1>
+                @if(auth()->user() && auth()->user()->isAdmin())
+                    <a 
+                        href="{{ route('admin.sights.edit', $sight->id) }}" 
+                        class="btn btn-primary px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
+                    >
+                        <i class="fas fa-edit mr-2"></i>Edit Sight
+                    </a>
+                @endif
+            </div>
             <p class="text-gray-700 text-lg mb-4">{{ $sight->description }}</p>
             <p class="text-gray-700"><strong>Location:</strong> {{ $sight->location }}</p>
             <p class="text-gray-700"><strong>Category:</strong> {{ $sight->category }}</p>
