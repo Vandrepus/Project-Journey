@@ -106,18 +106,18 @@
 
                         <div class="flex mt-4 space-x-4">
                             @auth
-                                <!-- Admin-Only Delete Button -->
-                                @if (auth()->user()->isAdmin())
-                                    <form method="POST" action="{{ route('admin.reviews.delete', $review->id) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button 
-                                            type="submit" 
-                                            class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                                            <i class="fas fa-trash-alt mr-2"></i>Delete
-                                        </button>
-                                    </form>
-                                @endif
+                                <!-- Admin-Only Delete Button and reviews owner button -->
+                                @if (auth()->user()->isAdmin() || auth()->id() === $review->user_id)
+                                <form method="POST" action="{{ route('reviews.delete', $review->id) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                        <i class="fas fa-trash-alt mr-2"></i>Delete
+                                    </button>
+                                </form>
+                            @endif
 
 
                                 <!-- Report Button -->
