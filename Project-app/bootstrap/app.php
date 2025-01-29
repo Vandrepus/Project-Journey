@@ -18,5 +18,23 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Handle 401 Unauthorized
+        $exceptions->render(function (AuthenticationException $e, $request) {
+            return response()->view('errors.401', [], 401);
+        });
+
+        // Handle 403 Forbidden
+        $exceptions->render(function (AccessDeniedHttpException $e, $request) {
+            return response()->view('errors.403', [], 403);
+        });
+
+        // Handle 404 Not Found
+        $exceptions->render(function (NotFoundHttpException $e, $request) {
+            return response()->view('errors.404', [], 404);
+        });
+
+        // Handle 500 Internal Server Error
+        $exceptions->render(function (Throwable $e, $request) {
+            return response()->view('errors.500', [], 500);
+        });
     })->create();
