@@ -21,7 +21,7 @@
                         <a href="{{ route('admin.countries.index') }}" class="btn btn-ghost btn-sm {{ request()->routeIs('admin.countries.index') ? 'btn-active' : '' }}">Review Countries</a>
                         <a href="{{ route('admin.tickets.index') }}" class="btn btn-ghost btn-sm {{ request()->routeIs('admin.tickets.index') ? 'btn-active' : '' }}">Manage Tickets</a>
                     @else
-                        <a href="{{ route('articles.list') }}" class="btn btn-ghost btn-sm {{ request()->routeIs('articles.list) ? 'btn-active' : '' }}">What's New</a>
+                        <a href="{{ route('articles.list') }}" class="btn btn-ghost btn-sm {{ request()->routeIs('articles.list') ? 'btn-active' : '' }}">What's New</a>
                         <a href="{{ route('countries.index') }}" class="btn btn-ghost btn-sm {{ request()->routeIs('countries.index') ? 'btn-active' : '' }}">Countries</a>
                         <a href="{{ route('forum.index') }}" class="btn btn-ghost btn-sm {{ request()->routeIs('forum.index') ? 'btn-active' : '' }}">Forum</a>
                         <a href="{{ route('location.propose') }}" class="btn btn-ghost btn-sm {{ request()->routeIs('location.propose') ? 'btn-active' : '' }}">Propose Location</a>
