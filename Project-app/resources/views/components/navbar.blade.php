@@ -14,11 +14,22 @@
                 </a>
             </li>
         @endforeach
-        <li>
-            <a href="{{ route('login') }}">
-                <button>Log In</button>
-            </a>
-        </li>
+        
+        <!-- If the user is logged in, show "Dashboard" -->
+        @auth
+            <li>
+                <a href="{{ auth()->user()->usertype === 'admin' ? route('admin.dashboard') : route('dashboard') }}">
+                    <button>Dashboard</button>
+                </a>
+            </li>
+        @else
+            <!-- If the user is not logged in, show "Log In" -->
+            <li>
+                <a href="{{ route('login') }}">
+                    <button>Log In</button>
+                </a>
+            </li>
+        @endauth
     </ul>
 </nav>
 
