@@ -13,6 +13,7 @@ class CreateCountriesTable extends Migration
             $table->string('name')->unique();
             $table->string('capital');
             $table->text('description')->nullable();
+            $table->string('picture')->nullable();
             $table->foreignId('submitted_by')->constrained('users')->onDelete('cascade');
             $table->boolean('visible')->default(false); // Default to invisible
             $table->timestamps();

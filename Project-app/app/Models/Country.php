@@ -12,7 +12,7 @@ class Country extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['name','capital', 'description', 'submitted_by', 'visible'];
+    protected $fillable = ['name','capital', 'description', 'picture', 'submitted_by', 'visible'];
 
     /**
      * Relationship with Sight model.

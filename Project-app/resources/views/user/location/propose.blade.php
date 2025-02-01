@@ -31,7 +31,6 @@
       @endif
 
       <!-- Form -->
-      <!-- Note: Added enctype for file uploads -->
       <form action="{{ route('location.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
 

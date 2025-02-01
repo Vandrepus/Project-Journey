@@ -101,44 +101,57 @@
                         <p class="text-center text-gray-500">No countries available for details.</p>
                     @else
                         @foreach ($proposedCountries as $country)
-                        <div class="bg-gray-100 p-6 rounded-md shadow-md">
-                            <h3 class="text-lg font-bold text-gray-700">{{ $country->name }}</h3>
-                            
-                            <!-- Capital -->
-                            <p class="text-gray-600 mb-2">
-                                <strong>Capital:</strong> 
-                                <span class="break-words">
-                                    {{ $country->capital ? $country->capital : 'Not provided' }}
-                                </span>
-                            </p>
-                            
-                            <!-- Description -->
-                            <p class="text-gray-600 mb-2 break-words">
-                                <strong>Description:</strong> 
-                                {{ $country->description }}
-                            </p>
-                            
-                            <!-- Submitted By -->
-                            <p class="text-gray-600 mb-2">
-                                <strong>Submitted By:</strong> 
-                                @if ($country->user)
-                                    <a 
-                                        href="{{ route('user.profile', $country->user->username) }}" 
-                                        class="text-blue-500 hover:underline"
-                                    >
-                                        {{ $country->user->username }}
-                                    </a>
-                                @else
-                                    Unknown
-                                @endif
-                            </p>
-                            
-                            <!-- Status -->
-                            <p class="text-gray-600">
-                                <strong>Status:</strong> 
-                                {{ $country->visible ? 'Approved' : 'Pending' }}
-                            </p>
-                        </div>
+                            <div class="bg-gray-100 p-6 rounded-md shadow-md">
+                                <h3 class="text-lg font-bold text-gray-700">{{ $country->name }}</h3>
+                                
+                                <!-- Country Picture -->
+                                <div class="mt-4">
+                                    @if ($country->picture)
+                                        <img 
+                                            src="{{ asset('storage/' . $country->picture) }}" 
+                                            alt="{{ $country->name }} picture" 
+                                            class="w-full max-w-md rounded-lg shadow-md"
+                                        />
+                                    @else
+                                        <p class="text-gray-500 italic">No photo available for this country.</p>
+                                    @endif
+                                </div>
+                                
+                                <!-- Capital -->
+                                <p class="text-gray-600 mt-4">
+                                    <strong>Capital:</strong> 
+                                    <span class="break-words">
+                                        {{ $country->capital ? $country->capital : 'Not provided' }}
+                                    </span>
+                                </p>
+                                
+                                <!-- Description -->
+                                <p class="text-gray-600 mb-2 break-words">
+                                    <strong>Description:</strong> 
+                                    {{ $country->description }}
+                                </p>
+                                
+                                <!-- Submitted By -->
+                                <p class="text-gray-600 mb-2">
+                                    <strong>Submitted By:</strong> 
+                                    @if ($country->user)
+                                        <a 
+                                            href="{{ route('user.profile', $country->user->username) }}" 
+                                            class="text-blue-500 hover:underline"
+                                        >
+                                            {{ $country->user->username }}
+                                        </a>
+                                    @else
+                                        Unknown
+                                    @endif
+                                </p>
+                                
+                                <!-- Status -->
+                                <p class="text-gray-600">
+                                    <strong>Status:</strong> 
+                                    {{ $country->visible ? 'Approved' : 'Pending' }}
+                                </p>
+                            </div>
                         @endforeach
                     @endif
                 </div>
