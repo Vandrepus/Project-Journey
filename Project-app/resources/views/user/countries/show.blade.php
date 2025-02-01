@@ -51,12 +51,18 @@
                             @if($sight->visible && (!$rating || $sight->average_rating >= $rating)) <!-- Only show visible sights matching the filter -->
                                 <div class="bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
                                     <a href="{{ route('sights.show', $sight->id) }}" class="block">
-                                        <!-- Sight Image -->
-                                        <img 
-                                            src="{{ $sight->image_url ?? 'https://via.placeholder.com/300' }}" 
-                                            alt="{{ $sight->name }}" 
-                                            class="w-full h-40 object-cover"
-                                        >
+                                        <!-- Sight Image with Fallback -->
+                                        <div class="relative w-full h-40 flex items-center justify-center bg-gray-200 rounded-lg overflow-hidden">
+                                            @if ($sight->photo)
+                                                <img 
+                                                    src="{{ asset('storage/' . $sight->photo) }}" 
+                                                    alt="{{ $sight->name }}" 
+                                                    class="w-full h-full object-cover"
+                                                />
+                                            @else
+                                                <i class="fas fa-image text-gray-500 text-4xl"></i>
+                                            @endif
+                                        </div>
                                         <!-- Sight Details -->
                                         <div class="p-4">
                                             <h3 class="text-lg font-medium text-gray-800 truncate">

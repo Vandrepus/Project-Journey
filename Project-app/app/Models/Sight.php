@@ -11,7 +11,7 @@ class Sight extends Model
 
     protected $table = 'sights';
 
-    protected $fillable = ['country_id', 'name', 'description', 'location', 'visible', 'category', 'opening_hours', 'average_rating', 'map_url', 'submitted_by'];
+    protected $fillable = ['country_id', 'name', 'description', 'location', 'visible', 'category', 'opening_hours', 'average_rating', 'map_url', 'photo', 'submitted_by'];
 
     public function country()
     {

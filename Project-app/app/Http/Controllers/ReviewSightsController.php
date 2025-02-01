@@ -24,7 +24,8 @@ class ReviewSightsController extends Controller
     {
         $sight = Sight::findOrFail($id);
         $sight->update(['visible' => 1]); // Make sight visible
-        return redirect()->back()->with('success', 'Sight approved successfully!');
+
+        return redirect()->route('admin.sights.index')->with('success', 'Sight approved successfully!');
     }
 
     public function decline($id)
@@ -45,24 +46,45 @@ class ReviewSightsController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'country_id' => 'required|exists:countries,id',
-            'location' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-            'opening_hours' => [
-                'required',
-                'regex:/^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i'
-            ],
-            'map_url' => 'nullable|url',
-            'description' => 'nullable|string',
-        ]);
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'country_id' => 'required|exists:countries,id',
+        'location' => 'required|string|max:255',
+        'category' => 'required|string|max:255',
+        'opening_hours' => [
+            'required',
+            'regex:/^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i'
+        ],
+        'map_url' => 'nullable|url',
+        'description' => 'required|string|max:500',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-        // Find the sight and update it
-        $sight = Sight::findOrFail($id);
-        $sight->update($validatedData);
+    $sight = Sight::findOrFail($id);
 
-        return redirect()->back()->with('success', 'Sight updated successfully!');
+    // Handle photo upload only if a new photo is provided
+    if ($request->hasFile('photo')) {
+        // Delete the old photo if it exists
+        if ($sight->photo && file_exists(storage_path('app/public/' . $sight->photo))) {
+            unlink(storage_path('app/public/' . $sight->photo));
+        }
+
+        // Store the new photo
+        $photoPath = $request->file('photo')->store('sight_photos', 'public');
+        $validatedData['photo'] = $photoPath;
+    } else {
+        // Do not overwrite the photo if no new photo is uploaded
+        unset($validatedData['photo']);
     }
+
+    // Update the sight with validated data
+    $sight->update($validatedData);
+
+    return redirect()->back()->with('success', 'Sight updated successfully!');
+}
+
+
+
+
 }

@@ -21,39 +21,54 @@ class ProposeLocationController extends Controller
     // Store the proposed sight in the database (invisible until admin approval)
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:3000',
-            'location' => 'required|string|max:255',
-            'country_id' => 'required|exists:countries,id', // Ensure valid country ID
-            'category' => 'required|string|max:255',
-            'opening_hours' => [
+        // Validate incoming request data, including a single photo upload
+        $validatedData = $request->validate([
+            'name'           => 'required|string|max:255',
+            'description'    => 'required|string|max:3000',
+            'location'       => 'required|string|max:255',
+            'country_id'     => 'required|exists:countries,id',
+            'category'       => 'required|string|max:255',
+            'opening_hours'  => [
                 'required',
                 'regex:/^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i',
-            ], // Enforce "9 AM - 5 PM" format
-            'map_url' => 'nullable|url', // Optional field, must be a valid URL if provided
+            ],
+            'map_url'        => 'nullable|url',
+            'photo'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Validate if the selected country is approved
-        $country = Country::where('id', $request->country_id)->where('visible', true)->first();
+        $country = Country::where('id', $validatedData['country_id'])
+            ->where('visible', true)
+            ->first();
 
         if (!$country) {
-            return redirect()->back()->withErrors(['country_id' => 'The selected country is not approved.']);
+            return redirect()->back()->withErrors([
+                'country_id' => 'The selected country is not approved.'
+            ]);
+        }
+
+        // Handle the photo upload if a file is provided
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            // Store the photo in storage/app/public/sight_photos
+            $photoPath = $request->file('photo')->store('sight_photos', 'public');
         }
 
         // Store the proposed sight as invisible by default
         Sight::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'location' => $request->location,
-            'country_id' => $request->country_id,
-            'category' => $request->category,
-            'opening_hours' => $request->opening_hours,
-            'map_url' => $request->map_url,
-            'visible' => 0, // Invisible by default
-            'submitted_by' => auth()->id(), // Track the user who submitted the sight
+            'name'           => $validatedData['name'],
+            'description'    => $validatedData['description'],
+            'location'       => $validatedData['location'],
+            'country_id'     => $validatedData['country_id'],
+            'category'       => $validatedData['category'],
+            'opening_hours'  => $validatedData['opening_hours'],
+            'map_url'        => $validatedData['map_url'] ?? null,
+            'photo'          => $photoPath, // Save the single photo path or null if not provided
+            'visible'        => 0, // Invisible by default
+            'submitted_by'   => auth()->id(), // Track the user who submitted the sight
         ]);
 
-        return redirect()->route('location.propose')->with('success', 'Sight proposed successfully! Awaiting admin approval.');
+        return redirect()->route('location.propose')
+                         ->with('success', 'Sight proposed successfully! Awaiting admin approval.');
     }
 }

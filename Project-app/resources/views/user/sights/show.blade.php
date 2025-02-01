@@ -26,43 +26,88 @@
     <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Sight Details -->
-        <div class="bg-white shadow-xl p-6">
-            <div class="flex justify-between items-center">
-                <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $sight->name }}</h1>
-                @if(auth()->user() && auth()->user()->isAdmin())
-                    <a 
-                        href="{{ route('admin.sights.edit', $sight->id) }}" 
-                        class="btn btn-primary px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
-                    >
-                        <i class="fas fa-edit mr-2"></i>Edit Sight
-                    </a>
-                @endif
-            </div>
-            <p class="text-gray-700 text-lg mb-4">{{ $sight->description }}</p>
-            <p class="text-gray-700"><strong>Location:</strong> {{ $sight->location }}</p>
-            <p class="text-gray-700"><strong>Category:</strong> {{ $sight->category }}</p>
-            <p class="text-gray-700"><strong>Opening Hours:</strong> {{ $sight->opening_hours }}</p>
-            <p class="text-gray-700"><strong>Map:</strong> 
-                @if ($sight->map_url)
-                    <a href="{{ $sight->map_url }}" target="_blank" class="text-indigo-600 hover:underline">
-                        View on Map
-                    </a>
-                @else
-                    None
-                @endif
-            </p>
+            <div class="bg-white shadow-xl p-6">
+                <div class="flex flex-col lg:flex-row gap-6">
+                    <!-- Sight Image Section -->
+                    <div class="lg:w-1/3 flex justify-center items-center">
+                        <div class="relative w-full h-64 bg-gray-100 rounded-lg overflow-hidden">
+                            @if ($sight->photo)
+                                <a href="javascript:void(0);" onclick="openPhotoModal()">
+                                    <img
+                                        src="{{ asset('storage/' . $sight->photo) }}"
+                                        alt="{{ $sight->name }}"
+                                        class="w-full h-full object-cover"
+                                    />
+                                </a>
+                            @else
+                            <div class="flex flex-col items-center text-gray-500">
+                                <i class="fas fa-image text-6xl"></i>
+                                <p class="mt-2 text-lg font-medium">No photo available</p>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
 
-            <div class="mt-6">
-                <h2 class="text-2xl font-semibold text-gray-800">Average Rating</h2>
-                <div class="flex items-center mt-2">
-                    @if ($sight->average_rating)
-                        <span class="text-3xl font-bold text-yellow-500 mr-2">{{ number_format($sight->average_rating, 1) }}</span>
-                        <i class="fas fa-star text-yellow-500"></i>
-                    @else
-                        <span class="text-gray-500">No ratings yet</span>
-                    @endif
+                    <!-- Full-Size Image Modal -->
+                    <div id="photoModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+                        <div class="relative bg-white p-4 rounded-lg shadow-lg max-w-2xl w-full">
+                            <!-- Close Button -->
+                            <button onclick="closePhotoModal()" class="absolute top-2 right-2 text-gray-800 hover:text-red-600 text-3xl font-bold">
+                                &times;
+                            </button>
+
+                            @if ($sight->photo)
+                                <img 
+                                    src="{{ asset('storage/' . $sight->photo) }}" 
+                                    alt="{{ $sight->name }}" 
+                                    class="w-full max-h-[75vh] object-contain rounded-lg"
+                                />
+                            @endif
+                        </div>
+                    </div>
+
+                    <!-- Sight Information -->
+                    <div class="w-full lg:w-1/2">
+                        <div class="flex justify-between items-center">
+                            <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ $sight->name }}</h1>
+                            @if(auth()->user() && auth()->user()->isAdmin())
+                                <a 
+                                    href="{{ route('admin.sights.edit', $sight->id) }}" 
+                                    class="btn btn-primary px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center"
+                                >
+                                    <i class="fas fa-edit mr-2"></i>Edit Sight
+                                </a>
+                            @endif
+                        </div>
+                        <p class="text-gray-700 text-lg mb-4">{{ $sight->description }}</p>
+                        <p class="text-gray-700"><strong>Location:</strong> {{ $sight->location }}</p>
+                        <p class="text-gray-700"><strong>Category:</strong> {{ $sight->category }}</p>
+                        <p class="text-gray-700"><strong>Opening Hours:</strong> {{ $sight->opening_hours }}</p>
+                        <p class="text-gray-700"><strong>Map:</strong> 
+                            @if ($sight->map_url)
+                                <a href="{{ $sight->map_url }}" target="_blank" class="text-indigo-600 hover:underline">
+                                    View on Map
+                                </a>
+                            @else
+                                None
+                            @endif
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h2 class="text-2xl font-semibold text-gray-800">Average Rating</h2>
+                    <div class="flex items-center mt-2">
+                        @if ($sight->average_rating)
+                            <span class="text-3xl font-bold text-yellow-500 mr-2">{{ number_format($sight->average_rating, 1) }}</span>
+                            <i class="fas fa-star text-yellow-500"></i>
+                        @else
+                            <span class="text-gray-500">No ratings yet</span>
+                        @endif
+                    </div>
                 </div>
             </div>
+
 
             <!-- Add to Favorites Button -->
             @auth
@@ -254,6 +299,17 @@
             updateCharacterCount({ target: reviewField });
         }
     });
+
+    
+    function openPhotoModal() {
+        document.getElementById('photoModal').classList.remove('hidden');
+    }
+
+    function closePhotoModal() {
+        document.getElementById('photoModal').classList.add('hidden');
+    }
+
+
     </script>
 
 
