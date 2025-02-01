@@ -23,8 +23,7 @@ class ReviewSightsController extends Controller
     public function approve($id)
     {
         $sight = Sight::findOrFail($id);
-        $sight->update(['visible' => 1]); // Make sight visible
-
+        $sight->update(['visible' => 1]);
         return redirect()->route('admin.sights.index')->with('success', 'Sight approved successfully!');
     }
 

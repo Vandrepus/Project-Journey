@@ -68,7 +68,6 @@ class ProposeLocationController extends Controller
             'submitted_by'   => auth()->id(), // Track the user who submitted the sight
         ]);
 
-        return redirect()->route('location.propose')
-                         ->with('success', 'Sight proposed successfully! Awaiting admin approval.');
+        return redirect()->route('location.propose')->with('success', 'Sight proposed successfully! Awaiting admin approval.');
     }
 }

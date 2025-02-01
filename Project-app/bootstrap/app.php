@@ -32,9 +32,4 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (NotFoundHttpException $e, $request) {
             return response()->view('errors.404', [], 404);
         });
-
-        // Handle 500 Internal Server Error
-        $exceptions->render(function (Throwable $e, $request) {
-            return response()->view('errors.500', [], 500);
-        });
     })->create();
