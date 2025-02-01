@@ -81,6 +81,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/admin/sights/{id}/decline', [ReviewSightsController::class, 'decline'])->name('admin.sights.decline');
     //countries approve
     Route::get('/admin/countries', [AdminCountryController::class, 'index'])->name('admin.countries.index');
+    Route::get('/admin/countries/{id}/edit', [AdminCountryController::class, 'edit'])->name('admin.country.edit');
+    Route::patch('/admin/countries/{country}', [AdminCountryController::class, 'update'])->name('admin.country.update');
     Route::patch('/admin/countries/{id}/approve', [AdminCountryController::class, 'approve'])->name('admin.country.approve');
     Route::delete('/admin/countries/{id}/decline', [AdminCountryController::class, 'decline'])->name('admin.country.decline');
     //support
