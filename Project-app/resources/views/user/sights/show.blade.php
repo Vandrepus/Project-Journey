@@ -196,19 +196,19 @@
                     
                     <!-- Review Content -->
                     <div class="form-control">
-                        <label for="content" class="label font-medium text-gray-700">Your Review (max 300 characters)</label>
+                        <label for="content" class="label font-medium text-gray-700">Your Review (max 600 characters)</label>
                         <textarea
                             id="content"
                             name="content"
                             rows="5"
-                            maxlength="300"
+                            maxlength="600"
                             oninput="updateCharacterCount(event)"
                             class="textarea textarea-bordered w-full"
                             placeholder="Share your thoughts..."
                             required
                         ></textarea>
                         <p id="characterCounter" class="text-sm text-gray-500 mt-2">
-                            Characters remaining: <span id="remainingCharacters">300</span>
+                            Characters remaining: <span id="remainingCharacters">600</span>
                         </p>
                     </div>
 
@@ -284,7 +284,7 @@
 
     <script>
     function updateCharacterCount(event) {
-        const maxLength = 300;
+        const maxLength = 600;
         const currentLength = event.target.value.length;
         const remainingCharacters = maxLength - currentLength;
 

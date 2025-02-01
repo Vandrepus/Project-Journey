@@ -109,8 +109,24 @@
         <!-- Single Photo Upload with Preview -->
         <div>
           <label for="photo" class="block text-sm font-medium text-gray-700">Upload Photo</label>
-          <input type="file" name="photo" id="photo" accept="image/*" class="input input-bordered w-full mt-1" />
-          <img id="photoPreview" src="#" alt="Photo Preview" style="display: none; margin-top: 10px; max-width: 100%; height: auto;" />
+          <!-- Drag & Drop Container -->
+          <div class="mt-2 flex items-center justify-center w-full">
+            <label for="photo" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+              <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl"></i>
+                <p class="mb-2 text-sm text-gray-500">
+                  <span class="font-semibold">Click to upload</span>
+                </p>
+                <p class="text-xs text-gray-500">PNG, JPG, JPEG (max. 2MB)</p>
+              </div>
+              <input id="photo" name="photo" type="file" accept="image/*" class="hidden" onchange="previewPhoto(event)" />
+            </label>
+          </div>
+          <!-- Photo Preview Container -->
+          <div id="photoPreviewContainer" class="mt-4 hidden">
+            <p class="text-sm text-gray-500 mb-2">Photo Preview:</p>
+            <img id="photoPreview" src="#" alt="Photo Preview" class="w-40 h-auto rounded-md shadow" />
+          </div>
         </div>
 
         <!-- Submit Button -->
@@ -154,27 +170,22 @@
     });
 
     // Single photo preview functionality
-    document.getElementById('photo').addEventListener('change', function(event) {
+    function previewPhoto(event) {
     const file = event.target.files[0];
-    const maxSize = 2 * 1024 * 1024; // 2MB
+    const previewContainer = document.getElementById('photoPreviewContainer');
+    const previewImage = document.getElementById('photoPreview');
 
-        if (file) {
-            if (file.size > maxSize) {
-                alert('The selected file is too large. Maximum allowed size is 2MB.');
-                event.target.value = ''; // Clear the input
-                document.getElementById('photoPreview').style.display = 'none';
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.getElementById('photoPreview');
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-            }
-            reader.readAsDataURL(file);
-        }
-    });
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewContainer.classList.remove('hidden');
+      }
+      reader.readAsDataURL(file);
+    } else {
+      previewContainer.classList.add('hidden');
+    }
+  }
   </script>
 
   <!-- Footer -->

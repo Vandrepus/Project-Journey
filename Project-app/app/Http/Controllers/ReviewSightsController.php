@@ -56,7 +56,7 @@ class ReviewSightsController extends Controller
             'regex:/^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i'
         ],
         'map_url' => 'nullable|url',
-        'description' => 'required|string|max:500',
+        'description' => 'required|string|max:3000',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ]);
 
