@@ -44,7 +44,7 @@ class ReviewController extends Controller
         $this->updateSightAverageRating($sightId);
 
         // Redirect back with a success message
-        return redirect()->route('sights.show', $sightId)->with('success', 'Review deleted successfully');
+        return redirect()->back()->with('success', 'Review deleted successfully');
     }
 
     protected function updateSightAverageRating($sightId)

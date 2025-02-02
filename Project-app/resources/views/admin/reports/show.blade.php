@@ -68,16 +68,29 @@
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
                 @if ($report->reportable)
-                    <form method="POST" action="{{ route('admin.forum.comments.delete', $report->reportable->id) }}" onsubmit="return confirm('Are you sure you want to delete this item?')">
-                        @csrf
-                        @method('DELETE')
-                        <button 
-                            type="submit" 
-                            class="btn btn-error w-full sm:w-auto px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center justify-center"
-                        >
-                            <i class="fas fa-trash-alt mr-2"></i> Delete Item
-                        </button>
-                    </form>
+                    @php
+                        $deleteRoute = '';
+                        if ($report->reportable_type === 'App\Models\Review') {
+                            $deleteRoute = route('admin.reviews.delete', $report->reportable->id);
+                        } elseif ($report->reportable_type === 'App\Models\Comment') {
+                            $deleteRoute = route('admin.comments.delete', $report->reportable->id);
+                        } elseif ($report->reportable_type === 'App\Models\Reply') {
+                            $deleteRoute = route('admin.forum.comments.delete', $report->reportable->id);
+                        }
+                    @endphp
+
+                    @if ($deleteRoute)
+                        <form method="POST" action="{{ $deleteRoute }}" onsubmit="return confirm('Are you sure you want to delete this item?')">
+                            @csrf
+                            @method('DELETE')
+                            <button 
+                                type="submit" 
+                                class="btn btn-error w-full sm:w-auto px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center justify-center"
+                            >
+                                <i class="fas fa-trash-alt mr-2"></i> Delete Item
+                            </button>
+                        </form>
+                    @endif
                 @endif
 
                 <form method="POST" action="{{ route('admin.reports.destroy', $report->id) }}" onsubmit="return confirm('Are you sure you want to dismiss this report?')">

@@ -54,17 +54,30 @@
                                 <td class="px-4 py-2 border text-center">
                                     <div class="flex justify-center items-center space-x-2">
                                         @if ($report->reportable)
-                                            <!-- Delete Reported Item -->
-                                            <form method="POST" action="{{ route('admin.forum.comments.delete', $report->reportable->id) }}" onsubmit="return confirm('Are you sure you want to delete this item?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button 
-                                                    type="submit" 
-                                                    class="btn btn-error px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-                                                >
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
+                                            @php
+                                                $deleteRoute = '';
+                                                if ($report->reportable_type === 'App\\Models\\Review') {
+                                                    $deleteRoute = route('admin.reviews.delete', $report->reportable->id);
+                                                } elseif ($report->reportable_type === 'App\\Models\\Comment') {
+                                                    $deleteRoute = route('admin.comments.delete', $report->reportable->id);
+                                                } elseif ($report->reportable_type === 'App\\Models\\Reply') {
+                                                    $deleteRoute = route('admin.forum.comments.delete', $report->reportable->id);
+                                                }
+                                            @endphp
+
+                                            @if ($deleteRoute)
+                                                <!-- Delete Reported Item -->
+                                                <form method="POST" action="{{ $deleteRoute }}" onsubmit="return confirm('Are you sure you want to delete this item?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button 
+                                                        type="submit" 
+                                                        class="btn btn-error px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+                                                    >
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         @endif
 
                                         <!-- Dismiss Report -->
