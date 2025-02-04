@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Controllers;
-
-use App\Models\Destination; // Assuming you have these models
+/**
+ * Varbūt nav izmantots
+ * 
+ * Probably not in use
+ */
+use App\Models\Destination; 
 use App\Models\Trip;
 
 class HomeController extends Controller
