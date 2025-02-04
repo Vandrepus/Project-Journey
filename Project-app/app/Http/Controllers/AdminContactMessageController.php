@@ -25,7 +25,7 @@ class AdminContactMessageController extends Controller
      */
     public function index(): View
     {
-        $messages = ContactMessage::latest()->paginate(10); // Lapdališana, lai nodrošinātu efektīvu datu ielādi
+        $messages = ContactMessage::latest()->paginate(10); 
         return view('admin.contact-messages.index', compact('messages'));
     }
 

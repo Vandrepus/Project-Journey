@@ -13,7 +13,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // Who reported
             $table->unsignedBigInteger('reportable_id'); // ID of the reported comment/post
             $table->string('reportable_type'); // Model type (Comment, ForumPost)
-            $table->string('reason')->nullable(); // Reason for reporting
+            $table->text('reason')->nullable(); // Reason for reporting
             $table->timestamps();
 
             // Foreign key
