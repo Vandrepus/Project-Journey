@@ -1,27 +1,48 @@
 <?php
 
-// app/Http/Controllers/ProposeLocationController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Country;
 use App\Models\Sight;
 use Illuminate\Http\Request;
 
+/**
+ * Šis kontrolieris pārvalda jaunu apskates vietu priekšlikumus, ko iesniedz lietotāji.
+ * Apskates vietas tiek saglabātas kā "neredzamas", līdz administrators tās apstiprina.
+ *
+ * This controller manages the user-submitted proposals for new sights.
+ * Sights are stored as "invisible" until an administrator approves them.
+ */
 class ProposeLocationController extends Controller
 {
-    // Show the form to propose a new sight with a list of approved countries
+    /**
+     * Parāda veidlapu, lai piedāvātu jaunu apskates vietu, iekļaujot apstiprināto valstu sarakstu.
+     *
+     * Displays the form to propose a new sight, including a list of approved countries.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
-        // Fetch only approved countries (visible = true)
+        /**
+         * Iegūst tikai apstiprinātās valstis (visible = true)
+         * Fetch only approved countries (visible = true)
+         */
         $countries = Country::where('visible', true)->get();
+        
         return view('user.location.propose', compact('countries'));
     }
 
-    // Store the proposed sight in the database (invisible until admin approval)
+    /**
+     * Saglabā piedāvāto apskates vietu datubāzē (sākotnēji "neredzama").
+     *
+     * Stores the proposed sight in the database (initially "invisible").
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
-        // Validate incoming request data, including a single photo upload
         $validatedData = $request->validate([
             'name'           => 'required|string|max:255',
             'description'    => 'required|string|max:3000',
@@ -36,7 +57,10 @@ class ProposeLocationController extends Controller
             'photo'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Validate if the selected country is approved
+        /**
+         * Pārbauda, vai izvēlētā valsts ir apstiprināta
+         * Validate if the selected country is approved
+         */
         $country = Country::where('id', $validatedData['country_id'])
             ->where('visible', true)
             ->first();
@@ -46,15 +70,15 @@ class ProposeLocationController extends Controller
                 'country_id' => 'The selected country is not approved.'
             ]);
         }
-
-        // Handle the photo upload if a file is provided
+        /**
+         * Apstrādā fotoattēla augšupielādi, ja fails ir nodrošināts
+         * Handle the photo upload if a file is provided
+         */ 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            // Store the photo in storage/app/public/sight_photos
             $photoPath = $request->file('photo')->store('sight_photos', 'public');
         }
 
-        // Store the proposed sight as invisible by default
         Sight::create([
             'name'           => $validatedData['name'],
             'description'    => $validatedData['description'],
@@ -63,9 +87,9 @@ class ProposeLocationController extends Controller
             'category'       => $validatedData['category'],
             'opening_hours'  => $validatedData['opening_hours'],
             'map_url'        => $validatedData['map_url'] ?? null,
-            'photo'          => $photoPath, // Save the single photo path or null if not provided
-            'visible'        => 0, // Invisible by default
-            'submitted_by'   => auth()->id(), // Track the user who submitted the sight
+            'photo'          => $photoPath, 
+            'visible'        => 0, 
+            'submitted_by'   => auth()->id(), 
         ]);
 
         return redirect()->route('location.propose')->with('success', 'Sight proposed successfully! Awaiting admin approval.');
