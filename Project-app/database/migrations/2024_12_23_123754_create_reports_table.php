@@ -14,9 +14,10 @@ return new class extends Migration
             $table->unsignedBigInteger('reportable_id'); // ID of the reported comment/post
             $table->string('reportable_type'); 
             $table->string('reason')->nullable(); 
+            $table->string('reportable_type'); 
+            $table->text('reason')->nullable(); 
             $table->timestamps();
-
-            // Foreign key
+          
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
