@@ -15,7 +15,7 @@ class CreateReviewsTable extends Migration
             $table->foreignId('sight_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->text('content');
-            $table->integer('rating'); // Assuming you want to include a rating
+            $table->integer('rating'); 
             $table->timestamps();
         });
     }

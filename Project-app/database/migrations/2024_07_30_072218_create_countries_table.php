@@ -15,7 +15,7 @@ class CreateCountriesTable extends Migration
             $table->text('description')->nullable();
             $table->string('picture')->nullable();
             $table->foreignId('submitted_by')->constrained('users')->onDelete('cascade');
-            $table->boolean('visible')->default(false); // Default to invisible
+            $table->boolean('visible')->default(false); 
             $table->timestamps();
         });
     }
