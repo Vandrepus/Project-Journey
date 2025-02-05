@@ -13,8 +13,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); 
             $table->unsignedBigInteger('reportable_id'); // ID of the reported comment/post
             $table->string('reportable_type'); 
-            $table->string('reason')->nullable(); 
-            $table->string('reportable_type'); 
             $table->text('reason')->nullable(); 
             $table->timestamps();
           
