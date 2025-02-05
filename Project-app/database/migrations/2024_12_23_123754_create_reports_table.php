@@ -10,13 +10,14 @@ return new class extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Who reported
+            $table->unsignedBigInteger('user_id'); 
             $table->unsignedBigInteger('reportable_id'); // ID of the reported comment/post
-            $table->string('reportable_type'); // Model type (Comment, ForumPost)
-            $table->text('reason')->nullable(); // Reason for reporting
+            $table->string('reportable_type'); 
+            $table->string('reason')->nullable(); 
+            $table->string('reportable_type'); 
+            $table->text('reason')->nullable(); 
             $table->timestamps();
-
-            // Foreign key
+          
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

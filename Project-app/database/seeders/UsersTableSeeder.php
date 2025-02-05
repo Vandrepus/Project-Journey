@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
         // Create Admin User
         User::create([
             'name' => 'Admin User',
-            'surname' => 'Administrator', // Provide a default value for surname
+            'surname' => 'Administrator', 
             'username' => 'admin',
             'email' => 'admin@example.com',
             'usertype' => 'admin',
@@ -27,6 +27,6 @@ class UsersTableSeeder extends Seeder
         
 
         // Create Regular Users
-        User::factory(10)->create(); // Assumes you have a User factory
+        User::factory(10)->create(); 
     }
 }

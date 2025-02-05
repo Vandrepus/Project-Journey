@@ -14,14 +14,14 @@ class CreateTicketsTable extends Migration
             $table->string('subject');
             $table->text('message');
             $table->string('category');
-            $table->enum('status', ['open', 'closed', 'answered'])->default('open'); // open, answered, closed
+            $table->enum('status', ['open', 'closed', 'answered'])->default('open'); 
             $table->timestamps();
         });
 
         Schema::create('ticket_replies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id')->constrained('tickets')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Admin or User
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
             $table->text('message');
             $table->timestamps();
         });
