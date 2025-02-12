@@ -21,7 +21,7 @@
         <div>
             <h4 class="text-lg font-semibold">Community</h4>
             <a href="https://github.com/Vandrepus" class="block text-gray-400 hover:text-gray-200">GitHub</a>
-            <a href="/" class="block text-gray-400 hover:text-gray-200">Project Change Log</a>
+            <a href="https://github.com/Vandrepus/Project-Journey" class="block text-gray-400 hover:text-gray-200">Project Change Log</a>
         </div>
 
         <!-- Help -->
@@ -33,9 +33,9 @@
         <!-- Others -->
         <div>
             <h4 class="text-lg font-semibold">Others</h4>
-            <a href="/" class="block text-gray-400 hover:text-gray-200">Terms of Service</a>
-            <a href="/" class="block text-gray-400 hover:text-gray-200">Privacy Policy</a>
-            <a href="/" class="block text-gray-400 hover:text-gray-200">License</a>
+            <a href="/" class="block text-gray-400 hover:text-gray-200">Terms of Service(Not working)</a>
+            <a href="/" class="block text-gray-400 hover:text-gray-200">Privacy Policy(Not working)</a>
+            <a href="/" class="block text-gray-400 hover:text-gray-200">License(Not working)</a>
         </div>
     </div>
 </footer>
