@@ -23,15 +23,11 @@
                     <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-105 overflow-hidden">
                         <a href="{{ route('countries.show', $country->id) }}" class="block">
                             <!-- Flag -->
-                            @if ($country->picture)
                                 <img 
-                                    src="{{ asset('storage/' . $country->picture) }}" 
+                                    src="{{ $country->picture ? asset('storage/' . $country->picture) : asset('images/placeholder.jpg') }}" 
                                     alt="{{ $country->name}}" 
                                     class="w-full h-full object-cover"
                                 />
-                            @else
-                                <i class="fas fa-image text-gray-500 text-4xl"></i>
-                            @endif
                             <!-- Country Details -->
                             <div class="p-4">
                                 <h3 class="text-lg font-semibold text-gray-800">{{ $country->name }}</h3>
