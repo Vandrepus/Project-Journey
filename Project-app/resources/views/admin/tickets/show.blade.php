@@ -18,7 +18,7 @@
             <div class="space-y-4">
                 <div>
                     <p class="font-semibold text-gray-700">Subject:</p>
-                    <p class="text-gray-800">{{ $ticket->subject }}</p>
+                    <p class="text-gray-800 break-words overflow-hidden">{{ $ticket->subject }}</p>
                 </div>
                 <div>
                     <p class="font-semibold text-gray-700">Category:</p>
@@ -26,7 +26,7 @@
                 </div>
                 <div>
                     <p class="font-semibold text-gray-700">Message:</p>
-                    <p class="bg-gray-50 p-4 rounded-md text-gray-800">{{ $ticket->message }}</p>
+                    <p class="text-gray-800 break-words overflow-hidden">{{ $ticket->message }}</p>
                 </div>
                 <div>
                     <p class="font-semibold text-gray-700">Status:</p>
@@ -88,12 +88,12 @@
                     @csrf
                     <label for="message" class="block text-gray-700 font-medium mb-2">Your Reply</label>
                     <textarea 
-                        name="message" 
-                        rows="5" 
-                        class="w-full border-gray-300 p-2 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
-                        placeholder="Write your reply here..." 
-                        required>
-                    </textarea>
+                            name="message" 
+                            rows="5" 
+                            class="w-full border border-gray-300 p-2 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" 
+                            placeholder="Write your reply here..." 
+                            required
+                            ></textarea>
                     <button 
                         type="submit" 
                         class="mt-4 w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-150"

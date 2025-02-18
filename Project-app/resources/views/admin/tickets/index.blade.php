@@ -60,7 +60,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             @foreach($openTickets as $ticket)
                                 <div class="p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $ticket->subject }}</h3>
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2 line-clamp-3">{{ $ticket->subject }}</h3>
                                     <p class="text-sm text-gray-600 mb-1">Category: {{ ucfirst($ticket->category) }}</p>
                                     <p class="text-sm text-gray-600 mb-4">Status: 
                                         <span class="px-2 py-1 rounded-md text-white {{ $ticket->status === 'open' ? 'bg-green-500' : 'bg-red-500' }}">
