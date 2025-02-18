@@ -13,7 +13,7 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'France',
                 'capital' => 'Paris',
-                'description' => 'France, known for its art, fashion, and gastronomy, is a country of rich cultural heritage. From the romantic streets of Paris to the lavender fields of Provence, every region has its own charm. Explore world-class museums like the Louvre, iconic landmarks like the Eiffel Tower, and indulge in fine wines and exquisite cuisine.',
+                'description' => 'France is celebrated for its art, fashion, and culinary excellence. Wander the romantic boulevards of Paris, explore the lavender fields of Provence, and savor exquisite wines in Bordeaux. Every region tells its own story through architecture, history, and gastronomy.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
@@ -21,7 +21,7 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'Italy',
                 'capital' => 'Rome',
-                'description' => 'Italy, the heart of the Roman Empire, boasts a legacy of art, architecture, and history. Stroll through the ancient ruins of Rome, admire the Renaissance masterpieces of Florence, and experience the vibrant canals of Venice. With its rich culinary traditions, Italy is also a paradise for food lovers, offering everything from handmade pasta to authentic Neapolitan pizza.',
+                'description' => 'Italy, the cradle of the Renaissance, is a vibrant tapestry of history, art, and mouthwatering cuisine. From the ancient ruins of Rome and the canals of Venice to the rolling vineyards of Tuscany, Italy offers a feast for both the eyes and the palate.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
@@ -29,7 +29,7 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'Japan',
                 'capital' => 'Tokyo',
-                'description' => 'Japan seamlessly blends tradition and modernity, offering everything from ancient shrines to high-tech cities. Explore Kyoto’s historic temples, experience Tokyo’s neon-lit streets, and relax in the tranquil gardens of Nara. Known for sushi, ramen, and cherry blossoms, Japan is a land of cultural treasures and breathtaking landscapes.',
+                'description' => 'Japan masterfully blends ancient traditions with futuristic innovation. Explore the serene temples of Kyoto, the bustling neon streets of Tokyo, and the majestic views of Mount Fuji. Its rich cultural festivals, world-class cuisine, and timeless customs make every visit unforgettable.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
@@ -37,7 +37,7 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'United States',
                 'capital' => 'Washington, D.C.',
-                'description' => 'The United States is a diverse nation with vibrant cities, stunning national parks, and rich cultural landmarks. Explore the skyscrapers of New York, the sunny beaches of California, and the breathtaking Grand Canyon. With its dynamic mix of cultures and cuisines, the U.S. offers endless travel experiences for all types of explorers.',
+                'description' => 'The United States is a land of endless diversity—from the iconic skylines of New York and Los Angeles to the natural wonders of the Grand Canyon and Yellowstone. With its melting pot of cultures and landscapes, the U.S. offers boundless opportunities for exploration and adventure.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
@@ -45,7 +45,7 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'Australia',
                 'capital' => 'Canberra',
-                'description' => 'Australia is known for its stunning natural wonders, unique wildlife, and laid-back culture. Discover the Great Barrier Reef, the red sands of Uluru, and the cosmopolitan vibes of Sydney and Melbourne. Whether it’s surfing on golden beaches or exploring the Outback, Australia is an adventurer’s dream.',
+                'description' => 'Australia captivates with its diverse natural beauty and dynamic urban centers. Dive into the vibrant Great Barrier Reef, traverse the rugged Outback, and enjoy the cosmopolitan charm of Sydney and Melbourne. Its unique wildlife and endless horizons invite explorers of all kinds.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
@@ -53,7 +53,7 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'Egypt',
                 'capital' => 'Cairo',
-                'description' => 'Egypt is a land of ancient wonders, home to the Pyramids of Giza, the Great Sphinx, and the historic temples of Luxor. Cruise along the Nile River and explore the bustling markets of Cairo. With its deep-rooted history and vibrant culture, Egypt remains one of the most fascinating destinations in the world.',
+                'description' => 'Egypt is a timeless land steeped in history and mystery. Home to the monumental Pyramids of Giza, the enigmatic Sphinx, and the ancient temples along the Nile, Egypt invites visitors to step back in time and marvel at the achievements of a bygone civilization.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
@@ -61,7 +61,7 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'Brazil',
                 'capital' => 'Brasília',
-                'description' => 'Brazil is a country of vibrant culture, stunning landscapes, and world-famous celebrations like Carnival. From the Amazon Rainforest to the golden beaches of Rio de Janeiro, Brazil offers a mix of adventure, music, and breathtaking natural beauty.',
+                'description' => 'Brazil bursts with energy, culture, and natural splendor. From the rhythmic beats of Carnival in Rio de Janeiro to the lush expanses of the Amazon Rainforest, Brazil offers a dynamic blend of vibrant city life, breathtaking landscapes, and rich cultural traditions.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
@@ -69,11 +69,43 @@ class CountriesTableSeeder extends Seeder
             [
                 'name' => 'Greece',
                 'capital' => 'Athens',
-                'description' => 'Greece is the birthplace of democracy and home to some of the world’s most famous historical sites. Wander through the ruins of Athens, relax on the white-sand beaches of Santorini, and indulge in delicious Mediterranean cuisine. Greece is a perfect blend of history, beauty, and hospitality.',
+                'description' => 'Greece is the cradle of Western civilization, where ancient ruins and sun-kissed islands create a landscape of timeless beauty. Stroll through the historic streets of Athens, unwind on the beaches of Santorini, and indulge in delicious Mediterranean flavors.',
                 'picture' => null,
                 'submitted_by' => 1,
                 'visible' => true,
-            ]
+            ],
+            [
+                'name' => 'Spain',
+                'capital' => 'Madrid',
+                'description' => 'Spain dazzles with its passionate culture, diverse landscapes, and historic legacy. Experience the artistic treasures of Madrid and Barcelona, the Moorish influences in Andalusia, and the sun-drenched beaches along its extensive coastline, all accompanied by a festive spirit and vibrant cuisine.',
+                'picture' => null,
+                'submitted_by' => 1,
+                'visible' => true,
+            ],
+            [
+                'name' => 'Germany',
+                'capital' => 'Berlin',
+                'description' => 'Germany is a dynamic blend of modern innovation and storied history. Discover the cutting-edge cultural scene of Berlin, the romantic landscapes of Bavaria, and a country that honors its past while driving boldly into the future. Its festivals, food, and traditions create a truly enriching experience.',
+                'picture' => null,
+                'submitted_by' => 1,
+                'visible' => true,
+            ],
+            [
+                'name' => 'Canada',
+                'capital' => 'Ottawa',
+                'description' => 'Canada is renowned for its pristine natural beauty and multicultural vibrancy. From the rugged Rocky Mountains and serene lakes to bustling cities like Toronto and Vancouver, Canada offers a peaceful yet diverse landscape perfect for outdoor adventures and urban exploration alike.',
+                'picture' => null,
+                'submitted_by' => 1,
+                'visible' => true,
+            ],
+            [
+                'name' => 'China',
+                'capital' => 'Beijing',
+                'description' => 'China is a nation of contrasts, where ancient traditions meet rapid modernization. Marvel at the wonders of the Great Wall, explore the historic Forbidden City, and witness the vibrant energy of its sprawling metropolises. Its diverse regions provide a unique journey through millennia of history and innovation.',
+                'picture' => null,
+                'submitted_by' => 1,
+                'visible' => true,
+            ],
         ];
 
         foreach ($countries as $country) {
