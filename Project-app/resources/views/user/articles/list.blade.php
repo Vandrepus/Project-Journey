@@ -14,7 +14,7 @@
     <!-- Main Content -->
     <main class="flex-grow">
         <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">Latest News Articles</h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Latest News Articles</h1>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse ($articles as $article)
