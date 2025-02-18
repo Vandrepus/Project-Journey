@@ -142,7 +142,7 @@
                                 {{ $review->user->username }}
                             </a>
                         </p>
-                        <p class="mt-1">{{ $review->content }}</p>
+                        <p class="mt-1 break-words overflow-hidden">{{ $review->content }}</p>
                         <p class="text-sm text-gray-500 mt-2">{{ $review->created_at->format('Y-m-d H:i:s') }}</p>
                         <div class="flex items-center mt-2">
                             <span class="text-yellow-500 font-semibold mr-1">{{ number_format($review->rating, 1) }}</span>

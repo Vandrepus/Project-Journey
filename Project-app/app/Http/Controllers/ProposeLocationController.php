@@ -51,7 +51,7 @@ class ProposeLocationController extends Controller
             'category'       => 'required|string|max:255',
             'opening_hours'  => [
                 'required',
-                'regex:/^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i',
+                'regex:/^(24\\/7|(?:0?[1-9]|1[0-2])(?:\\:[0-5]\\d)?\\s?(?:AM|PM)\\s?-\\s?(?:0?[1-9]|1[0-2])(?:\\:[0-5]\\d)?\\s?(?:AM|PM))$/i',
             ],
             'map_url'        => 'nullable|url',
             'photo'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

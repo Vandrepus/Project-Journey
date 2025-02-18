@@ -86,7 +86,7 @@
                 <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7l-4-4H4z" />
                 </svg>
                 <p class="mb-2 text-sm text-gray-500">
-                <span class="font-semibold">Click to upload</span> or drag and drop
+                <span class="font-semibold">Click to upload</span> 
                 </p>
                 <p class="text-xs text-gray-500">PNG, JPG, JPEG (max. 2MB)</p>
             </div>

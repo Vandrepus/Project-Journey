@@ -18,7 +18,7 @@
         <!-- Topic Details -->
         <div class="mb-8">
             <h2 class="text-3xl font-bold text-gray-800">{{ $topic->title }}</h2>
-            <p class="text-gray-700 text-lg mt-4">{{ $topic->content }}</p>
+            <p class="text-gray-700 text-lg mt-4 break-words overflow-hidden">{{ $topic->content }}</p>
             <p class="text-sm text-gray-500 mt-2">
                 Posted by 
                 <a href="{{ route('user.profile', $topic->user->username) }}" class="text-blue-500 hover:underline font-medium">

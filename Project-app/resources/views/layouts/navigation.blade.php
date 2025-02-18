@@ -32,14 +32,14 @@
             </div>
 
             <!-- Profile Dropdown -->
-            <div class="hidden md:block relative">
+            <div class="hidden md:block relative dropdown dropdown-end">
                 @auth
                     <div class="dropdown dropdown-end">
                         <label tabindex="0" class="btn bg-primary text-white btn-sm flex items-center space-x-2 rounded-md shadow-md hover:bg-blue-600 transition duration-150 h-10">
                             <span class="font-medium">{{ Auth::user()->username ?? Auth::user()->name }}</span>
                             <i class="fa-solid fa-chevron-down"></i>
                         </label>
-                        <ul tabindex="0" class="dropdown-content bg-white text-black shadow-lg rounded-md p-2 w-36 space-y-2">
+                        <ul tabindex="0" class="dropdown-content bg-white text-black shadow-lg rounded-md p-2 w-40 mt-2 z-50 space-y-2">
                             <!-- Profile Links for Users -->
                             <li>
                                 <a 

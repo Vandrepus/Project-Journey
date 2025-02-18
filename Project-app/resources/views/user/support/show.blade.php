@@ -22,7 +22,7 @@
 
             <!-- Ticket Information -->
             <div class="mb-8">
-                <p class="text-lg"><strong>Subject:</strong> {{ $ticket->subject }}</p>
+                <p class="text-lg break-words overflow-hidden"><strong>Subject:</strong> {{ $ticket->subject }}</p>
                 <p class="text-lg"><strong>Category:</strong> {{ ucfirst($ticket->category) }}</p>
                 <p class="text-lg">
                     <strong>Status:</strong>
@@ -33,7 +33,7 @@
                     </span>
                 </p>
                 <p class="text-lg mt-4"><strong>Message:</strong></p>
-                <p class="bg-gray-50 p-4 rounded-md shadow-sm text-gray-700">{{ $ticket->message }}</p>
+                <p class="bg-gray-50 p-4 rounded-md shadow-sm text-gray-700 break-words overflow-hidden">{{ $ticket->message }}</p>
             </div>
 
             <!-- Replies Section -->
@@ -49,7 +49,7 @@
                             @endif
                             <span class="text-sm text-gray-500 ml-2">{{ $reply->created_at->format('Y-m-d H:i:s') }}</span>
                         </p>
-                        <p class="text-gray-700 mt-2">{{ $reply->message }}</p>
+                        <p class="text-gray-700 mt-2 break-words overflow-hidden">{{ $reply->message }}</p>
                     </div>
                 @endforeach
             </div>

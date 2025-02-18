@@ -158,7 +158,7 @@
     // Validate opening hours input format
     document.getElementById('opening_hours').addEventListener('input', function (event) {
       const input = event.target.value;
-      const regex = /^((1[0-2]|0?[1-9])\s?(AM|PM)\s?-\s?(1[0-2]|0?[1-9])\s?(AM|PM))$/i;
+      const regex = /^(24\/7|(?:(?:0?[1-9]|1[0-2])(?::[0-5]\d)?\s*(?:AM|PM))\s*-\s*(?:(?:0?[1-9]|1[0-2])(?::[0-5]\d)?\s*(?:AM|PM)))$/i;
       if (!regex.test(input)) {
         event.target.classList.add('border-red-600');
         event.target.classList.remove('border-gray-300');
