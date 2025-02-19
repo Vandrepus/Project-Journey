@@ -53,7 +53,7 @@
                         <i class="fas fa-info-circle text-indigo-600 mr-2"></i> About Me
                     </h2>
                     @if($user->about_me)
-                        <p class="text-gray-700 leading-relaxed">{{ $user->about_me }}</p>
+                        <p class="text-gray-700 leading-relaxed break-words overflow-hidden">{{ $user->about_me }}</p>
                     @else
                         <p class="text-gray-500 italic">No information available.</p>
                     @endif
@@ -70,7 +70,7 @@
                                 <div class="card bg-base-100 shadow-md hover:shadow-lg transition-transform duration-300 rounded-lg">
                                     <figure>
                                         <img 
-                                            src="{{ $sight->image_url ?? 'https://via.placeholder.com/300x200' }}" 
+                                            src="{{ $sight->image_url ?? asset('images/placeholder.jpg') }}" 
                                             alt="{{ $sight->name }}" 
                                             class="rounded-t-lg object-cover w-full h-40"
                                         >

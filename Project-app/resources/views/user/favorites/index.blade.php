@@ -31,7 +31,7 @@
                     <div class="card bg-base-100 shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300">
                         <figure>
                             <img 
-                                src="{{ $sight->image_url ?? 'https://via.placeholder.com/300x200' }}" 
+                                src="{{ $sight->image_url ?? asset('images/placeholder.jpg') }}" 
                                 alt="{{ $sight->name }}" 
                                 class="w-full h-56 object-cover rounded-t-lg"
                             />
