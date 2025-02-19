@@ -53,9 +53,15 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'usertype' => 'required|in:user,admin',
+        ]);
+
         $user = User::findOrFail($id);
 
-        $user->usertype = $request->usertype;
+        $user->usertype = $validatedData['usertype'];
+        $user->banned = $request->has('banned');
+
         $user->save();
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');

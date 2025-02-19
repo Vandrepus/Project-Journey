@@ -41,7 +41,7 @@ Route::get('/contact', function () {
 
 Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
-Route::middleware(['web', 'auth'])->group(function () {
+Route::middleware(['web', 'auth', 'notBanned'])->group(function () {
     Route::get('/dashboard', function () {
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
@@ -55,7 +55,7 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['web', 'auth', 'admin'])->group(function () {
+Route::middleware(['web', 'auth', 'admin', 'notBanned'])->group(function () {
 
     Route::get('/admin/dashboard', function () {
         return view('admin.dashboard');
@@ -67,7 +67,7 @@ Route::middleware(['web', 'auth', 'admin'])->group(function () {
 });
 
 //admin routes
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin', 'notBanned'])->group(function () {
     //user management
     Route::get('/admin/users', [UserManagementController::class, 'index'])->name('admin.users.index');
     Route::get('/admin/users/{id}/edit', [UserManagementController::class, 'edit'])->name('admin.users.edit');
@@ -114,7 +114,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 //user routes
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth' , 'notBanned'])->group(function () {
     //favourte place
     Route::get('/favorites', [FavoriteSightsController::class, 'index'])->name('favorites.index');
     Route::post('/favorites/{sight}', [FavoriteSightsController::class, 'store'])->name('favorites.store');
@@ -145,7 +145,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 //support via prefix
-Route::middleware('auth')->group(function () {
+Route::middleware('auth' ,'notBanned')->group(function () {
     Route::prefix('support')->group(function () {
         Route::get('/', [TicketController::class, 'index'])->name('support.index'); // List tickets
         Route::get('/create', [TicketController::class, 'create'])->name('support.create'); // Create ticket form
@@ -155,12 +155,15 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::middleware('notBanned')->group(function () {
+    Route::get('/articles', [ArticleController::class, 'list'])->name('articles.list');
+    Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
+    Route::get('/user/{username}', [UserProfileController::class, 'show'])->name('user.profile');
+    Route::get('/countries', [CountryController::class, 'index'])->name('countries.index');
+    Route::get('/countries/{country}', [CountryController::class, 'show'])->name('countries.show');
+    Route::get('/sights/{sight}', [SightController::class, 'show'])->name('sights.show');
+});
 //public routes
-Route::get('/articles', [ArticleController::class, 'list'])->name('articles.list');
-Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
-Route::get('/user/{username}', [UserProfileController::class, 'show'])->name('user.profile');
-Route::get('/countries', [CountryController::class, 'index'])->name('countries.index');
-Route::get('/countries/{country}', [CountryController::class, 'show'])->name('countries.show');
-Route::get('/sights/{sight}', [SightController::class, 'show'])->name('sights.show');
+
 
 require __DIR__.'/auth.php';
