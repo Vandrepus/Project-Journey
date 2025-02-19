@@ -37,10 +37,9 @@
                 @endauth
             </div>
 
-
-            <!-- Filter Section -->
+            <!-- Filter & Search Section -->
             <div class="p-6 bg-gray-50">
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">Filter by Average Rating</h3>
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Filter Sights</h3>
                 <form method="GET" action="{{ route('countries.show', $country->id) }}" class="flex items-center gap-4">
                     <select name="rating" id="rating-filter" class="select select-bordered w-40">
                         <option value="" selected>All Ratings</option>
@@ -50,6 +49,14 @@
                         <option value="2">2 Stars & Up</option>
                         <option value="1">1 Star & Up</option>
                     </select>
+                    <!-- Search Bar for Sights -->
+                    <input 
+                        type="text" 
+                        name="sight_search" 
+                        placeholder="Search sights..." 
+                        value="{{ request('sight_search') }}" 
+                        class="input input-bordered flex-1"
+                    />
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
             </div>
@@ -60,56 +67,55 @@
                 @if(count($sights) > 0)
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($sights as $sight)
-                            @if($sight->visible && (!$rating || $sight->average_rating >= $rating)) <!-- Only show visible sights matching the filter -->
-                                <div class="bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
-                                    <a href="{{ route('sights.show', $sight->id) }}" class="block">
-                                        <!-- Sight Image with Fallback -->
-                                        <div class="relative w-full h-40 flex items-center justify-center bg-gray-200 rounded-lg overflow-hidden">
-                                            @if ($sight->photo)
-                                                <img 
-                                                    src="{{ asset('storage/' . $sight->photo) }}" 
-                                                    alt="{{ $sight->name }}" 
-                                                    class="w-full h-full object-cover"
-                                                />
-                                            @else
-                                                <i class="fas fa-image text-gray-500 text-4xl"></i>
-                                            @endif
-                                        </div>
-                                        <!-- Sight Details -->
-                                        <div class="p-4">
-                                            <h3 class="text-lg font-medium text-gray-800 truncate">
-                                                {{ $sight->name }}
-                                            </h3>
-                                            <p class="text-sm text-gray-600 mt-2">
-                                                {{ Str::limit($sight->description, 100) }}
-                                            </p>
-                                            <p class="text-sm text-gray-500 mt-2">
-                                                <strong>Category:</strong> {{ $sight->category }}
-                                            </p>
-                                            <p class="text-sm text-yellow-500 mt-2 flex items-center">
-                                                <i class="fas fa-star mr-1"></i>
-                                                <strong>Rating:</strong> 
-                                                {{ $sight->average_rating ? number_format($sight->average_rating, 1) : 'No ratings yet' }}
-                                            </p>
-                                        </div>
-                                    </a>
+                            @if($sight->visible && (!$rating || $sight->average_rating >= $rating))
+                                @if(!request()->filled('sight_search') || stripos($sight->name, request('sight_search')) !== false)
+                                    <div class="bg-gray-50 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden">
+                                        <a href="{{ route('sights.show', $sight->id) }}" class="block">
+                                            <!-- Sight Image with Fallback -->
+                                            <div class="relative w-full h-40 flex items-center justify-center bg-gray-200 rounded-lg overflow-hidden">
+                                                @if ($sight->photo)
+                                                    <img 
+                                                        src="{{ asset('storage/' . $sight->photo) }}" 
+                                                        alt="{{ $sight->name }}" 
+                                                        class="w-full h-full object-cover"
+                                                    />
+                                                @else
+                                                    <i class="fas fa-image text-gray-500 text-4xl"></i>
+                                                @endif
+                                            </div>
+                                            <!-- Sight Details -->
+                                            <div class="p-4">
+                                                <h3 class="text-lg font-medium text-gray-800 truncate">
+                                                    {{ $sight->name }}
+                                                </h3>
+                                                <p class="text-sm text-gray-600 mt-2">
+                                                    {{ Str::limit($sight->description, 100) }}
+                                                </p>
+                                                <p class="text-sm text-gray-500 mt-2">
+                                                    <strong>Category:</strong> {{ $sight->category }}
+                                                </p>
+                                                <p class="text-sm text-yellow-500 mt-2 flex items-center">
+                                                    <i class="fas fa-star mr-1"></i>
+                                                    <strong>Rating:</strong> 
+                                                    {{ $sight->average_rating ? number_format($sight->average_rating, 1) : 'No ratings yet' }}
+                                                </p>
+                                            </div>
+                                        </a>
 
-                                    <!-- Admin-Only Delete Button -->
-                                    @auth
-                                        @if(auth()->user()->isAdmin())
-                                            <form method="POST" action="{{ route('admin.sights.delete', $sight->id) }}" onsubmit="return confirm('Are you sure you want to delete this sight?');" class="p-4">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button 
-                                                    type="submit" 
-                                                    class="btn btn-error w-full text-white"
-                                                >
-                                                    <i class="fas fa-trash-alt mr-2"></i>Delete Sight
-                                                </button>
-                                            </form>
-                                        @endif
-                                    @endauth
-                                </div>
+                                        <!-- Admin-Only Delete Button -->
+                                        @auth
+                                            @if(auth()->user()->isAdmin())
+                                                <form method="POST" action="{{ route('admin.sights.delete', $sight->id) }}" onsubmit="return confirm('Are you sure you want to delete this sight?');" class="p-4">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-error w-full text-white">
+                                                        <i class="fas fa-trash-alt mr-2"></i>Delete Sight
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        @endauth
+                                    </div>
+                                @endif
                             @endif
                         @endforeach
                     </div>

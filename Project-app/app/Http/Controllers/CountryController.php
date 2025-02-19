@@ -19,16 +19,27 @@ class CountryController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
         /**
          * Atlasa visas valstis, kas ir redzamas (apstiprinātas admina)
          * Selects all countries that are visible (approved by admin)
          */
         
-        $countries = Country::where('visible', true)->get();
+         $query = Country::query()->where('visible', true);
 
-        return view('user.countries.index', compact('countries'));
+         if ($request->filled('search')) {
+             $search = $request->input('search');
+             $query->where(function ($q) use ($search) {
+                 $q->where('name', 'like', "%{$search}%")
+                   ->orWhere('capital', 'like', "%{$search}%")
+                   ->orWhere('description', 'like', "%{$search}%");
+             });
+         }
+     
+         $countries = $query->get();
+     
+         return view('user.countries.index', compact('countries'));
     }
 
     /**
