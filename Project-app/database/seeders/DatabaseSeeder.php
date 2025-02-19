@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             CountriesTableSeeder::class,
             SightsTableSeeder::class,
             ReviewsTableSeeder::class,
+            ForumTableSeeder::class,
+            NewsTableSeeder::class,
         ]);
 
         User::factory()->create([
