@@ -93,6 +93,22 @@
                     </select>
                 </div>
 
+                <!-- Ban User Checkbox -->
+                <div class="mb-4">
+                    <label for="banned" class="block text-sm font-medium text-gray-700">Ban User</label>
+                    <div class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            name="banned" 
+                            id="banned" 
+                            value="1" 
+                            class="mr-2" 
+                            {{ $user->banned ? 'checked' : '' }}
+                        >
+                        <span class="text-gray-700">Ban this user</span>
+                    </div>
+                </div>
+
                 <!-- Error Messages -->
                 @if($errors->any())
                     <div class="mb-4">
