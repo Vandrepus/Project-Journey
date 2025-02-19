@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/daisyui/dist/full.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <title>Report Details</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <title>Report Details</title>
 </head>
 <body class="bg-base-200 min-h-screen flex flex-col">
     <!-- Navigation -->
@@ -64,6 +64,27 @@
                     @endif
                 </div>
             </div>
+
+            <!-- Reported Person -->
+            @if ($report->reportable && isset($report->reportable->user))
+                <div class="card shadow-md bg-base-100 border border-gray-200 mt-6">
+                    <div class="card-body space-y-4">
+                        <h2 class="text-lg font-bold flex items-center space-x-2 text-indigo-600">
+                            <i class="fas fa-user"></i>
+                            <span>Reported Person</span>
+                        </h2>
+                        <p class="text-gray-700"><strong>Name:</strong> {{ $report->reportable->user->name }}</p>
+                        <p class="text-gray-700">
+                            <strong>Username:</strong> 
+                            <a href="{{ route('user.profile', $report->reportable->user->username) }}" class="text-blue-600 hover:underline">
+                                {{ $report->reportable->user->username }}
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            @else
+                <p class="text-gray-500 mt-6">Reported person information not available.</p>
+            @endif
 
             <!-- Actions -->
             <div class="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
