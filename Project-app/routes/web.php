@@ -155,6 +155,7 @@ Route::middleware('auth' ,'notBanned')->group(function () {
     });
 });
 
+//public routes
 Route::middleware('notBanned')->group(function () {
     Route::get('/articles', [ArticleController::class, 'list'])->name('articles.list');
     Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
@@ -163,7 +164,7 @@ Route::middleware('notBanned')->group(function () {
     Route::get('/countries/{country}', [CountryController::class, 'show'])->name('countries.show');
     Route::get('/sights/{sight}', [SightController::class, 'show'])->name('sights.show');
 });
-//public routes
+
 
 
 require __DIR__.'/auth.php';
