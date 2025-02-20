@@ -35,14 +35,13 @@
                 <ul class="space-y-4">
                     @foreach($topic->replies as $reply)
                         <li class="bg-white rounded-lg p-4 shadow-md">
-                            <!-- Apply line-break styles -->
                             <p class="text-gray-700 break-words whitespace-pre-wrap">{{ $reply->content }}</p>
                             <p class="text-sm text-gray-500 mt-2">
                                 Replied by 
                                 <a href="{{ route('user.profile', $reply->user->username) }}" class="text-blue-500 hover:underline font-medium">
                                     {{ $reply->user->username }}
                                 </a> 
-                                on {{ $reply->created_at->format('M d, Y') }}
+                                • {{ $reply->created_at->diffForHumans() }}
                             </p>
 
                             <div class="mt-4 flex items-center space-x-4">

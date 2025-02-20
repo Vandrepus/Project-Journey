@@ -67,7 +67,11 @@
                                 <a href="{{ route('user.profile', $topic->user->username) }}" class="text-blue-500 hover:underline font-semibold">
                                     {{ $topic->user->username }}
                                 </a> 
-                                on {{ $topic->created_at->format('M d, Y') }}
+                                on {{ $topic->created_at->format('M d, Y') }} •
+                                {{ $topic->replies->count() }} {{ Str::plural('reply', $topic->replies->count()) }}
+                                @if($topic->replies->isNotEmpty())
+                                    • Last updated: {{ $topic->replies->last()->created_at->diffForHumans() }}
+                                @endif
                             </p>
                         </div>
 
