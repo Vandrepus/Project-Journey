@@ -25,22 +25,23 @@ class ForumController extends Controller
      */
     public function index(Request $request)
     {
-        /**
-         * Iegūst meklēšanas ievadi
-         * Retrieve the search input
-         */
-        $search = $request->input('search'); // 
+        
+        $search = $request->input('search');
+        $sort = $request->input('sort', 'newest');
 
-        $topics = Topic::query()
-            ->when($search, function ($query, $search) {
-                /**
-                 * Filtrē tēmas pēc nosaukuma
-                 * Filter topics by title
-                 */
-                $query->where('title', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->get();
+        $query = Topic::query();
+
+        if ($search) {
+            $query->where('title', 'like', "%{$search}%");
+        }
+
+        if ($sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $topics = $query->get();
 
         return view('user.forum.index', compact('topics'));
     }
