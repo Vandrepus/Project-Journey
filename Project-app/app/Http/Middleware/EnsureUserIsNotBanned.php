@@ -19,8 +19,14 @@ class EnsureUserIsNotBanned
     {
         // Check if the user is authenticated and banned
         if (Auth::check() && Auth::user()->banned) {
+            $banReason = Auth::user()->ban_reason;
             Auth::logout();
-            return redirect()->route('login')->withErrors(['Your account has been banned. Please contact support.']);
+
+            $errorMessage = "Your account has been banned.";
+            $errorMessage .= "Reason: " . ($banReason ? $banReason : 'No reason') . "\n";
+            $errorMessage .= "Please contact support.";
+
+            return redirect()->route('login')->withErrors([$errorMessage]);
         }
         return $next($request);
     }

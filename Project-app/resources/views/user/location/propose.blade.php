@@ -20,14 +20,14 @@
 
       <!-- Success Notification -->
       @if (session('success'))
-      <div class="alert alert-success shadow-lg mb-6">
-        <div>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span>{{ session('success') }}</span>
+        <div class="alert alert-success shadow-lg mb-6">
+          <div class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current flex-shrink-0 w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{{ session('success') }}</span>
+          </div>
         </div>
-      </div>
       @endif
 
       <!-- Form -->
@@ -89,13 +89,17 @@
             name="opening_hours" 
             id="opening_hours" 
             required 
-            class="input input-bordered w-full mt-1" 
+            class="input input-bordered w-full mt-1 border-gray-300"
             placeholder="e.g., 9 AM - 5 PM" 
           />
-          @if ($errors->has('opening_hours'))
-          <p class="text-sm text-red-600 mt-2">
-            {{ $errors->first('opening_hours') }}
+          <!-- Validation Error Message -->
+          <p id="openingHoursError" class="text-sm text-red-600 mt-2 hidden">
+            Please enter valid opening hours in the format "9 AM - 5 PM" or "24/7".
           </p>
+          @if ($errors->has('opening_hours'))
+            <p class="text-sm text-red-600 mt-2">
+              {{ $errors->first('opening_hours') }}
+            </p>
           @endif
         </div>
 
@@ -105,7 +109,7 @@
           <input type="url" name="map_url" id="map_url" class="input input-bordered w-full mt-1" placeholder="Paste a map URL (optional)" />
         </div>
 
-        <!-- Single Photo Upload with Preview -->
+        <!-- Photo Upload with Preview -->
         <div>
           <label for="photo" class="block text-sm font-medium text-gray-700">Upload Photo</label>
           <!-- Drag & Drop Container -->
@@ -113,9 +117,7 @@
             <label for="photo" class="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div class="flex flex-col items-center justify-center pt-5 pb-6">
                 <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl"></i>
-                <p class="mb-2 text-sm text-gray-500">
-                  <span class="font-semibold">Click to upload</span>
-                </p>
+                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span></p>
                 <p class="text-xs text-gray-500">PNG, JPG, JPEG (max. 2MB)</p>
               </div>
               <input id="photo" name="photo" type="file" accept="image/*" class="hidden" onchange="previewPhoto(event)" />
@@ -155,36 +157,39 @@
       }
     });
 
-    // Validate opening hours input format
+    // Validate opening hours input format and display validation message
     document.getElementById('opening_hours').addEventListener('input', function (event) {
       const input = event.target.value;
       const regex = /^(24\/7|(?:(?:0?[1-9]|1[0-2])(?::[0-5]\d)?\s*(?:AM|PM))\s*-\s*(?:(?:0?[1-9]|1[0-2])(?::[0-5]\d)?\s*(?:AM|PM)))$/i;
+      const errorEl = document.getElementById('openingHoursError');
       if (!regex.test(input)) {
         event.target.classList.add('border-red-600');
         event.target.classList.remove('border-gray-300');
+        errorEl.classList.remove('hidden');
       } else {
         event.target.classList.remove('border-red-600');
         event.target.classList.add('border-gray-300');
+        errorEl.classList.add('hidden');
       }
     });
 
     // Single photo preview functionality
     function previewPhoto(event) {
-    const file = event.target.files[0];
-    const previewContainer = document.getElementById('photoPreviewContainer');
-    const previewImage = document.getElementById('photoPreview');
+      const file = event.target.files[0];
+      const previewContainer = document.getElementById('photoPreviewContainer');
+      const previewImage = document.getElementById('photoPreview');
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        previewImage.src = e.target.result;
-        previewContainer.classList.remove('hidden');
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewContainer.classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+      } else {
+        previewContainer.classList.add('hidden');
       }
-      reader.readAsDataURL(file);
-    } else {
-      previewContainer.classList.add('hidden');
     }
-  }
   </script>
 
   <!-- Footer -->

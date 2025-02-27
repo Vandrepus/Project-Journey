@@ -47,7 +47,7 @@
                             @else
                                 {{ $reply->user->username }}
                             @endif
-                            <span class="text-sm text-gray-500 ml-2">{{ $reply->created_at->format('Y-m-d H:i:s') }}</span>
+                            <span class="text-sm text-gray-500 ml-2">{{ $reply->created_at->diffForHumans() }}</span>
                         </p>
                         <p class="text-gray-700 mt-2 break-words overflow-hidden">{{ $reply->message }}</p>
                     </div>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('usertype')->default('user');
             $table->boolean('banned')->default(false);
+            $table->text('ban_reason')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

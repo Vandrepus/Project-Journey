@@ -22,9 +22,24 @@ class UserManagementController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $query = User::query();
+
+        // Filter by search (username)
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where('username', 'like', "%{$search}%");
+        }
+
+        // Filter by user type (e.g., admin)
+        if ($request->filled('filter') && $request->input('filter') == 'admin') {
+            $query->where('usertype', 'admin');
+        }
+
+        // Paginate and preserve query parameters
+        $users = $query->paginate(10)->appends($request->query());
+
         return view('admin.UserManagement.index', compact('users'));
     }
 
@@ -53,17 +68,29 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validate the user type and, if the user is banned, the ban reason is required.
         $validatedData = $request->validate([
-            'usertype' => 'required|in:user,admin',
+            'usertype'   => 'required|in:user,admin',
+            'ban_reason' => 'required_if:banned,1|string'
         ]);
 
         $user = User::findOrFail($id);
-
         $user->usertype = $validatedData['usertype'];
-        $user->banned = $request->has('banned');
+
+        // Determine if the ban checkbox is checked.
+        $isBanned = $request->has('banned');
+        $user->banned = $isBanned;
+
+        // If banned, update the ban reason; otherwise, clear it.
+        if ($isBanned) {
+            $user->ban_reason = $validatedData['ban_reason'];
+        } else {
+            $user->ban_reason = null;
+        }
 
         $user->save();
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.users.index')
+            ->with('success', 'User updated successfully.');
     }
 }

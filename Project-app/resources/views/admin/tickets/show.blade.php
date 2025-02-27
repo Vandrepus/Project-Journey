@@ -61,8 +61,8 @@
                                     </a>:
                                 </strong>
                             </p>
-                            <p class="text-gray-800">{{ $reply->message }}</p>
-                            <p class="text-gray-500 text-sm mt-2">{{ $reply->created_at->format('Y-m-d H:i:s') }}</p>
+                            <p class="text-gray-800  break-words">{{ $reply->message }}</p>
+                            <p class="text-gray-500 text-sm mt-2">{{ $reply->created_at->diffForHumans() }}</p>
                         </li>
                     @endforeach
                 </ul>

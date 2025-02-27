@@ -109,6 +109,18 @@
                     </div>
                 </div>
 
+                <!-- Reason for Ban -->
+                <div class="mb-4">
+                    <label for="ban_reason" class="block text-sm font-medium text-gray-700">Reason for Ban</label>
+                    <textarea 
+                        name="ban_reason" 
+                        id="ban_reason" 
+                        rows="3"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:ring-opacity-50"
+                        placeholder="Enter the reason for banning the user..."
+                    >{{ old('ban_reason', $user->ban_reason) }}</textarea>
+                </div>
+
                 <!-- Error Messages -->
                 @if($errors->any())
                     <div class="mb-4">
