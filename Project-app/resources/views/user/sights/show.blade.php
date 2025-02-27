@@ -7,17 +7,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>{{ $sight->name }}</title>
-    <script>
-        function openReportModal(reviewId) {
-            document.getElementById('reportable_id').value = reviewId; // Set the review ID
-            document.getElementById('reportModal').classList.remove('hidden'); // Show the modal
-        }
-
-        function closeReportModal() {
-            document.getElementById('reportModal').classList.add('hidden'); // Hide the modal
-            document.getElementById('reportForm').reset(); // Reset the form
-        }
-    </script>
 </head>
 <body class="bg-base-100 min-h-screen flex flex-col">
     <!-- Navigation -->
@@ -130,60 +119,75 @@
         </div>
 
 
-        <!-- Reviews Section -->
-        <section class="mt-8">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Reviews</h2>
-        @if($sight->reviews->count() > 0)
-            <div class="space-y-4">
-                @foreach($sight->reviews as $review)
+         <!-- Reviews Section -->
+        <section class="card bg-white shadow-xl rounded-lg p-6 mb-8">
+            <h2 class="card-title text-2xl font-bold text-gray-800 mb-4">Reviews</h2>
+            
+            <!-- Sort Reviews Form -->
+            <div class="mb-4 flex items-center">
+                <label for="sort_reviews" class="mr-2 text-sm font-medium text-gray-700">Sort reviews by:</label>
+                <form method="GET" action="{{ route('sights.show', $sight->id) }}" class="flex items-center">
+                <select name="sort_reviews" id="sort_reviews" class="select select-bordered">
+                    <option value="newest" {{ request('sort_reviews', 'newest') == 'newest' ? 'selected' : '' }}>Newest</option>
+                    <option value="oldest" {{ request('sort_reviews') == 'oldest' ? 'selected' : '' }}>Oldest</option>
+                </select>
+                <button type="submit" class="btn btn-primary ml-2">Sort</button>
+                </form>
+            </div>
+            
+            @php
+                $sortOrder = request('sort_reviews', 'newest');
+                $sortedReviews = $sight->reviews;
+                if($sortOrder === 'oldest'){
+                    $sortedReviews = $sight->reviews->sortBy('created_at');
+                } else {
+                    $sortedReviews = $sight->reviews->sortByDesc('created_at');
+                }
+            @endphp
+
+            @if($sortedReviews->count() > 0)
+                <div class="space-y-4">
+                @foreach($sortedReviews as $review)
                     <div class="card bg-base-200 shadow-md p-4">
-                        <p class="font-medium">
-                            <a href="{{ route('user.profile', $review->user->username) }}" class="text-blue-600 hover:underline">
-                                {{ $review->user->username }}
-                            </a>
-                        </p>
-                        <p class="mt-1 break-words overflow-hidden">{{ $review->content }}</p>
-                        <p class="text-sm text-gray-500 mt-2">{{ $review->created_at->format('Y-m-d H:i:s') }}</p>
-                        <div class="flex items-center mt-2">
-                            <span class="text-yellow-500 font-semibold mr-1">{{ number_format($review->rating, 1) }}</span>
-                            <i class="fas fa-star text-yellow-500"></i>
-                        </div>
+                    <p class="font-medium">
+                        <a href="{{ route('user.profile', $review->user->username) }}" class="text-blue-600 hover:underline">
+                        {{ $review->user->username }}
+                        </a>
+                    </p>
+                    <p class="mt-1 break-words overflow-hidden">{{ $review->content }}</p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        {{ $review->created_at->diffForHumans() }}
+                    </p>
+                    <div class="flex items-center mt-2">
+                        <span class="text-yellow-500 font-semibold mr-1">{{ number_format($review->rating, 1) }}</span>
+                        <i class="fas fa-star text-yellow-500"></i>
+                    </div>
+                    <div class="flex mt-4 space-x-4">
+                        @auth
+                        @if (auth()->user()->isAdmin() || auth()->id() === $review->user_id)
+                            <form method="POST" action="{{ route('reviews.delete', $review->id) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                                <i class="fas fa-trash-alt mr-2"></i>Delete
+                            </button>
+                            </form>
+                        @endif
 
-                        <div class="flex mt-4 space-x-4">
-                            @auth
-                                <!-- Admin-Only Delete Button and reviews owner button -->
-                                @if (auth()->user()->isAdmin() || auth()->id() === $review->user_id)
-                                <form method="POST" action="{{ route('reviews.delete', $review->id) }}" onsubmit="return confirm('Are you sure you want to delete this review?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button 
-                                        type="submit" 
-                                        class="btn btn-danger px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
-                                        <i class="fas fa-trash-alt mr-2"></i>Delete
-                                    </button>
-                                </form>
-                            @endif
-
-
-                                <!-- Report Button -->
-                                @if (!auth()->user()->isAdmin() && auth()->id() !== $review->user_id && !$review->user->isAdmin())
-                                    <button 
-                                        type="button" 
-                                        onclick="openReportModal({{ $review->id }})"
-                                        class="btn btn-warning px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
-                                    >
-                                        <i class="fas fa-flag mr-2"></i>Report
-                                    </button>
-                                @endif
-                            @endauth
-                        </div>
+                        @if (!auth()->user()->isAdmin() && auth()->id() !== $review->user_id && !$review->user->isAdmin())
+                            <button type="button" onclick="openReportModal({{ $review->id }})" class="btn btn-warning px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+                            <i class="fas fa-flag mr-2"></i>Report
+                            </button>
+                        @endif
+                        @endauth
+                    </div>
                     </div>
                 @endforeach
-            </div>
-        @else
-            <p class="text-gray-500">No reviews yet for this sight.</p>
-        @endif
-    </section>
+                </div>
+            @else
+                <p class="text-gray-500">No reviews yet for this sight.</p>
+            @endif
+        </section>
 
 
         <!-- Write a Review Section -->
@@ -300,7 +304,6 @@
         }
     });
 
-    
     function openPhotoModal() {
         document.getElementById('photoModal').classList.remove('hidden');
     }
@@ -309,10 +312,17 @@
         document.getElementById('photoModal').classList.add('hidden');
     }
 
+    function openReportModal(reviewId) {
+        document.getElementById('reportable_id').value = reviewId; // Set the review ID
+        document.getElementById('reportModal').classList.remove('hidden'); // Show the modal
+    }
 
+    function closeReportModal() {
+        document.getElementById('reportModal').classList.add('hidden'); // Hide the modal
+        document.getElementById('reportForm').reset(); // Reset the form
+    }
     </script>
-
-
+    
     <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4">
         <p>&copy; {{ date('Y') }} JourneyHub. All rights reserved.</p>
