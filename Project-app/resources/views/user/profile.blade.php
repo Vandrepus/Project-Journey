@@ -69,11 +69,18 @@
                             @foreach($user->favoriteSights as $sight)
                                 <div class="card bg-base-100 shadow-md hover:shadow-lg transition-transform duration-300 rounded-lg">
                                     <figure>
-                                        <img 
-                                            src="{{ $sight->image_url ?? asset('images/placeholder.jpg') }}" 
-                                            alt="{{ $sight->name }}" 
-                                            class="rounded-t-lg object-cover w-full h-40"
-                                        >
+                                        @if ($sight->photo)
+                                            <img 
+                                                src="{{ asset('storage/' . $sight->photo) ?? asset('images/placeholder.jpg') }}" 
+                                                alt="{{ $sight->name }}" 
+                                                class="rounded-t-lg object-cover w-full h-40"
+                                            />
+                                        @else
+                                            <img 
+                                                src="{{asset('images/placeholder.jpg') }}" 
+                                                class="rounded-t-lg object-cover w-full h-40"
+                                            />
+                                        @endif
                                     </figure>
                                     <div class="card-body p-4">
                                         <h3 class="text-md font-bold text-gray-800">{{ $sight->name }}</h3>

@@ -30,11 +30,18 @@
                 @foreach($favorites as $sight)
                     <div class="card bg-base-100 shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform duration-300">
                         <figure>
-                            <img 
-                                src="{{ $sight->image_url ?? asset('images/placeholder.jpg') }}" 
-                                alt="{{ $sight->name }}" 
-                                class="w-full h-56 object-cover rounded-t-lg"
-                            />
+                            @if ($sight->photo)
+                                <img 
+                                    src="{{ asset('storage/' . $sight->photo) ?? asset('images/placeholder.jpg') }}" 
+                                    alt="{{ $sight->name }}" 
+                                    class="w-full h-56 object-cover rounded-t-lg"
+                                />
+                                @else
+                                    <img 
+                                        src="{{asset('images/placeholder.jpg') }}" 
+                                        class="w-full h-56 object-cover rounded-t-lg"
+                                    />
+                                @endif
                         </figure>
                         <div class="card-body">
                             <h2 class="card-title text-xl font-semibold text-gray-800">{{ $sight->name }}</h2>
