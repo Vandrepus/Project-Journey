@@ -72,36 +72,33 @@
                                                 {{ \Illuminate\Support\Str::limit($country->description, 50, '...') }}
                                             </td>
                                             <td class="px-6 py-4 text-center space-x-2">
-                                                <form action="{{ route('admin.country.edit', $country->id) }}"class="inline-block">
-                                                    <button 
-                                                        type="submit" 
-                                                        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all duration-150"
-                                                        title="Edit this country"
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                </form>
+                                                <!-- Edit Button -->
+                                                <a href="{{ route('admin.country.edit', $country->id) }}" 
+                                                class="btn btn-info btn-sm"
+                                                title="Edit this country">
+                                                <i class="fas fa-edit mr-1"></i> Edit
+                                                </a>
+                                                <!-- Approve Button -->
                                                 <form action="{{ route('admin.country.approve', $country->id) }}" method="POST" class="inline-block">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button 
-                                                        type="submit" 
-                                                        class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-all duration-150"
-                                                        title="Approve this country"
-                                                    >
-                                                        Approve
-                                                    </button>
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                        class="btn btn-success btn-sm"
+                                                        onclick="return confirm('Are you sure you want to approve this country?')"
+                                                        title="Approve {{ $country->name }}">
+                                                    <i class="fas fa-check mr-1"></i> Approve
+                                                </button>
                                                 </form>
+                                                <!-- Decline Button -->
                                                 <form action="{{ route('admin.country.decline', $country->id) }}" method="POST" class="inline-block">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button 
-                                                        type="submit" 
-                                                        class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-all duration-150"
-                                                        title="Decline this country"
-                                                    >
-                                                        Decline
-                                                    </button>
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="btn btn-error btn-sm"
+                                                        onclick="return confirm('Are you sure you want to decline this country?')"
+                                                        title="Decline {{ $country->name }}">
+                                                    <i class="fas fa-times mr-1"></i> Decline
+                                                </button>
                                                 </form>
                                             </td>
                                         </tr>

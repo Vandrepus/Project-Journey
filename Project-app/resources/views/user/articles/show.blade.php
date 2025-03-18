@@ -10,7 +10,7 @@
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" 
         crossorigin="anonymous" referrerpolicy="no-referrer">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <title>{{ $article->title }} - JourneyHub</title>
+  <title>{{ $article->title }}</title>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
   @include('layouts.navigation')

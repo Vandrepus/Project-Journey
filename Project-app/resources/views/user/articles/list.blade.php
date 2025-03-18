@@ -10,7 +10,7 @@
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
   @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <title>Latest News Articles - JourneyHub</title>
+  <title>Latest News Articles</title>
 </head>
 <body class="bg-base-200 min-h-screen flex flex-col">
   @include('layouts.navigation')

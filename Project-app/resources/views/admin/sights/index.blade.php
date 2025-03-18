@@ -7,7 +7,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Pending Sights for Review</title>
+    <title>Pending Sights</title>
 </head>
 <body class="bg-gray-50 min-h-screen">
     @include('layouts.navigation')
@@ -55,35 +55,37 @@
                                     <td class="px-6 py-4 text-sm text-gray-600">
                                         {{ Str::limit($sight->description, 100) }}
                                     </td>
-                                    <td class="px-6 py-4 text-center space-y-2 md:space-y-0 md:space-x-2">
-                                        <!-- View Details Button -->
-                                        <a href="{{ route('admin.sights.show', $sight->id) }}" 
-                                           class="inline-block px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 transition duration-150"
-                                           aria-label="View details for {{ $sight->name }}">
-                                            View Details
-                                        </a>
-                                        <!-- Approve Button -->
-                                        <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit"
-                                                    class="px-4 py-2 bg-green-500 text-white text-sm font-medium rounded-md hover:bg-green-600 transition duration-150"
-                                                    onclick="return confirm('Are you sure you want to approve this sight?')"
-                                                    aria-label="Approve {{ $sight->name }}">
-                                                Approve
-                                            </button>
-                                        </form>
-                                        <!-- Decline Button -->
-                                        <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                    class="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600 transition duration-150"
-                                                    onclick="return confirm('Are you sure you want to decline this sight?')"
-                                                    aria-label="Decline {{ $sight->name }}">
-                                                Decline
-                                            </button>
-                                        </form>
+                                    <td class="px-6 py-4 text-center space-x-2">
+                                    <!-- View Details Button -->
+                                    <a href="{{ route('admin.sights.show', $sight->id) }}" 
+                                        class="btn btn-info btn-sm"
+                                        title="View details for {{ $sight->name }}">
+                                        <i class="fas fa-eye mr-1"></i> View Details
+                                    </a>
+
+                                    <!-- Approve Button -->
+                                    <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit"
+                                                class="btn btn-success btn-sm"
+                                                onclick="return confirm('Are you sure you want to approve this sight?')"
+                                                title="Approve {{ $sight->name }}">
+                                        <i class="fas fa-check mr-1"></i> Approve
+                                        </button>
+                                    </form>
+
+                                    <!-- Decline Button -->
+                                    <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                                class="btn btn-error btn-sm"
+                                                onclick="return confirm('Are you sure you want to decline this sight?')"
+                                                title="Decline {{ $sight->name }}">
+                                        <i class="fas fa-times mr-1"></i> Decline
+                                        </button>
+                                    </form>
                                     </td>
                                 </tr>
                             @endforeach

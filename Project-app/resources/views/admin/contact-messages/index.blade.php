@@ -54,21 +54,20 @@
                                     </td>
                                     <td class="px-4 py-3 text-sm text-gray-500">{{ $message->created_at->format('Y-m-d H:i') }}</td>
                                     <td class="px-4 py-3 text-center">
-                                        <a 
-                                            href="{{ route('admin.contact-messages.show', $message->id) }}" 
-                                            class="text-blue-500 hover:text-blue-700 flex items-center space-x-1"
-                                        >
+                                        <div class="btn-group">
+                                            <a href="{{ route('admin.contact-messages.show', $message->id) }}" class="btn btn-sm btn-primary" title="View Message">
                                             <i class="fas fa-eye"></i>
-                                            <span>View</span>
-                                        </a>
-                                        <form action="{{ route('admin.contact-messages.destroy', $message->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?')" class="mt-2">
+                                            <span class="hidden sm:inline">View</span>
+                                            </a>
+                                            <form action="{{ route('admin.contact-messages.destroy', $message->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this message?')" class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-500 hover:text-red-700 flex items-center space-x-1">
+                                            <button type="submit" class="btn btn-sm btn-error" title="Delete Message">
                                                 <i class="fas fa-trash-alt"></i>
-                                                <span>Delete</span>
+                                                <span class="hidden sm:inline">Delete</span>
                                             </button>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
