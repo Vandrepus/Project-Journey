@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <title>Admin - Reported Items</title>
+    <title>Admin - Reported Content</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
@@ -13,7 +13,15 @@
 
     <!-- Main Content -->
     <div class="container mx-auto p-6 bg-white rounded-lg shadow mt-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Reported Items</h1>
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Reported Content</h1>
+        
+        <!-- Success Notification -->
+        @if(session('success'))
+        <div class="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-md flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>{{ session('success') }}</span>
+        </div>
+        @endif
 
         @if ($reports->count() > 0)
             <div class="overflow-x-auto">

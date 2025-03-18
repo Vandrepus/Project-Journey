@@ -25,8 +25,19 @@
         <p class="text-sm text-indigo-200">Update the sight details below</p>
       </div>
 
-      <!-- Form Content -->
+      <!-- Content Area -->
       <div class="p-8">
+        <!-- Success Notification -->
+        @if(session('success'))
+          <div class="alert alert-success shadow-lg mb-6">
+            <div class="flex items-center space-x-2">
+              <i class="fas fa-check-circle"></i>
+              <span>{{ session('success') }}</span>
+            </div>
+          </div>
+        @endif
+
+        <!-- Validation Errors -->
         @if ($errors->any())
           <div class="alert alert-error shadow-lg mb-6">
             <ul>
@@ -36,7 +47,7 @@
             </ul>
           </div>
         @endif
-
+        
         <form action="{{ route('admin.sights.update', $sight->id) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
           @csrf
           @method('PUT')

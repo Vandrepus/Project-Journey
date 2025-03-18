@@ -71,7 +71,7 @@ class UserManagementController extends Controller
         // Validate the user type and, if the user is banned, the ban reason is required.
         $validatedData = $request->validate([
             'usertype'   => 'required|in:user,admin',
-            'ban_reason' => 'required_if:banned,1|string'
+            'ban_reason'  => 'nullable|string|required_if:banned,1',
         ]);
 
         $user = User::findOrFail($id);

@@ -111,6 +111,6 @@ class AdminCountryController extends Controller
         }
         $country->update($validatedData);
 
-        return redirect()->route('countries.index')->with('success', 'Country updated successfully.');
+        return redirect()->back()->with('success', 'Sight updated successfully!');
     }
 }

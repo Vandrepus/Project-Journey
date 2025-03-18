@@ -19,6 +19,14 @@
         <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Pending Countries</h2>
 
+            <!-- Success Notification -->
+            @if(session('success'))
+                <div class="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-md flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
             <div x-data="{ activeTab: 'pending' }" class="space-y-6">
                 <!-- Tabs -->
                 <div class="flex justify-center mb-6">
@@ -64,6 +72,15 @@
                                                 {{ \Illuminate\Support\Str::limit($country->description, 50, '...') }}
                                             </td>
                                             <td class="px-6 py-4 text-center space-x-2">
+                                                <form action="{{ route('admin.country.edit', $country->id) }}"class="inline-block">
+                                                    <button 
+                                                        type="submit" 
+                                                        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-all duration-150"
+                                                        title="Edit this country"
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </form>
                                                 <form action="{{ route('admin.country.approve', $country->id) }}" method="POST" class="inline-block">
                                                     @csrf
                                                     @method('PATCH')

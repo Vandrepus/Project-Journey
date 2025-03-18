@@ -16,6 +16,14 @@
         <div class="bg-white shadow-lg rounded-lg p-6">
             <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">All Support Tickets</h1>
 
+            <!-- Success Notification -->
+            @if(session('success'))
+                <div class="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-md flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>{{ session('success') }}</span>
+                </div>
+            @endif
+
             <!-- Filter Form -->
             <form method="GET" class="mb-6 flex flex-col sm:flex-row items-center gap-4">
                 <div class="w-full sm:w-auto">
