@@ -87,4 +87,9 @@ class Sight extends Model
     {
         return $this->belongsToMany(User::class, 'favorite_sights')->withTimestamps();
     }
+
+    public function isFavoritedBy($user)
+    {
+        return $this->favoredByUsers()->where('user_id', $user->id)->exists();
+    }
 }

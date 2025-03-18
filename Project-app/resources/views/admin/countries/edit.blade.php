@@ -20,16 +20,27 @@
                 <p class="text-sm text-indigo-200">Make changes to the country details and update its information</p>
             </div>
 
-            <!-- Form Content -->
+            <!-- Content Area -->
             <div class="p-8">
-                @if ($errors->any())
-                    <div class="alert alert-error shadow-lg mb-6">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li class="text-red-600">{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                <!-- Success Notification -->
+                @if(session('success'))
+                <div class="alert alert-success shadow-lg mb-6">
+                    <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle"></i>
+                    <span>{{ session('success') }}</span>
                     </div>
+                </div>
+                @endif
+
+                <!-- Validation Errors -->
+                @if ($errors->any())
+                <div class="alert alert-error shadow-lg mb-6">
+                    <ul>
+                    @foreach ($errors->all() as $error)
+                        <li class="text-red-600">{{ $error }}</li>
+                    @endforeach
+                    </ul>
+                </div>
                 @endif
 
                 <form action="{{ route('admin.country.update', $country->id) }}" method="POST" enctype="multipart/form-data" class="space-y-8">

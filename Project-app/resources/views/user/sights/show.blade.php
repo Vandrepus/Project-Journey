@@ -100,23 +100,37 @@
 
             <!-- Add to Favorites Button -->
             @auth
-                <div class="mt-6">
-                    <form method="POST" action="{{ route('favorites.store', $sight) }}">
-                        @csrf
-                        <button 
-                            type="submit" 
-                            class="btn btn-primary w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center"
-                        >
-                            <i class="fas fa-heart mr-2"></i> Add to Favorites
-                        </button>
-                    </form>
-                </div>
+            <div class="mt-6">
+                @if($sight->isFavoritedBy(auth()->user()))
+                <form method="POST" action="{{ route('favorites.destroy', $sight) }}">
+                    @csrf
+                    @method('DELETE')
+                    <button 
+                    type="submit" 
+                    class="btn btn-secondary w-full sm:w-auto px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 flex items-center justify-center"
+                    >
+                    <i class="fas fa-heart-broken mr-2"></i> Remove from Favorites
+                    </button>
+                </form>
+                @else
+                <form method="POST" action="{{ route('favorites.store', $sight) }}">
+                    @csrf
+                    <button 
+                    type="submit" 
+                    class="btn btn-primary w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center"
+                    >
+                    <i class="fas fa-heart mr-2"></i> Add to Favorites
+                    </button>
+                </form>
+                @endif
+            </div>
             @else
-                <div class="mt-6">
-                    <p class="text-gray-500">Please <a href="{{ route('login') }}" class="text-blue-500 hover:underline">log in</a> to add this sight to your favorites.</p>
-                </div>
+            <div class="mt-6">
+                <p class="text-gray-500">
+                Please <a href="{{ route('login') }}" class="text-blue-500 hover:underline">log in</a> to add this sight to your favorites.
+                </p>
+            </div>
             @endauth
-        </div>
 
 
          <!-- Reviews Section -->

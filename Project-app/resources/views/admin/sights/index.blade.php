@@ -15,8 +15,16 @@
     <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <div class="px-6 py-4">
-                <h1 class="text-3xl font-bold text-gray-800">Pending Sights for Review</h1>
+                <h1 class="text-3xl font-bold text-gray-800">Pending Sights</h1>
             </div>
+
+             <!-- Success Notification -->
+            @if(session('success'))
+                <div class="mx-6 mb-4 p-4 bg-green-100 border border-green-300 text-green-800 rounded-md flex items-center">
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>{{ session('success') }}</span>
+                </div>
+            @endif
 
             @if($pendingSights->isEmpty())
                 <div class="px-6 py-4">

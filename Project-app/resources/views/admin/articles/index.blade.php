@@ -22,6 +22,14 @@
                     </a>
                 </div>
 
+                 <!-- Success Notification -->
+                @if(session('success'))
+                <div class="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-lg flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span>{{ session('success') }}</span>
+                </div>
+                @endif
+
                 <!-- Articles Table -->
                 <div class="overflow-x-auto">
                     <table class="table-auto w-full border-collapse border border-gray-200">
