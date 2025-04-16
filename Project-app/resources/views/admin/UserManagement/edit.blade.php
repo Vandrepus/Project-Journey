@@ -118,7 +118,7 @@
             name="ban_reason" 
             id="ban_reason" 
             rows="3"
-            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+            class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 disabled:bg-gray-100"
             placeholder="Enter the reason for banning the user..."
             {{ $user->banned ? '' : 'disabled' }}
           >{{ old('ban_reason', $user->ban_reason) }}</textarea>
