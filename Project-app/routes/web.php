@@ -8,6 +8,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminContactMessageController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\SightController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\TopicController;
@@ -27,9 +28,11 @@ use App\Http\Controllers\FavoriteSightsController;
 
 
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+// Route::get('/', function () {
+//     return view('home');
+// })->name('home');
+
+Route::get('/', [HomeController::class,'index'])->name('home');
 
 Route::get('/about', function () {
     return view('about');

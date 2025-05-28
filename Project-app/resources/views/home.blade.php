@@ -30,8 +30,8 @@
         url="/register"
         btnClass="show"
     />
-    <x-destination/> {{-- Pass your destinations data from the controller --}}
-    <x-trip/> {{-- Pass your trips data from the controller --}}
+    <x-destination :sights="$sights" /> {{-- Pass your destinations data from the controller --}}
+    <x-trip :sights="$recentSights"/> {{-- Pass your trips data from the controller --}}
 
     <x-footer />
     </div>
