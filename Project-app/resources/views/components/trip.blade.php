@@ -14,7 +14,7 @@
                 <div class="card bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300">
                     <figure class="h-48 overflow-hidden">
                         <img 
-                            src="{{ $sight->photo ? asset('storage/' . $sight->photo) : asset('images/default.jpg') }}" 
+                            src="{{ $sight->photo ? asset('storage/' . $sight->photo) : asset('images/placeholder.jpg') }}" 
                             alt="{{ $sight->name }}" 
                             class="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
                         >

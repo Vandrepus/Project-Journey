@@ -18,7 +18,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        /
+        
         return view('home', [
             'sights' => $sights,
             'recentSights' => $recentSights,

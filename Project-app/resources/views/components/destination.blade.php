@@ -17,7 +17,7 @@
             <!-- Image -->
             <div class="w-full md:w-1/2 relative">
                 <img 
-                    src="{{ $sight->photo ? asset('storage/' . $sight->photo) : asset('images/default.jpg') }}" 
+                    src="{{ $sight->photo ? asset('storage/' . $sight->photo) : asset('images/placeholder.jpg') }}" 
                     alt="{{ $sight->name }}" 
                     class="w-full h-80 object-cover rounded-lg shadow-lg"
                 >
