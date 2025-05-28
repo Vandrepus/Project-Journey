@@ -31,7 +31,7 @@
         btnClass="show"
     />
     <x-destination :sights="$sights" /> {{-- Pass your destinations data from the controller --}}
-    <x-trip/> {{-- Pass your trips data from the controller --}}
+    <x-trip :sights="$recentSights"/> {{-- Pass your trips data from the controller --}}
 
     <x-footer />
     </div>

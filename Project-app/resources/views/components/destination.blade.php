@@ -1,114 +1,27 @@
 @props(['sights'])
-<div class="destination">
-    <h1>Popular Destinations Shared by Our Community</h1>
-    <p>Discover hidden gems, share your experiences, and get travel tips from fellow explorers!</p>
-    
+
+<div class="destination container mx-auto px-6 py-12 text-center">
+    <h1 class="text-4xl font-bold mb-4">Popular Destinations Shared by Our Community</h1>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Discover hidden gems, share your experiences, and get travel tips from fellow explorers!
+    </p>
+
     @foreach ($sights->take(5) as $index => $sight)
-    <x-destination-data 
-        class="{{ $index % 2 == 0 ? 'first-des' : 'first-des-reverse' }}"
-        heading="{{ $sight->name }}"
-        text="{{ $sight->description }}"
-        img1="{{ $sight->photo }}"
-    />
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8 my-16 {{ $index % 2 === 0 ? '' : 'md:flex-row-reverse' }}">
+            <!-- Text Content -->
+            <div class="w-full md:w-1/2 text-left">
+                <h2 class="text-2xl font-semibold mb-3">{{ $sight->name }}</h2>
+                <p class="text-gray-700">{{ Str::limit($sight->description, 150) }}</p>
+            </div>
+
+            <!-- Image -->
+            <div class="w-full md:w-1/2 relative">
+                <img 
+                    src="{{ $sight->photo ? asset('storage/' . $sight->photo) : asset('images/default.jpg') }}" 
+                    alt="{{ $sight->name }}" 
+                    class="w-full h-80 object-cover rounded-lg shadow-lg"
+                >
+            </div>
+        </div>
     @endforeach
 </div>
-
-
-
-<style>
-    .destination{
-    margin: 4rem 6rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.destination h1{
-    font-size: 3rem;
-}
-
-.first-des{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4.5rem;
-}
-
-.first-des-reverse{
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4.5rem;
-}
-
-.des-text{
-    width: 45%;
-    text-align: start;
-    font-size: 1.1rem;
-
-}
-
-.des-text h2{
-    padding-bottom: 1rem;
-}
-
-.image{
-    position: relative;
-    width: 50%;
-    display: flex;
-    justify-content: space-between;
-    z-index: -99;
-}
-
-.image img{
-    width: 49%;
-    height: 350px;
-    object-fit: cover;
-    border-radius: 6px;
-    box-shadow: -1px 1px 62px -18px rgba(0, 0, 0, 0.19);
-}
-
-.image img:nth-child(2){
-    position: absolute;
-    top: -10%;
-    right: 0;
-}
-
-@media screen and (max-width: 850px){
-    .destination{
-        margin: 4rem 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .first-des{
-        display: flex;
-        flex-direction: column-reverse;
-        margin-top: 2.5rem;
-    }
-
-    .first-des-reverse{
-        display: flex;
-        flex-direction: column-reverse;
-        margin-top: 2.5rem;
-    }
-    
-    .des-text{
-        width: 100%;
-    }
-
-    .image{
-        width: 100%;
-        margin: 1.8rem 0;
-    }
-
-    .image img{
-        height: 250px;
-    }
-}
-
-</style>
