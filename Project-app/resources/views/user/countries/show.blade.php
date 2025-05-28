@@ -40,8 +40,8 @@
             <!-- Filter & Search Section -->
             <div class="p-6 bg-gray-50">
                 <h3 class="text-lg font-semibold text-gray-800 mb-2">Filter Sights</h3>
-                <form method="GET" action="{{ route('countries.show', $country->id) }}" class="flex items-center gap-4">
-                    <select name="rating" id="rating-filter" class="select select-bordered w-40">
+                <form method="GET" action="{{ route('countries.show', $country->id) }}" class="flex flex-col sm:flex-row gap-4">
+                    <select name="rating" id="rating-filter" class="select select-bordered w-40 ">
                         <option value="" selected>All Ratings</option>
                         <option value="5">5 Stars</option>
                         <option value="4">4 Stars & Up</option>

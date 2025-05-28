@@ -16,17 +16,19 @@
   <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white shadow-lg rounded-lg p-6">
       <!-- Forum Header -->
-      <div class="flex justify-between items-center mb-6">
-        <a href="{{ route('forum.index') }}" class="text-2xl font-bold text-gray-800 hover:underline">
-          Forum
-        </a>
-        <a href="{{ route('forum.create') }}" class="btn btn-primary">
-          <i class="fas fa-plus mr-2"></i>Create New Topic
-        </a>
+      <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+          <a href="{{ route('forum.index') }}" class="text-2xl font-bold text-gray-800 hover:underline">
+              Forum
+          </a>
+          <div class="mt-4 sm:mt-0">
+              <a href="{{ route('forum.create') }}" class="btn btn-primary">
+                  <i class="fas fa-plus mr-2"></i>Create New Topic
+              </a>
+          </div>
       </div>
 
       <!-- Search and Sort Bar -->
-      <form method="GET" action="{{ route('forum.index') }}" class="mb-6 flex items-center space-x-4">
+      <form method="GET" action="{{ route('forum.index') }}" class="mb-6 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
         <input 
           type="text" 
           name="search" 
@@ -34,13 +36,13 @@
           placeholder="Search topics..." 
           class="flex-grow border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring focus:ring-blue-200"
         />
-        <select name="sort" class="select select-bordered">
+        <select name="sort" class="select select-bordered mt-2 sm:mt-0">
           <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest</option>
           <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Oldest</option>
         </select>
         <button 
           type="submit" 
-          class="ml-2 btn btn-primary px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          class="mt-2 sm:mt-0 btn btn-primary px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
         >
           <i class="fas fa-search"></i>
         </button>

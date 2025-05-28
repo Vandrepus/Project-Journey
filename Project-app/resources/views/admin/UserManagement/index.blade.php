@@ -58,28 +58,36 @@
               <th class="px-4 py-3 text-left text-sm font-bold text-gray-700">Username</th>
               <th class="px-4 py-3 text-left text-sm font-bold text-gray-700">Email</th>
               <th class="px-4 py-3 text-left text-sm font-bold text-gray-700">User Type</th>
+              <th class="px-4 py-3 text-left text-sm font-bold text-gray-700">Status</th>
               <th class="px-4 py-3 text-center text-sm font-bold text-gray-700">Actions</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
             @forelse ($users as $user)
               <tr class="hover:bg-gray-50 transition">
-                <td class="px-4 py-3 text-sm text-gray-800 font-medium">
-                  <a href="{{ route('user.profile', $user->username) }}" class="text-blue-500 hover:underline">
-                    {{ $user->username }}
-                  </a>
-                </td>
-                <td class="px-4 py-3 text-sm text-gray-600">{{ $user->email }}</td>
-                <td class="px-4 py-3 text-sm text-gray-800 font-semibold">{{ ucfirst($user->usertype) }}</td>
-                <td class="px-4 py-3 text-center">
-                  <div class="flex justify-center items-center space-x-2">
-                    <!-- Edit Button -->
-                    <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary flex items-center">
-                      <i class="fas fa-edit mr-2"></i> Edit
-                    </a>
-                  </div>
-                </td>
-              </tr>
+    <td class="px-4 py-3 text-sm text-gray-800 font-medium">
+        <a href="{{ route('user.profile', $user->username) }}" class="text-blue-500 hover:underline">
+            {{ $user->username }}
+        </a>
+    </td>
+    <td class="px-4 py-3 text-sm text-gray-600">{{ $user->email }}</td>
+    <td class="px-4 py-3 text-sm text-gray-800 font-semibold">{{ ucfirst($user->usertype) }}</td>
+    <td class="px-4 py-3 text-sm">
+        @if($user->banned)
+            <span class="text-red-600 font-semibold">Banned</span>
+        @else
+            <span class="text-green-600 font-semibold">Active</span>
+        @endif
+    </td>
+    <td class="px-4 py-3 text-center">
+        <div class="flex justify-center items-center space-x-2">
+            <!-- Edit Button -->
+            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary flex items-center">
+                <i class="fas fa-edit mr-2"></i> Edit
+            </a>
+        </div>
+    </td>
+</tr>
             @empty
               <tr>
                 <td colspan="4" class="px-4 py-3 text-center text-gray-500 italic">No users found.</td>

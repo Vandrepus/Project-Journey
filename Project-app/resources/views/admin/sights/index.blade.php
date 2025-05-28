@@ -64,26 +64,26 @@
                                     </a>
 
                                     <!-- Approve Button -->
-                                    <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST" class="inline-block">
+                                    <form action="{{ route('admin.sights.approve', $sight->id) }}" method="POST" class="inline-block  space-y-2">
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit"
                                                 class="btn btn-success btn-sm"
                                                 onclick="return confirm('Are you sure you want to approve this sight?')"
                                                 title="Approve {{ $sight->name }}">
-                                        <i class="fas fa-check mr-1"></i> Approve
+                                                Approve
                                         </button>
                                     </form>
 
                                     <!-- Decline Button -->
-                                    <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST" class="inline-block">
+                                    <form action="{{ route('admin.sights.decline', $sight->id) }}" method="POST" class="inline-block  space-y-2">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
                                                 class="btn btn-error btn-sm"
                                                 onclick="return confirm('Are you sure you want to decline this sight?')"
                                                 title="Decline {{ $sight->name }}">
-                                        <i class="fas fa-times mr-1"></i> Decline
+                                                Decline
                                         </button>
                                     </form>
                                     </td>

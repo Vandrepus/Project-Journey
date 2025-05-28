@@ -71,7 +71,7 @@
                                             <td class="px-6 py-4 text-gray-600">
                                                 {{ \Illuminate\Support\Str::limit($country->description, 50, '...') }}
                                             </td>
-                                            <td class="px-6 py-4 text-center space-x-2">
+                                            <td class="px-6 py-4 text-center space-y-2">
                                                 <!-- Edit Button -->
                                                 <a href="{{ route('admin.country.edit', $country->id) }}" 
                                                 class="btn btn-info btn-sm"
@@ -86,7 +86,7 @@
                                                         class="btn btn-success btn-sm"
                                                         onclick="return confirm('Are you sure you want to approve this country?')"
                                                         title="Approve {{ $country->name }}">
-                                                    <i class="fas fa-check mr-1"></i> Approve
+                                                        Approve
                                                 </button>
                                                 </form>
                                                 <!-- Decline Button -->
@@ -97,7 +97,7 @@
                                                         class="btn btn-error btn-sm"
                                                         onclick="return confirm('Are you sure you want to decline this country?')"
                                                         title="Decline {{ $country->name }}">
-                                                    <i class="fas fa-times mr-1"></i> Decline
+                                                        Decline
                                                 </button>
                                                 </form>
                                             </td>
